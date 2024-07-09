@@ -14,7 +14,7 @@ export default function Home() {
         <title>Kosthority</title>
       </Head>
 
-      <div className="sm:block bg-slate-200">
+      <div className="sm:block bg-white">
         {/* navbar */}
         <nav className="">
           <div className="max-w-7xl mx-auto p-4 sm:px-6 lg:px-8">
@@ -72,14 +72,14 @@ export default function Home() {
                     <Link
                       href="/register"
                       className="inline-flex items-center justify-center px-5 py-3 border border-transparent text-base font-semibold rounded-md text-slate-100 bg-sky-500 hover:bg-sky-400">
-                      Get started
+                      Get started !
                     </Link>
                   </div>
                 </div>
               </div>
               <div className="mt-10 lg:-mx-4 relative lg:mt-0">
                 <img
-                  className="relative mx-auto"
+                  className="relative mx-auto shadow-2xl rounded-lg"
                   src="https://tailwindui.com/img/component-images/full-width-with-sidebar.jpg"
                   alt="App screenshot"
                 />
