@@ -8,6 +8,7 @@ import {
   Bell,
   CircleUser,
   Home,
+  LayoutDashboard,
   LineChart,
   Menu,
   Package,
@@ -36,8 +37,9 @@ const DashboardPage = () => {
   const { logout } = useAuth({})
   return (
     <div className="grid min-h-screen w-full md:grid-cols-[220px_1fr] lg:grid-cols-[280px_1fr]">
-      <div className="hidden border-r bg-muted/40 md:block">
-        <div className="flex h-full max-h-screen flex-col gap-2">
+      {/* sidebar */}
+      <div className="hidden border-r bg-muted/40 md:block ">
+        <div className="flex h-full max-h-screen flex-col gap-2 ">
           <div className="flex h-14 items-center border-b px-4 lg:h-[60px] lg:px-6">
             <Link href="/" className="flex items-center gap-2 font-semibold">
               <Package2 className="h-6 w-6" />
@@ -52,42 +54,44 @@ const DashboardPage = () => {
             <nav className="grid items-start px-2 text-sm font-medium lg:px-4">
               <Link
                 href="#"
-                className="flex items-center gap-3 rounded-lg px-3 py-2 text-muted-foreground transition-all hover:text-primary">
-                <Home className="h-4 w-4" />
+                className="flex items-center gap-3 bg-muted text-primary rounded-lg px-3 py-2 transition-all hover:text-primary">
+                <LayoutDashboard className="h-4 w-4" />
                 Dashboard
               </Link>
               <Link
                 href="#"
                 className="flex items-center gap-3 rounded-lg px-3 py-2 text-muted-foreground transition-all hover:text-primary">
-                <ShoppingCart className="h-4 w-4" />
-                Orders
+                <Home className="h-4 w-4" />
+                Houses
                 <Badge className="ml-auto flex h-6 w-6 shrink-0 items-center justify-center rounded-full">
                   6
                 </Badge>
               </Link>
               <Link
                 href="#"
-                className="flex items-center gap-3 rounded-lg bg-muted px-3 py-2 text-primary transition-all hover:text-primary">
-                <Package className="h-4 w-4" />
-                Products{' '}
+                className="flex items-center gap-3 rounded-lg px-3 py-2 text-muted-foreground transition-all hover:text-primary">
+                <Users className="h-4 w-4" />
+                Tenants
               </Link>
               <Link
                 href="#"
                 className="flex items-center gap-3 rounded-lg px-3 py-2 text-muted-foreground transition-all hover:text-primary">
-                <Users className="h-4 w-4" />
-                Customers
+                <Package className="h-4 w-4" />
+                Payments
               </Link>
               <Link
                 href="#"
                 className="flex items-center gap-3 rounded-lg px-3 py-2 text-muted-foreground transition-all hover:text-primary">
                 <LineChart className="h-4 w-4" />
-                Analytics
+                Reports
               </Link>
             </nav>
           </div>
         </div>
       </div>
+      {/* main */}
       <div className="flex flex-col">
+        {/* header */}
         <header className="flex h-14 items-center gap-4 border-b bg-muted/40 px-4 lg:h-[60px] lg:px-6">
           <Sheet>
             <SheetTrigger asChild>
@@ -143,7 +147,7 @@ const DashboardPage = () => {
               </nav>
             </SheetContent>
           </Sheet>
-          <div className="w-full flex-1">
+          {/* <div className="w-full flex-1">
             <form>
               <div className="relative">
                 <Search className="absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground" />
@@ -154,12 +158,12 @@ const DashboardPage = () => {
                 />
               </div>
             </form>
-          </div>
+          </div> */}
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
               <Button
                 variant="secondary"
-                className="rounded-full gap-2 focus-visible:ring-0 focus-visible:ring-offset-0">
+                className="rounded-full gap-2 focus-visible:ring-0 focus-visible:ring-offset-0 bg-white hover:bg-white">
                 <span>{user?.name}</span>
                 <CircleUser className="h-5 w-5" />
                 <span className="sr-only">Toggle user menu</span>
@@ -171,9 +175,7 @@ const DashboardPage = () => {
               <DropdownMenuItem>Settings</DropdownMenuItem>
               <DropdownMenuItem>Support</DropdownMenuItem>
               <DropdownMenuSeparator />
-              <DropdownMenuItem onClick={logout}>
-                Logout
-              </DropdownMenuItem>
+              <DropdownMenuItem onClick={logout}>Logout</DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>
         </header>
