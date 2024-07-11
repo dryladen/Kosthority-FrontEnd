@@ -16,10 +16,10 @@ const NavHead = () => {
   const { user } = useAuth({ middleware: 'auth' })
   const { logout } = useAuth({})
   return (
-    <header className="flex h-14 items-center justify-between md:justify-end gap-4 border-b bg-muted/40 px-4 lg:h-[60px] lg:px-6">
+    <header className="flex h-14 items-center bg-background justify-between md:justify-end gap-4 border-b px-4 lg:h-[60px] lg:px-6">
       <Sheet>
         <SheetTrigger asChild>
-          <Button variant="outline" size="icon" className="shrink-0 md:hidden">
+          <Button variant="outline" size="icon" className="text-muted-foreground shrink-0 md:hidden">
             <Menu className="h-5 w-5" />
             <span className="sr-only">Toggle navigation menu</span>
           </Button>
@@ -28,7 +28,7 @@ const NavHead = () => {
           <nav className="grid gap-2 text-lg font-medium">
             <Link
               href="#"
-              className="flex items-center gap-4 text-gray-900 text-2xl font-bold">
+              className="flex text-muted-foreground items-center gap-4 text-gray-900 text-2xl font-bold">
               <Package2 className="h-6 w-6" />
               <span className="">Kosthority</span>
             </Link>
@@ -43,9 +43,6 @@ const NavHead = () => {
               className="mx-[-0.65rem] flex items-center gap-4 rounded-xl bg-muted px-3 py-2 text-foreground hover:text-foreground">
               <ShoppingCart className="h-5 w-5" />
               Orders
-              <Badge className="ml-auto flex h-6 w-6 shrink-0 items-center justify-center rounded-full">
-                6
-              </Badge>
             </Link>
             <Link
               href="#"
@@ -71,10 +68,10 @@ const NavHead = () => {
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
           <Button
-            variant="secondary"
-            className="rounded-full gap-2 focus-visible:ring-0 focus-visible:ring-offset-0 bg-white hover:bg-white">
+            variant="outline"
+            className="rounded-full border-0 text-muted-foreground gap-2 focus-visible:ring-0 focus-visible:ring-offset-0">
             <span>{user?.name}</span>
-            <CircleUser className="h-5 w-5" />
+            <CircleUser className="h-5 w-5 " />
             <span className="sr-only">Toggle user menu</span>
           </Button>
         </DropdownMenuTrigger>
