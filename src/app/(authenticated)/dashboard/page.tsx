@@ -1,5 +1,5 @@
 'use client'
-import CardDashboard from '@/components/CardDashboard'
+import CardList from '@/components/CardList'
 import NavHead from '@/components/NavHead'
 import { useData } from '@/hooks/dataKost'
 import { RentalHouse } from '@/types/RentalHouse'
@@ -7,34 +7,21 @@ import { UserType } from '@/types/User'
 import React from 'react'
 import Link from 'next/link'
 import {
+  Bed,
   Bell,
-  CircleUser,
   DollarSign,
   Home,
+  HomeIcon,
   LayoutDashboard,
   LineChart,
-  Menu,
   Package,
   Package2,
-  Search,
-  ShoppingCart,
   User,
   Users,
 } from 'lucide-react'
 import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuSeparator,
-  DropdownMenuTrigger,
-} from '@/components/ui/dropdown-menu'
-import { Input } from '@/components/ui/input'
-import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet'
 import { useAuth } from '@/hooks/auth'
-import { DropdownButton } from '@/components/DropdownLink'
 import Transactions from '@/components/Transaction'
 
 const DashboardPage = () => {
@@ -100,24 +87,32 @@ const DashboardPage = () => {
         <NavHead />
         <main className="flex flex-1 flex-col gap-4 p-4 lg:gap-6 lg:p-6 ">
           <div className="grid gap-4 md:grid-cols-2 md:gap-8 lg:grid-cols-4">
-            <CardDashboard
-              title="Income"
-              logo={<DollarSign className="w-4 h-4 text-muted-foreground"/>}
-              content="Rp.15.000"
-              desc=""
-            />
-            <CardDashboard
-              title="Tenants"
-              logo={<Users className="h-4 w-4 text-muted-foreground" />}
-              content="24"
-              desc=""
-            />
-            <CardDashboard
-              title="Income"
-              logo={<DollarSign className="w-5 h-5"></DollarSign>}
-              content="Rp.15.000"
-              desc=""
-            />
+            <CardList summary={[
+              {
+                title: 'Income',
+                logo: DollarSign,
+                sum: 'Rp.15.000',
+                desc: '',
+              },
+              {
+                title: 'Tenants',
+                logo: Users,
+                sum: '13',
+                desc: '',
+              },
+              {
+                title: 'Houses',
+                logo: HomeIcon,
+                sum: '2',
+                desc: '',
+              },
+              {
+                title: 'Rooms',
+                logo: Bed,
+                sum: '14',
+                desc: '',
+              },
+            ]} />
           </div>
           <Transactions />
         </main>
