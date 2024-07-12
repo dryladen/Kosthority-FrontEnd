@@ -7,7 +7,7 @@ export const useData = () => {
     return { data, error, isLoading }
   },
   GetRentalHouse = () => {
-    const { data, error, isLoading } = useSWR("/rentalhouse", api.getRentalHouse)
+    const { data, error, isLoading } = useSWR("/rentalhouses", api.getRentalHouse)
     return { data, error, isLoading }
   }
 

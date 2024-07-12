@@ -2,12 +2,7 @@ import Link from 'next/link'
 import { Button } from './ui/button'
 import {
   Bell,
-  Home,
-  LayoutDashboard,
-  LineChart,
-  Package,
   Package2,
-  Users,
 } from 'lucide-react'
 import { ModeToggle } from './ModeToggle'
 import { usePathname } from 'next/navigation'
