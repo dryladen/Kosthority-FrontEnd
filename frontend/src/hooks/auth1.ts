@@ -77,7 +77,6 @@ export const useAuth = ({
   }) => {
     try {
       await csrf()
-
       const response = await axios.post('/reset-password', {
         ...data,
         token: params.token,

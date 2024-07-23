@@ -11,7 +11,7 @@ import { DropdownButton } from '@/components/DropdownLink'
 import ApplicationLogo from '@/components/ApplicationLogo'
 
 import { UserType } from '@/types/User'
-import { useAuth } from '@/hooks/auth'
+import { useAuth } from '@/hooks/auth1'
 
 const Navigation = ({ user }: { user: UserType }) => {
   const pathname = usePathname()

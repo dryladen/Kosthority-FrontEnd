@@ -4,7 +4,10 @@ use App\Http\Controllers\API\RentHouseController;
 use App\Http\Controllers\API\RoomController;
 use App\Http\Controllers\API\TenantController;
 use App\Http\Controllers\API\UserController;
+use App\Http\Controllers\Auth\AuthenticatedSessionController;
 use Illuminate\Support\Facades\Route;
+
+
 
 Route::group([
     'middleware' => 'auth:sanctum',
@@ -15,3 +18,5 @@ Route::group([
     Route::apiResource('/rooms', RoomController::class);
     Route::apiResource('/users', UserController::class);
 });
+
+Route::post('/login', [AuthenticatedSessionController::class, 'login']);

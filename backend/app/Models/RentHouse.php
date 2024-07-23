@@ -2,10 +2,10 @@
 
 namespace App\Models;
 
-use App\Traits\HasOwner;
 use App\Traits\ModelHelpers;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class RentHouse extends Model
 {
@@ -22,7 +22,7 @@ class RentHouse extends Model
         'owner_id',
     ];
 
-    public function owner()
+    public function owner() : BelongsTo
     {
         return $this->belongsTo(User::class,'owner_id');
     }

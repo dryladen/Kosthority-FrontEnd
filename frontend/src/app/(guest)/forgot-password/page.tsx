@@ -5,7 +5,7 @@ import Link from 'next/link'
 import axios, { AxiosError } from 'axios'
 import { ErrorMessage, Field, Form, Formik, FormikHelpers } from 'formik'
 
-import { useAuth } from '@/hooks/auth'
+import { useAuth } from '@/hooks/auth1'
 import AuthCard from '@/components/AuthCard'
 import ApplicationLogo from '@/components/ApplicationLogo'
 import AuthSessionStatus from '@/components/AuthSessionStatus'

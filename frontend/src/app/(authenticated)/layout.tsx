@@ -1,12 +1,16 @@
 'use client'
 import { ReactNode } from 'react'
-import { useAuth } from '@/hooks/auth'
+import { useAuth } from '@/hooks/auth1'
 import Navigation from '@/components/Layouts/Navigation'
 import Sidebar from '@/components/SideBar'
 import NavHead from '@/components/NavHead'
 
-const AppLayout = ({ children }: { children: ReactNode }) => {
-  const { user } = useAuth({ middleware: 'auth' })
+const AppLayout = ({
+  children,
+}: {
+  children: ReactNode
+}) => {
+  // const { user } = useAuth({ middleware: 'auth' })
 
   return (
     <div className="min-h-screen bg-white">

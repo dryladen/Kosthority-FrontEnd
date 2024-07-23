@@ -21,7 +21,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu'
-import { useAuth } from '@/hooks/auth'
+import { useAuth } from '@/hooks/auth1'
 import { ModeToggle } from './ModeToggle'
 
 const NavHead = () => {

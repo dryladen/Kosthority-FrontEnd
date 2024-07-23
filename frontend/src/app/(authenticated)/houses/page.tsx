@@ -1,4 +1,4 @@
-"use client"
+'use client'
 import {
   DropdownMenu,
   DropdownMenuCheckboxItem,
@@ -23,12 +23,11 @@ import { DataTable } from './data-table'
 import axios from '@/lib/axios'
 import { useData } from '@/hooks/dataKost'
 import useSWR from 'swr'
+import { useEffect } from 'react'
 
-async function getData(): Promise<Houses[]> {
+async function getData(): Promise<any> {
   // Fetch data from your API here.
-  const {
-    data: renthouses,
-  } = useSWR('/api/renthouses', () =>
+  const { data: renthouses } = useSWR('/api/renthouses', () =>
     axios
       .get('/api/renthouses')
       .then(res => res.data.data)
@@ -36,18 +35,19 @@ async function getData(): Promise<Houses[]> {
         if (error.response.status !== 409) throw error
       }),
   )
-  const housesData: Houses[] = renthouses?.map((item: Houses) => ({
-    id: item.id,
-    name: item.name,
-    address: item.address,
-    image: item.image,
-    price: item.price,
-  })) || [];
+  const housesData: Houses[] =
+    renthouses?.map((item: Houses) => ({
+      id: item.id,
+      name: item.name,
+      address: item.address,
+      image: item.image,
+      price: item.price,
+    })) || []
   return housesData
 }
 
 const HousesPage = async () => {
-  const dataTable = await getData()
+  const dataTable = getData()
   return (
     <>
       <Tabs defaultValue="all">

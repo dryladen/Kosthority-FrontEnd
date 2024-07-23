@@ -2,7 +2,7 @@
 import Link from 'next/link'
 import React, { useState } from 'react'
 
-import { useAuth } from '@/hooks/auth'
+import { useAuth } from '@/hooks/auth1'
 import AuthCard from '@/components/AuthCard'
 import ApplicationLogo from '@/components/ApplicationLogo'
 

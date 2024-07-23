@@ -1,50 +1,56 @@
 'use client'
 import Link from 'next/link'
 import * as Yup from 'yup'
+import { useSearchParams } from 'next/navigation'
 import axios, { AxiosError } from 'axios'
 import { ErrorMessage, Field, Form, Formik, FormikHelpers } from 'formik'
-
 import { useAuth } from '@/hooks/auth1'
 import ApplicationLogo from '@/components/ApplicationLogo'
 import AuthCard from '@/components/AuthCard'
+import { useEffect, useState } from 'react'
+import AuthSessionStatus from '@/components/AuthSessionStatus'
 
 interface Values {
-  name: string
   email: string
   password: string
-  password_confirmation: string
+  remember: boolean
 }
 
-const RegisterPage = () => {
-  const { register } = useAuth({
+const LoginPage = () => {
+  const searchParams = useSearchParams()
+  const [status, setStatus] = useState<string>('')
+
+  const { login } = useAuth({
     middleware: 'guest',
     redirectIfAuthenticated: '/dashboard',
   })
+
+  useEffect(() => {
+    const resetToken = searchParams.get('reset')
+    setStatus(resetToken ? atob(resetToken) : '')
+  }, [searchParams])
 
   const submitForm = async (
     values: Values,
     { setSubmitting, setErrors }: FormikHelpers<Values>,
   ): Promise<any> => {
     try {
-      await register(values)
+      await login(values)
     } catch (error: Error | AxiosError | any) {
       if (axios.isAxiosError(error) && error.response?.status === 422) {
         setErrors(error.response?.data?.errors)
       }
     } finally {
       setSubmitting(false)
+      setStatus('')
     }
   }
 
-  const RegisterSchema = Yup.object().shape({
-    name: Yup.string().required('The name field is required.'),
+  const LoginSchema = Yup.object().shape({
     email: Yup.string()
       .email('Invalid email')
       .required('The email field is required.'),
     password: Yup.string().required('The password field is required.'),
-    password_confirmation: Yup.string()
-      .required('Please confirm password.')
-      .oneOf([Yup.ref('password')], 'Your passwords do not match.'),
   })
 
   return (
@@ -54,18 +60,14 @@ const RegisterPage = () => {
           <ApplicationLogo className="w-20 h-20 fill-current text-gray-500" />
         </Link>
       }>
+      <AuthSessionStatus className="mb-4" status={status} />
       <Formik
         onSubmit={submitForm}
-        validationSchema={RegisterSchema}
-        initialValues={{
-          name: '',
-          email: '',
-          password: '',
-          password_confirmation: '',
-        }}>
+        validationSchema={LoginSchema}
+        initialValues={{ email: '', password: '', remember: false }}>
         <Form className="space-y-4">
           <h1 className="text-3xl text-center font-bold text-gray-900">
-            Second to register!
+            Welcome back!
           </h1>
           <div>
             <button
@@ -91,7 +93,7 @@ const RegisterPage = () => {
                   fill="#1565c0"
                   d="M43.611,20.083L43.595,20L42,20H24v8h11.303c-0.792,2.237-2.231,4.166-4.087,5.571	c0.001-0.001,0.002-0.001,0.003-0.002l6.19,5.238C36.971,39.205,44,34,44,24C44,22.659,43.862,21.35,43.611,20.083z"></path>
               </svg>
-              <span className="ml-6 lg:ml-16">Continue with Google</span>
+              <span className='ml-6 lg:ml-16'>Continue with Google</span>
             </button>
             {/* or */}
             <div className="flex items-center mt-4">
@@ -100,37 +102,16 @@ const RegisterPage = () => {
               <div className="flex-1 border-t border-gray-300" />
             </div>
             <label
-              htmlFor="name"
-              className="undefined block font-medium text-sm text-gray-700">
-              Name
-            </label>
-            <Field
-              id="name"
-              name="name"
-              placeholder="John Doe"
-              className="block p-2 text-sm mt-1 w-full rounded-md shadow-sm border-gray-300 focus:border-slate-200 outline-none focus:ring-2 focus:ring-slate-200 "
-            />
-
-            <ErrorMessage
-              name="name"
-              component="span"
-              className="text-xs text-red-500"
-            />
-          </div>
-
-          <div>
-            <label
               htmlFor="email"
-              className="undefined block font-medium text-sm text-gray-700">
+              className="undefined block font-semibold mt-4 text-sm text-gray-700">
               Email
             </label>
-
             <Field
               id="email"
               name="email"
               type="email"
-              placeholder="example@site.com"
-              className="block p-2 text-sm mt-1 w-full rounded-md shadow-sm border-gray-300 focus:border-slate-200 outline-none focus:ring-2 focus:ring-slate-200 "
+              placeholder="Enter your email address"
+              className="block p-2 mt-1 w-full text-sm rounded-md shadow-sm border-gray-300 focus:border-slate-200 outline-none focus:ring-2 focus:ring-slate-200 "
             />
 
             <ErrorMessage
@@ -154,7 +135,6 @@ const RegisterPage = () => {
               placeholder="Enter your password"
               className="block p-2 text-sm mt-1 w-full rounded-md shadow-sm border-gray-300 focus:border-slate-200 outline-none focus:ring-2 focus:ring-slate-200 "
             />
-
             <ErrorMessage
               name="password"
               component="span"
@@ -162,39 +142,29 @@ const RegisterPage = () => {
             />
           </div>
 
-          <div className="">
-            <label
-              htmlFor="password"
-              className="undefined block font-medium text-sm text-gray-700">
-              Confirm Password
+          <div className="flex items-center justify-between">
+            <label htmlFor="remember" className="inline-flex items-center">
+              <Field
+                type="checkbox"
+                name="remember"
+                className="rounded border-[#99A6AE] text-indigo-600 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+              />
+              <span className="ml-2 text-[#252729] text-sm leading-[150%] tracking-[-0.4px] font-medium">
+                Remember me
+              </span>
             </label>
-
-            <Field
-              id="password_confirmation"
-              name="password_confirmation"
-              type="password"
-              placeholder="Confirm your password"
-              className="block p-2 text-sm mt-1 w-full rounded-md shadow-sm border-gray-300 focus:border-slate-200 outline-none focus:ring-2 focus:ring-slate-200 "
-            />
-
-            <ErrorMessage
-              name="password_confirmation"
-              component="span"
-              className="text-xs text-red-500"
-            />
           </div>
 
-          <div className="flex items-center justify-end mt-4">
+          <div className="flex items-center space-x-4 justify-end mt-4">
             <Link
-              href="/login"
+              href="/register"
               className="underline text-sm text-gray-600 hover:text-gray-900">
-              Already registered?
+              Dont have any account?
             </Link>
-
             <button
               type="submit"
-              className="ml-4 inline-flex items-center px-4 py-2 bg-gray-800 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-gray-700 active:bg-gray-900 focus:outline-none focus:border-gray-900 focus:ring ring-gray-300 disabled:opacity-25 transition ease-in-out duration-150">
-              Register
+              className="ml-3 inline-flex items-center px-4 py-2 bg-gray-800 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-gray-700 active:bg-gray-900 focus:outline-none focus:border-gray-900 focus:ring ring-gray-300 disabled:opacity-25 transition ease-in-out duration-150">
+              Login
             </button>
           </div>
         </Form>
@@ -203,4 +173,4 @@ const RegisterPage = () => {
   )
 }
 
-export default RegisterPage
+export default LoginPage
