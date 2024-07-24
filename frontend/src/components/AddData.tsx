@@ -18,6 +18,8 @@ import { useSearchParams } from 'next/navigation'
 import { useEffect, useState } from 'react'
 import axios, { AxiosError } from 'axios'
 import Axios from '@/lib/axios'
+import { useToast } from './ui/use-toast'
+import { mutate } from 'swr'
 
 interface Values {
   name: string
@@ -32,7 +34,7 @@ const AddData = () => {
   const [status, setStatus] = useState<string>('')
   const [isLoading, setIsLoading] = useState<boolean>(false)
   const [open, setOpen] = useState(false)
-
+  const { toast } = useToast()
   useEffect(() => {
     const resetToken = searchParams.get('reset')
     setStatus(resetToken ? atob(resetToken) : '')
@@ -44,7 +46,13 @@ const AddData = () => {
   ): Promise<any> => {
     try {
       await Axios.post('/api/renthouses', values)
-      
+        .then(() => {
+          mutate('/api/renthouses')
+          toast({ title: 'Success', description: 'Data has been added' })
+        })
+        .catch(error => {
+          console.error(error)
+        })
     } catch (error: Error | AxiosError | any) {
       if (axios.isAxiosError(error) && error.response?.status === 422) {
         setErrors(error.response?.data?.errors)
@@ -82,9 +90,7 @@ const AddData = () => {
           </DialogDescription>
         </DialogHeader>
         <Formik
-          onSubmit={
-            submitForm
-          }
+          onSubmit={submitForm}
           validationSchema={LoginSchema}
           initialValues={{
             name: '',
@@ -200,9 +206,9 @@ const AddData = () => {
               placeholder="Enter your price rental house"
               className="hidden p-2 mt-1 w-full text-sm rounded-md shadow-sm border-gray-300 focus:border-slate-200 outline-none focus:ring-2 focus:ring-slate-200 "
             />
-          <DialogFooter>
-            <Button type="submit">Add Data</Button>
-          </DialogFooter>
+            <DialogFooter>
+              <Button type="submit">Add Data</Button>
+            </DialogFooter>
           </Form>
         </Formik>
       </DialogContent>

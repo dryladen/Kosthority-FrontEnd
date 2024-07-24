@@ -11,6 +11,7 @@ import {
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu'
 import { MoreHorizontal } from 'lucide-react'
+import { DeleteAlert } from '@/components/DeleteAlert'
 // This type is used to define the shape of our data.
 // You can use a Zod schema here if you want.
 export type Houses = {
@@ -23,10 +24,6 @@ export type Houses = {
 }
 
 export const columns: ColumnDef<Houses>[] = [
-  {
-    accessorKey: 'id',
-    header: 'ID',
-  },
   {
     accessorKey: 'name',
     header: 'Name',
@@ -58,9 +55,8 @@ export const columns: ColumnDef<Houses>[] = [
     id: 'actions',
     cell: ({ row }) => {
       const renthouse = row.original
-
       return (
-        <DropdownMenu>
+        <DropdownMenu modal={false}>
           <DropdownMenuTrigger asChild>
             <Button variant="ghost" className="h-8 w-8 p-0">
               <span className="sr-only">Open menu</span>
@@ -69,13 +65,14 @@ export const columns: ColumnDef<Houses>[] = [
           </DropdownMenuTrigger>
           <DropdownMenuContent align="end">
             <DropdownMenuLabel>Actions</DropdownMenuLabel>
-            <DropdownMenuItem
+            {/* <DropdownMenuItem
               onClick={() => navigator.clipboard.writeText(renthouse.id)}>
               Copy renthouse ID
             </DropdownMenuItem>
-            <DropdownMenuSeparator />
-            <DropdownMenuItem>View tenants</DropdownMenuItem>
-            <DropdownMenuItem>View renthouse details</DropdownMenuItem>
+            <DropdownMenuSeparator /> */}
+            <DropdownMenuItem>Details</DropdownMenuItem>
+            <DropdownMenuItem>Edit</DropdownMenuItem>
+            <DropdownMenuItem onSelect={(e) => e.preventDefault()}><DeleteAlert id={`${renthouse.id}`} /></DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>
       )

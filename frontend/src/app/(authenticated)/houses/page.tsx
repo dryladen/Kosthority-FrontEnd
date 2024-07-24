@@ -21,18 +21,22 @@ import { File, ListFilter, PlusCircle } from 'lucide-react'
 import { columns, Houses } from './columns'
 import { DataTable } from './data-table'
 import axios from '@/lib/axios'
-import { useData } from '@/hooks/dataKost'
 import useSWR from 'swr'
-import  AddData  from '@/components/AddData'
+import AddData from '@/components/AddData'
 
 function getData(): Houses[] {
-  const { data: renthouses } = useSWR('/api/renthouses', () =>
-    axios
-      .get('/api/renthouses')
-      .then(res => res.data.data)
-      .catch(error => {
-        if (error.response.status !== 409) throw error
-      }),
+  const { data: renthouses } = useSWR(
+    '/api/renthouses',
+    () =>
+      axios
+        .get('/api/renthouses')
+        .then(res => res.data.data)
+        .catch(error => {
+          if (error.response.status !== 409) throw error
+        }),
+    {
+
+    },
   )
   const housesData: Houses[] =
     renthouses?.map((item: Houses) => ({
@@ -46,7 +50,7 @@ function getData(): Houses[] {
   return housesData
 }
 
-const HousesPage =  () => {
+const HousesPage = () => {
   const dataTable = getData()
   return (
     <>
@@ -63,7 +67,10 @@ const HousesPage =  () => {
           <div className="ml-auto flex items-center gap-2">
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
-                <Button variant="outline" size="sm" className="h-8 gap-1 text-foreground">
+                <Button
+                  variant="outline"
+                  size="sm"
+                  className="h-8 gap-1 text-foreground">
                   <ListFilter className="h-3.5 w-3.5" />
                   <span className="sr-only sm:not-sr-only sm:whitespace-nowrap">
                     Filter
@@ -80,7 +87,10 @@ const HousesPage =  () => {
                 <DropdownMenuCheckboxItem>Archived</DropdownMenuCheckboxItem>
               </DropdownMenuContent>
             </DropdownMenu>
-            <Button size="sm" variant="outline" className="h-8 gap-1 text-foreground">
+            <Button
+              size="sm"
+              variant="outline"
+              className="h-8 gap-1 text-foreground">
               <File className="h-3.5 w-3.5" />
               <span className="sr-only sm:not-sr-only sm:whitespace-nowrap">
                 Export
