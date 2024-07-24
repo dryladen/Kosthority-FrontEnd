@@ -23,6 +23,7 @@ import { DataTable } from './data-table'
 import axios from '@/lib/axios'
 import { useData } from '@/hooks/dataKost'
 import useSWR from 'swr'
+import  AddData  from '@/components/AddData'
 
 function getData(): Houses[] {
   const { data: renthouses } = useSWR('/api/renthouses', () =>
@@ -85,12 +86,7 @@ const HousesPage =  () => {
                 Export
               </span>
             </Button>
-            <Button size="sm" className="h-8 gap-1 ">
-              <PlusCircle className="h-3.5 w-3.5" />
-              <span className="sr-only sm:not-sr-only sm:whitespace-nowrap">
-                Add House
-              </span>
-            </Button>
+            <AddData />
           </div>
         </div>
         <TabsContent value="all">
