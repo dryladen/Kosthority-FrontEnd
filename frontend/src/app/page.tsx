@@ -2,7 +2,7 @@
 
 import Head from 'next/head'
 import Link from 'next/link'
-import { useAuth } from '@/hooks/auth1'
+import { useAuth } from '@/hooks/auth'
 import { Button } from '@/components/ui/button'
 
 export default function Home() {

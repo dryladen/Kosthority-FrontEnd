@@ -10,7 +10,6 @@ use Illuminate\Auth\Events\Validated;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
-
 class RentHouseController extends Controller
 {
     /**
@@ -18,7 +17,7 @@ class RentHouseController extends Controller
      */
     public function index(Request $request)
     {
-        return new RentHouseCollection(RentHouse::where('owner_id',Auth::user()->id)->paginate($request->get('paginate') ?: 10));
+        return new RentHouseCollection(Auth::user()->rentHouse()->paginate($request->get('paginate') ?: 10));
     }
 
     /**

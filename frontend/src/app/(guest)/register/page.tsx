@@ -4,7 +4,7 @@ import * as Yup from 'yup'
 import axios, { AxiosError } from 'axios'
 import { ErrorMessage, Field, Form, Formik, FormikHelpers } from 'formik'
 
-import { useAuth } from '@/hooks/auth1'
+import { useAuth } from '@/hooks/auth'
 import ApplicationLogo from '@/components/ApplicationLogo'
 import AuthCard from '@/components/AuthCard'
 

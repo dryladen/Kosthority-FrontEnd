@@ -23,10 +23,8 @@ import { DataTable } from './data-table'
 import axios from '@/lib/axios'
 import { useData } from '@/hooks/dataKost'
 import useSWR from 'swr'
-import { useEffect } from 'react'
 
-async function getData(): Promise<any> {
-  // Fetch data from your API here.
+function getData(): Houses[] {
   const { data: renthouses } = useSWR('/api/renthouses', () =>
     axios
       .get('/api/renthouses')
@@ -42,11 +40,12 @@ async function getData(): Promise<any> {
       address: item.address,
       image: item.image,
       price: item.price,
+      created_at: item.created_at,
     })) || []
   return housesData
 }
 
-const HousesPage = async () => {
+const HousesPage =  () => {
   const dataTable = getData()
   return (
     <>
@@ -63,7 +62,7 @@ const HousesPage = async () => {
           <div className="ml-auto flex items-center gap-2">
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
-                <Button variant="outline" size="sm" className="h-8 gap-1">
+                <Button variant="outline" size="sm" className="h-8 gap-1 text-foreground">
                   <ListFilter className="h-3.5 w-3.5" />
                   <span className="sr-only sm:not-sr-only sm:whitespace-nowrap">
                     Filter
@@ -80,13 +79,13 @@ const HousesPage = async () => {
                 <DropdownMenuCheckboxItem>Archived</DropdownMenuCheckboxItem>
               </DropdownMenuContent>
             </DropdownMenu>
-            <Button size="sm" variant="outline" className="h-8 gap-1">
+            <Button size="sm" variant="outline" className="h-8 gap-1 text-foreground">
               <File className="h-3.5 w-3.5" />
               <span className="sr-only sm:not-sr-only sm:whitespace-nowrap">
                 Export
               </span>
             </Button>
-            <Button size="sm" className="h-8 gap-1">
+            <Button size="sm" className="h-8 gap-1 ">
               <PlusCircle className="h-3.5 w-3.5" />
               <span className="sr-only sm:not-sr-only sm:whitespace-nowrap">
                 Add House

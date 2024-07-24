@@ -1,7 +1,6 @@
 import { Sheet, SheetContent, SheetTrigger } from './ui/sheet'
 import { Button } from './ui/button'
 import {
-  Badge,
   Bell,
   CircleUser,
   Home,
@@ -21,7 +20,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu'
-import { useAuth } from '@/hooks/auth1'
+import { useAuth } from '@/hooks/auth'
 import { ModeToggle } from './ModeToggle'
 
 const NavHead = () => {
@@ -93,7 +92,7 @@ const NavHead = () => {
         <DropdownMenuTrigger asChild>
           <Button
             variant="outline"
-            className="rounded-full border-0 text-muted-foreground gap-2 focus-visible:ring-0 focus-visible:ring-offset-0">
+            className="text-md rounded-full border-0 text-muted-foreground gap-2 focus-visible:ring-0 focus-visible:ring-offset-0">
             <span>{user?.name}</span>
             <CircleUser className="h-5 w-5 " />
             <span className="sr-only">Toggle user menu</span>

@@ -12,11 +12,10 @@ use Illuminate\Support\Facades\Route;
 Route::group([
     'middleware' => 'auth:sanctum',
 ], function () {
-    Route::get('/user', [UserController::class, 'userLogin']);
     Route::apiResource('/renthouses', RentHouseController::class);
     Route::apiResource('/tenants', TenantController::class);
     Route::apiResource('/rooms', RoomController::class);
     Route::apiResource('/users', UserController::class);
+    Route::get('/user', [UserController::class, 'userLogin']);
 });
-
 Route::post('/login', [AuthenticatedSessionController::class, 'login']);

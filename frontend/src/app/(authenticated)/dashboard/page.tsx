@@ -3,7 +3,7 @@ import CardList from '@/components/CardList'
 import NavHead from '@/components/NavHead'
 import React from 'react'
 import { Bed, DollarSign, HomeIcon, Users } from 'lucide-react'
-import { useAuth } from '@/hooks/auth1'
+import { useAuth } from '@/hooks/auth'
 import Transactions from '@/components/Transaction'
 import Sidebar from '@/components/SideBar'
 
