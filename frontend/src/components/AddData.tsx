@@ -17,6 +17,7 @@ import { ErrorMessage, Field, Form, Formik, FormikHelpers } from 'formik'
 import { useSearchParams } from 'next/navigation'
 import { useEffect, useState } from 'react'
 import axios, { AxiosError } from 'axios'
+import Axios from '@/lib/axios'
 
 interface Values {
   name: string
@@ -30,6 +31,7 @@ const AddData = () => {
   const searchParams = useSearchParams()
   const [status, setStatus] = useState<string>('')
   const [isLoading, setIsLoading] = useState<boolean>(false)
+  const [open, setOpen] = useState(false)
 
   useEffect(() => {
     const resetToken = searchParams.get('reset')
@@ -41,6 +43,7 @@ const AddData = () => {
     { setSubmitting, setErrors }: FormikHelpers<Values>,
   ): Promise<any> => {
     try {
+      await Axios.post('/api/renthouses', values)
       
     } catch (error: Error | AxiosError | any) {
       if (axios.isAxiosError(error) && error.response?.status === 422) {
@@ -49,6 +52,7 @@ const AddData = () => {
     } finally {
       setSubmitting(false)
       setStatus('')
+      setOpen(false)
       setIsLoading(false)
     }
   }
@@ -61,7 +65,7 @@ const AddData = () => {
     price: Yup.number().required('The price field is required.'),
   })
   return (
-    <Dialog>
+    <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
         <Button size="sm" className="h-8 gap-1 ">
           <PlusCircle className="h-3.5 w-3.5" />
@@ -78,7 +82,9 @@ const AddData = () => {
           </DialogDescription>
         </DialogHeader>
         <Formik
-          onSubmit={submitForm}
+          onSubmit={
+            submitForm
+          }
           validationSchema={LoginSchema}
           initialValues={{
             name: '',
