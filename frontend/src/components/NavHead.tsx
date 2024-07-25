@@ -1,4 +1,11 @@
-import { Sheet, SheetContent, SheetTrigger } from './ui/sheet'
+import {
+  Sheet,
+  SheetContent,
+  SheetDescription,
+  SheetHeader,
+  SheetTitle,
+  SheetTrigger,
+} from './ui/sheet'
 import { Button } from './ui/button'
 import {
   Bell,
@@ -31,7 +38,10 @@ const NavHead = () => {
   return (
     <>
       <header className="flex h-14 items-center bg-background justify-between gap-4 border-b px-4 lg:h-[60px] lg:px-6">
-        <span className='text-muted-foreground font-semibold'> {`${pathname}`}</span>
+        <span className="hidden md:block text-muted-foreground font-semibold">
+          {' '}
+          {`${pathname}`}
+        </span>
         <Sheet>
           <SheetTrigger asChild>
             <Button
@@ -43,22 +53,29 @@ const NavHead = () => {
             </Button>
           </SheetTrigger>
           <SheetContent side="left" className="flex flex-col">
-            <nav className="grid gap-2 text-lg font-medium">
-              <div className="flex h-14 items-center justify-between border-b gap-2 lg:h-[60px] lg:px-6">
-                <Link
-                  href="/"
-                  className="dark:text-white flex items-center gap-2 font-semibold">
-                  <Package2 className="h-6 w-6" />
-                  <span>Kosthority</span>
-                </Link>
-                <div className="flex justify-end gap-2">
-                  <Button variant="secondary" size="icon" className="h-8 w-8">
-                    <Bell className="h-4 w-4" />
-                    <span className="sr-only">Toggle notifications</span>
-                  </Button>
-                  <ModeToggle />
+            <SheetHeader className="none">
+              <SheetTitle>
+                <div className="flex h-14 items-center justify-between border-b gap-2 lg:h-[60px] lg:px-6">
+                  <Link
+                    href="/"
+                    className="dark:text-white flex items-center gap-2 font-semibold">
+                    <Package2 className="h-6 w-6" />
+                    <span>Kosthority</span>
+                  </Link>
+                  <div className="flex justify-end gap-2">
+                    <Button variant="secondary" size="icon" className="h-8 w-8">
+                      <Bell className="h-4 w-4" />
+                      <span className="sr-only">Toggle notifications</span>
+                    </Button>
+                    <ModeToggle />
+                  </div>
                 </div>
-              </div>
+              </SheetTitle>
+              <SheetDescription className="none">
+                A simple way to manage your rental houses
+              </SheetDescription>
+            </SheetHeader>
+            <nav className="grid gap-2 text-lg font-medium">
               <Link
                 href="#"
                 className="mx-[-0.65rem] flex items-center gap-4 rounded-xl px-3 py-2 text-muted-foreground hover:text-foreground">

@@ -13,8 +13,7 @@ export default function Home() {
       <Head>
         <title>Kosthority</title>
       </Head>
-
-      <div className="sm:block bg-white">
+      <div className="sm:block ">
         {/* navbar */}
         <nav className="">
           <div className="max-w-7xl mx-auto p-4 sm:px-6 lg:px-8">

@@ -17,7 +17,7 @@ class RentHouseController extends Controller
      */
     public function index(Request $request)
     {
-        return new RentHouseCollection(Auth::user()->rentHouse()->latest()->paginate($request->get('paginate') ?: 10));
+        return new RentHouseCollection(Auth::user()->rentHouse()->latest()->get());
     }
 
     /**

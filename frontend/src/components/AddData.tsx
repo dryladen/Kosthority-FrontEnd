@@ -36,7 +36,10 @@ const AddData = () => {
   const [status, setStatus] = useState<string>('')
   const [isLoading, setIsLoading] = useState<boolean>(false)
   const [open, setOpen] = useState(false)
-  const { user } = useAuth({middleware: 'auth', redirectIfAuthenticated: '/dashboard'})
+  const { user } = useAuth({
+    middleware: 'auth',
+    redirectIfAuthenticated: '/dashboard',
+  })
   const { toast } = useToast()
   useEffect(() => {
     const resetToken = searchParams.get('reset')
@@ -78,8 +81,8 @@ const AddData = () => {
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
-        <Button size="sm" className="h-8 gap-1 ">
-          <PlusCircle className="h-3.5 w-3.5" />
+        <Button className="gap-2">
+          <PlusCircle className="h-4 w-4" />
           <span className="sr-only sm:not-sr-only sm:whitespace-nowrap">
             Add House
           </span>

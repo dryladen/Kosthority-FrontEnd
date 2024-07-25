@@ -10,11 +10,18 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu'
-import { MoreHorizontal, Pencil, Receipt, ReceiptText } from 'lucide-react'
+import {
+  MoreHorizontal,
+  ArrowUpDown,
+  Pencil,
+  Receipt,
+  ReceiptText,
+} from 'lucide-react'
 import { DeleteAlert } from '@/components/DeleteAlert'
 import { EditData } from '@/components/EditData'
 import AddData from '@/components/AddData'
 import { DataTableRowAction } from './data-table-row-action'
+import { DataTableColumnHeader } from './data-table-column-header'
 // This type is used to define the shape of our data.
 // You can use a Zod schema here if you want.
 export type Houses = {
@@ -30,19 +37,27 @@ export type Houses = {
 export const columns: ColumnDef<Houses>[] = [
   {
     accessorKey: 'name',
-    header: 'Name',
+    header: ({ column }) => (
+      <DataTableColumnHeader column={column} title={'Name'} />
+    ),
   },
   {
     accessorKey: 'address',
-    header: 'Address',
+    header: ({ column }) => (
+      <DataTableColumnHeader column={column} title={'Address'} />
+    ),
   },
   {
     accessorKey: 'price',
-    header: 'Price',
+    header: ({ column }) => (
+      <DataTableColumnHeader column={column} title={'Price'} />
+    ),
   },
   {
     accessorKey: 'created_at',
-    header: 'Created At',
+    header: ({ column }) => (
+      <DataTableColumnHeader column={column} title={'Created At'} />
+    ),
     cell: ({ row }) => {
       return new Date(row.getValue('created_at')).toLocaleDateString(
         undefined,
@@ -57,6 +72,6 @@ export const columns: ColumnDef<Houses>[] = [
   },
   {
     id: 'actions',
-    cell: ({ row }) => <DataTableRowAction row={row} />
+    cell: ({ row }) => <DataTableRowAction row={row} />,
   },
 ]
