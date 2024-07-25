@@ -39,7 +39,7 @@ export function DeleteAlert({ id }: { id: string }) {
   }
   return (
     <AlertDialog open={open} onOpenChange={setOpen}>
-      <AlertDialogTrigger className="flex justify-center items-center">
+      <AlertDialogTrigger className="flex w-full items-center">
         <Trash2 className="mr-2 h-4 w-4" />
         <span>Delete</span>
       </AlertDialogTrigger>

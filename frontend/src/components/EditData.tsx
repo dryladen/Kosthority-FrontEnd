@@ -1,4 +1,4 @@
-import { Copy, PlusCircle } from 'lucide-react'
+import { Copy, Pencil, PlusCircle } from 'lucide-react'
 
 import { Button } from '@/components/ui/button'
 import {
@@ -21,6 +21,7 @@ import Axios from '@/lib/axios'
 import { useToast } from './ui/use-toast'
 import { mutate } from 'swr'
 import { useAuth } from '@/hooks/auth'
+import { Houses } from '@/app/(authenticated)/houses/columns'
 
 interface Values {
   name: string
@@ -31,12 +32,15 @@ interface Values {
   owner_id: number
 }
 
-const AddData = () => {
+export function EditData ({ data }: { data: Houses }) {
   const searchParams = useSearchParams()
   const [status, setStatus] = useState<string>('')
   const [isLoading, setIsLoading] = useState<boolean>(false)
   const [open, setOpen] = useState(false)
-  const { user } = useAuth({middleware: 'auth', redirectIfAuthenticated: '/dashboard'})
+  const { user } = useAuth({
+    middleware: 'auth',
+    redirectIfAuthenticated: '/dashboard',
+  })
   const { toast } = useToast()
   useEffect(() => {
     const resetToken = searchParams.get('reset')
@@ -48,10 +52,10 @@ const AddData = () => {
     { setSubmitting, setErrors }: FormikHelpers<Values>,
   ): Promise<any> => {
     try {
-      await Axios.post('/api/renthouses', values)
+      await Axios.put(`/api/renthouses/${data.id}`, values)
         .then(() => {
           mutate('/api/renthouses')
-          toast({ title: 'Success', description: 'Data has been added' })
+          toast({ title: 'Success', description: 'Data has been updated' })
         })
         .catch(error => {
           console.error(error)
@@ -68,7 +72,7 @@ const AddData = () => {
     }
   }
 
-  const LoginSchema = Yup.object().shape({
+  const validated = Yup.object().shape({
     name: Yup.string().required('The name field is required.'),
     address: Yup.string().required('The address field is required.'),
     description: Yup.string().required('The description field is required.'),
@@ -77,30 +81,25 @@ const AddData = () => {
   })
   return (
     <Dialog open={open} onOpenChange={setOpen}>
-      <DialogTrigger asChild>
-        <Button size="sm" className="h-8 gap-1 ">
-          <PlusCircle className="h-3.5 w-3.5" />
-          <span className="sr-only sm:not-sr-only sm:whitespace-nowrap">
-            Add House
-          </span>
-        </Button>
+      <DialogTrigger className="flex items-center w-full">
+        <Pencil className="h-4 w-4 mr-2" /> <span>Edit</span>
       </DialogTrigger>
       <DialogContent className="sm:max-w-[425px]">
         <DialogHeader>
-          <DialogTitle>Add Rental House</DialogTitle>
+          <DialogTitle>Edit Rental House</DialogTitle>
           <DialogDescription>
             Add a new rental house to the list
           </DialogDescription>
         </DialogHeader>
         <Formik
           onSubmit={submitForm}
-          validationSchema={LoginSchema}
+          validationSchema={validated}
           initialValues={{
-            name: '',
-            address: '',
-            description: '',
-            image: '',
-            price: 0,
+            name: data.name,
+            price: data.price,
+            address: data.address,
+            description: data.description,
+            image: data.image,
             owner_id: user?.id || 0,
           }}>
           <Form className="space-y-4">
@@ -202,7 +201,7 @@ const AddData = () => {
               />
             </div>
             <DialogFooter>
-              <Button type="submit">Add Data</Button>
+              <Button type="submit">Edit Data</Button>
             </DialogFooter>
           </Form>
         </Formik>
@@ -210,5 +209,3 @@ const AddData = () => {
     </Dialog>
   )
 }
-
-export default AddData

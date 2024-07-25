@@ -21,6 +21,7 @@ class RentHouseResource extends JsonResource
             'name' => $this->name,
             'price' => $this->price,
             'address' => $this->address,
+            'image' => $this->image,
             'description' => $this->description,
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at,

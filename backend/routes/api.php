@@ -4,9 +4,7 @@ use App\Http\Controllers\API\RentHouseController;
 use App\Http\Controllers\API\RoomController;
 use App\Http\Controllers\API\TenantController;
 use App\Http\Controllers\API\UserController;
-use App\Http\Controllers\Auth\AuthenticatedSessionController;
 use Illuminate\Support\Facades\Route;
-
 
 
 Route::group([
@@ -18,4 +16,3 @@ Route::group([
     Route::apiResource('/users', UserController::class);
     Route::get('/user', [UserController::class, 'userLogin']);
 });
-Route::post('/login', [AuthenticatedSessionController::class, 'login']);

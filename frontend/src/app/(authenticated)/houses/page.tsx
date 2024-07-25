@@ -25,18 +25,13 @@ import useSWR from 'swr'
 import AddData from '@/components/AddData'
 
 function getData(): Houses[] {
-  const { data: renthouses } = useSWR(
-    '/api/renthouses',
-    () =>
-      axios
-        .get('/api/renthouses')
-        .then(res => res.data.data)
-        .catch(error => {
-          if (error.response.status !== 409) throw error
-        }),
-    {
-
-    },
+  const { data: renthouses } = useSWR('/api/renthouses', () =>
+    axios
+      .get('/api/renthouses')
+      .then(res => res.data.data)
+      .catch(error => {
+        if (error.response.status !== 409) throw error
+      }),
   )
   const housesData: Houses[] =
     renthouses?.map((item: Houses) => ({
@@ -45,6 +40,7 @@ function getData(): Houses[] {
       address: item.address,
       image: item.image,
       price: item.price,
+      description: item.description,
       created_at: item.created_at,
     })) || []
   return housesData
