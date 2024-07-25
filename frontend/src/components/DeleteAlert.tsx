@@ -16,9 +16,16 @@ import { useState } from 'react'
 import { mutate } from 'swr'
 import { useToast } from './ui/use-toast'
 
-export function DeleteAlert({ id }: { id: string }) {
+export function DeleteAlert({
+  id,
+  isOpen,
+  setIsOpen,
+}: {
+  id: string
+  isOpen: boolean
+  setIsOpen: React.Dispatch<React.SetStateAction<boolean>>
+}) {
   const [remove, setRemove] = useState(false)
-  const [open, setOpen] = useState(false)
   const { toast } = useToast()
   if (remove) {
     try {
@@ -27,22 +34,19 @@ export function DeleteAlert({ id }: { id: string }) {
           mutate('/api/renthouses')
           toast({ title: 'Success', description: 'Data has been deleted' })
         })
-        .catch((error) => {
+        .catch(error => {
           console.error(error)
         })
     } catch (error) {
       console.error(error)
     } finally {
       setRemove(false)
-      setOpen(false)
+      setIsOpen(false)
     }
   }
   return (
-    <AlertDialog open={open} onOpenChange={setOpen}>
-      <AlertDialogTrigger className="flex w-full items-center">
-        <Trash2 className="mr-2 h-4 w-4" />
-        <span>Delete</span>
-      </AlertDialogTrigger>
+    <AlertDialog open={isOpen} onOpenChange={setIsOpen}>
+      
       <AlertDialogContent>
         <AlertDialogHeader>
           <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>

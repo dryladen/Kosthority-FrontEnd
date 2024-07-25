@@ -13,6 +13,8 @@ import {
 import { MoreHorizontal, Pencil, Receipt, ReceiptText } from 'lucide-react'
 import { DeleteAlert } from '@/components/DeleteAlert'
 import { EditData } from '@/components/EditData'
+import AddData from '@/components/AddData'
+import { DataTableRowAction } from './data-table-row-action'
 // This type is used to define the shape of our data.
 // You can use a Zod schema here if you want.
 export type Houses = {
@@ -55,29 +57,6 @@ export const columns: ColumnDef<Houses>[] = [
   },
   {
     id: 'actions',
-    cell: ({ row }) => {
-      const renthouse = row.original
-      return (
-        <DropdownMenu>
-          <DropdownMenuTrigger asChild>
-            <Button variant="ghost" className="h-8 w-8 p-0">
-              <span className="sr-only">Open menu</span>
-              <MoreHorizontal className="h-4 w-4" />
-            </Button>
-          </DropdownMenuTrigger>
-          <DropdownMenuContent align="end">
-            <DropdownMenuLabel>Actions</DropdownMenuLabel>
-            {/* <DropdownMenuItem
-              onClick={() => navigator.clipboard.writeText(renthouse.id)}>
-              Copy renthouse ID
-            </DropdownMenuItem>
-            <DropdownMenuSeparator /> */}
-            <DropdownMenuItem><ReceiptText className='h-4 w-4 mr-2' /><span>Details</span></DropdownMenuItem>
-            <DropdownMenuItem onSelect={(e) => e.preventDefault()}><EditData data={renthouse} /></DropdownMenuItem>
-            <DropdownMenuItem onSelect={(e) => e.preventDefault()}><DeleteAlert id={`${renthouse.id}`} /></DropdownMenuItem>
-          </DropdownMenuContent>
-        </DropdownMenu>
-      )
-    },
+    cell: ({ row }) => <DataTableRowAction row={row} />
   },
 ]

@@ -15,7 +15,7 @@ import * as Yup from 'yup'
 
 import { ErrorMessage, Field, Form, Formik, FormikHelpers } from 'formik'
 import { useSearchParams } from 'next/navigation'
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import axios, { AxiosError } from 'axios'
 import Axios from '@/lib/axios'
 import { useToast } from './ui/use-toast'
@@ -32,15 +32,23 @@ interface Values {
   owner_id: number
 }
 
-export function EditData ({ data }: { data: Houses }) {
+export function EditData({
+  data,
+  isOpen,
+  setIsOpen,
+}: {
+  data: Houses
+  isOpen: boolean
+  setIsOpen: React.Dispatch<React.SetStateAction<boolean>>
+}) {
   const searchParams = useSearchParams()
   const [status, setStatus] = useState<string>('')
   const [isLoading, setIsLoading] = useState<boolean>(false)
-  const [open, setOpen] = useState(false)
   const { user } = useAuth({
     middleware: 'auth',
     redirectIfAuthenticated: '/dashboard',
   })
+  const triggerRef = useRef<HTMLDivElement>(null)
   const { toast } = useToast()
   useEffect(() => {
     const resetToken = searchParams.get('reset')
@@ -67,8 +75,8 @@ export function EditData ({ data }: { data: Houses }) {
     } finally {
       setSubmitting(false)
       setStatus('')
-      setOpen(false)
       setIsLoading(false)
+      setIsOpen(false)
     }
   }
 
@@ -80,10 +88,7 @@ export function EditData ({ data }: { data: Houses }) {
     price: Yup.number().required('The price field is required.'),
   })
   return (
-    <Dialog open={open} onOpenChange={setOpen}>
-      <DialogTrigger className="flex items-center w-full">
-        <Pencil className="h-4 w-4 mr-2" /> <span>Edit</span>
-      </DialogTrigger>
+    <Dialog open={isOpen} onOpenChange={setIsOpen}>
       <DialogContent className="sm:max-w-[425px]">
         <DialogHeader>
           <DialogTitle>Edit Rental House</DialogTitle>
