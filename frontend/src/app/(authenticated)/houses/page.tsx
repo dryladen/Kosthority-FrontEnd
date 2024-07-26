@@ -1,14 +1,5 @@
 'use client'
 import {
-  DropdownMenu,
-  DropdownMenuCheckboxItem,
-  DropdownMenuContent,
-  DropdownMenuLabel,
-  DropdownMenuSeparator,
-  DropdownMenuTrigger,
-} from '@/components/ui/dropdown-menu'
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
-import {
   Card,
   CardContent,
   CardDescription,
@@ -16,13 +7,10 @@ import {
   CardHeader,
   CardTitle,
 } from '@/components/ui/card'
-import { Button } from '@/components/ui/button'
-import { File, ListFilter, PlusCircle } from 'lucide-react'
 import { columns, Houses } from './columns'
 import { DataTable } from './data-table'
 import axios from '@/lib/axios'
 import useSWR from 'swr'
-import AddData from '@/components/AddData'
 
 function getData(): Houses[] {
   const { data: renthouses } = useSWR('/api/renthouses', () =>

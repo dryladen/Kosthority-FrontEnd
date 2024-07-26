@@ -15,9 +15,9 @@ class TenantController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index(Request $request)
+    public function index()
     {
-        return TenantCollection::make(Tenant::paginate($request->get('paginate') ?: 10));
+        return TenantCollection::make(Tenant::all());
     }
 
     /**

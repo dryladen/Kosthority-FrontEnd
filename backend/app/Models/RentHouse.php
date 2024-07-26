@@ -26,4 +26,8 @@ class RentHouse extends Model
     {
         return $this->belongsTo(User::class,'owner_id');
     }
+    public function rooms()
+    {
+        return $this->hasMany(Room::class);
+    }
 }
