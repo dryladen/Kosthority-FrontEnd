@@ -3,7 +3,13 @@
 namespace Database\Seeders;
 
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+
+use App\Models\RentHouse;
+use App\Models\Room;
+use App\Models\Tenant;
+use App\Models\User;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\DB;
 
 class DatabaseSeeder extends Seeder
 {
@@ -12,11 +18,24 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        $this->call([
-            UserSeeder::class,
-            RentHouseSeeder::class,
-            RoomSeeder::class,
-            TenantSeeder::class,
-        ]);
+        DB::beginTransaction();
+        try {
+            User::factory()->create([
+                'name' => 'Laden',
+                'email' => 'laden@gmail.com',
+                'password' => bcrypt('password')
+            ]);
+            User::factory()->create([
+                'name' => 'John Doe',
+                'email' => 'johndoe@gmail.com',
+                'password' => bcrypt('password')
+            ]);
+            RentHouse::factory(2)->has(Room::factory(3)->has(Tenant::factory(3), 'tenant'), 'rooms')->create(['owner_id' => 2]);
+            RentHouse::factory(2)->has(Room::factory(3)->has(Tenant::factory(3), 'tenant'), 'rooms')->create(['owner_id' => 2]);
+            DB::commit();
+        } catch (\Exception $e) {
+            DB::rollBack();
+            echo $e->getMessage();
+        }
     }
 }

@@ -2,7 +2,6 @@
 
 namespace Database\Factories;
 
-use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -23,7 +22,7 @@ class RentHouseFactory extends Factory
             'description' => fake()->sentence(),
             'image' => fake()->imageUrl(),
             'price' => fake()->randomFloat(2, 100, 1000),
-            'owner_id' => $attributes['owner_id'] ?? User::factory(),
+            'owner_id' => 1,
         ];
     }
 }
