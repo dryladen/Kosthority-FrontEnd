@@ -16,7 +16,6 @@ class RoomResource extends JsonResource
     public function toArray(Request $request): array
     {
         return [
-            'type' => 'room', // 'room' is the type of the resource
             'id' => $this->id,
             'name' => $this->name,
             'is_available' => $this->isAvailable,
@@ -26,10 +25,8 @@ class RoomResource extends JsonResource
             'links' => [
                 'self' => route('rooms.show', ['room' => $this->id]),
             ],
-            'tenant_id' => $this->tenant_id,
+            'tenant_id' => $this->tenant_id ? $this->tenant_id : null,
             'rent_house_id' => $this->rent_house_id,
-            // 'tenant' => $this->tenant,
-            // 'rent_house' => new RentHouseResource($this->rentHouse),
         ];
     }
 

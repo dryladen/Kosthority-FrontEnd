@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\RentHouseRequest;
 use App\Http\Resources\RentHouseCollection;
 use App\Http\Resources\RentHouseResource;
 use App\Models\RentHouse;
@@ -10,6 +11,7 @@ use Illuminate\Auth\Events\Validated;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+
 class RentHouseController extends Controller
 {
     /**
@@ -23,26 +25,16 @@ class RentHouseController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(RentHouse $request)
     {
         try {
-            $validated = $request->validate([
-                'name' => 'required|string',
-                'address' => 'required|string',
-                'description' => 'required|string',
-                'image' => 'required|string',
-                'price' => 'required|integer',
-                'owner_id' => 'required|integer',
-            ]);
-            DB::beginTransaction();
-            $rentHouse = RentHouse::create($validated);
-            DB::commit();
+            $rentHouse = RentHouse::create($request->validated());
             return (new RentHouseResource($rentHouse))->response()->setStatusCode(201);
         } catch (\Exception $e) {
-            DB::rollBack();
+            Log::error('Error creating data: ' . $e->getMessage());
             return response()->json([
-                'message' => 'Error',
-                'error' => $e->getMessage(),
+                'status' => 'Error',
+                'message' => $e->getMessage(),
             ], 500);
         }
     }
@@ -50,18 +42,16 @@ class RentHouseController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(RentHouse $renthouse)
+    public function show(string $id)
     {
-        DB::beginTransaction();
         try {
-            $data = new RentHouseResource($renthouse);
-            DB::commit();
-            return $data->response()->setStatusCode(200);
+            $renthouse = RentHouse::findOrFail($id);
+            return (new RentHouseResource(renthouse))->response()->setStatusCode(200);
         } catch (\Exception $e) {
-            DB::rollBack();
+            Log::error('Error fetching data: ' . $e->getMessage());
             return response()->json([
-                'message' => 'Server Internal Error',
-                'error' => $e->getMessage(),
+                'status' => 'Error',
+                'message' => $e->getMessage(),
             ], 500);
         }
     }
@@ -69,26 +59,17 @@ class RentHouseController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, RentHouse $renthouse)
+    public function update(RentHouseRequest $request, string $id)
     {
         try {
-            $validated = $request->validate([
-                'name' => 'required|string',
-                'address' => 'required|string',
-                'description' => 'required|string',
-                'image' => 'required|string',
-                'price' => 'required|integer',
-                'owner_id' => 'required|integer',
-            ]);
-            DB::beginTransaction();
-            $renthouse->update($validated);
-            DB::commit();
+            $renthouse = RentHouse::findOrFail($id);
+            $renthouse->update($request->validated());
             return (new RentHouseResource($renthouse))->response()->setStatusCode(200);
         } catch (\Exception $e) {
-            DB::rollBack();
+            Log::error('Error editing data: ' . $e->getMessage());
             return response()->json([
-                'message' => 'Error',
-                'error' => $e->getMessage(),
+                'status' => 'Error',
+                'message' => $e->getMessage(),
             ], 500);
         }
     }
@@ -96,20 +77,20 @@ class RentHouseController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(RentHouse $renthouse)
+    public function destroy(string  $id)
     {
-        DB::beginTransaction();
         try {
+            $renthouse = RentHouse::findOrFail($id);
             $renthouse->delete();
-            DB::commit();
             return response()->json([
-                'message' => 'Delete Success',
+                'status' => 'Success',
+                'message' => 'Data deleted successfuly',
             ], 200);
         } catch (\Exception $e) {
-            DB::rollBack();
+            Log::error('Error deleting data: ' . $e->getMessage());
             return response()->json([
-                'message' => 'Server Internal Error',
-                'error' => $e->getMessage(),
+                'status' => 'Error',
+                'message' => $e->getMessage(),
             ], 500);
         }
     }

@@ -16,7 +16,6 @@ class RentHouseResource extends JsonResource
     public function toArray(Request $request): array
     {
         return [
-            'type' => 'rent_houses', // 'rent_house' is the type of the resource
             'id' => $this->id,
             'name' => $this->name,
             'price' => $this->price,
@@ -26,7 +25,9 @@ class RentHouseResource extends JsonResource
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at,
             'owner' => $this->owner,
-            
+            'links' => [
+                'self' => route('users.show', ['user' => $this->id]),
+            ],
         ];
     }
 

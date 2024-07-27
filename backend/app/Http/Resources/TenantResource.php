@@ -31,7 +31,6 @@ class TenantResource extends JsonResource
                 'self' => route('tenants.show', ['tenant' => $this->id]),
             ],
             'room_id' => $this->room_id,
-            // 'room' => new RoomResource($this->room),
         ];
     }
 

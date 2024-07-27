@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\UserRequest;
 use App\Http\Resources\UserCollection;
 use App\Http\Resources\UserResource;
 use App\Models\User;
@@ -23,24 +24,16 @@ class UserController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(UserRequest $request)
     {
-        DB::beginTransaction();
         try {
-            $validated = $request->validate([
-                'name' => 'required|string',
-                'email' => 'required|email',
-                'password' => 'required|string',
-            ]);
-            $user = User::create($validated);
-            DB::commit();
+            $user = User::create($request->validated());
             return (new UserResource($user))->response()->setStatusCode(201);
         } catch (\Exception $e) {
-            DB::rollBack();
             Log::error('Error creating user: ' . $e->getMessage());
             return response()->json([
-                'message' => 'Error',
-                'error' => $e->getMessage(),
+                'status' => 'Error',
+                'message' => $e->getMessage(),
             ], 500);
         }
     }
@@ -48,17 +41,16 @@ class UserController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(User $user)
+    public function show(string $id)
     {
         try {
-            $roomResource = new UserResource($user);
-            return $roomResource->response()->setStatusCode(200);
+            $user = User::findOrFail($id);
+            return (new UserResource($user))->response()->setStatusCode(200);
         } catch (\Exception $e) {
-            // Log the exception for better debugging and monitoring
-            Log::error('Error fetching user data: ' . $e->getMessage());
+            Log::error('Error fetching user: ' . $e->getMessage());
             return response()->json([
-                'message' => 'Server Internal Error',
-                'error' => env('APP_DEBUG') ? $e->getMessage() : 'An unexpected error occurred',
+                'status' => 'Error',
+                'message' => $e->getMessage(),
             ], 500);
         }
     }
@@ -66,24 +58,17 @@ class UserController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, User $user)
+    public function update(UserRequest $request, string $id)
     {
-        DB::beginTransaction();
         try {
-            $validated = $request->validate([
-                'name' => 'required|string',
-                'email' => 'required|email',
-                'password' => 'required|string',
-            ]);
-            $user->update($validated);
-            DB::commit();
+            $user = User::findOrFail($id);
+            $user->update($request->validated());
             return (new UserResource($user))->response()->setStatusCode(200);
         } catch (\Exception $e) {
-            DB::rollBack();
             Log::error('Error updating user: ' . $e->getMessage());
             return response()->json([
-                'message' => 'Error',
-                'error' => $e->getMessage(),
+                'status' => 'Error',
+                'message' => $e->getMessage(),
             ], 500);
         }
     }
@@ -91,21 +76,20 @@ class UserController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(User $user)
+    public function destroy(string $id)
     {
-        DB::beginTransaction();
         try {
+            $user = User::findOrFail($id);
             $user->delete();
-            DB::commit();
             return response()->json([
+                'status' => 'Success',
                 'message' => 'User deleted successfully',
-            ],204);
+            ], 200);
         } catch (\Exception $e) {
-            DB::rollBack();
             Log::error('Error deleting user: ' . $e->getMessage());
             return response()->json([
-                'message' => 'Error',
-                'error' => $e->getMessage(),
+                'status' => 'Error',
+                'message' => $e->getMessage(),
             ], 500);
         }
     }

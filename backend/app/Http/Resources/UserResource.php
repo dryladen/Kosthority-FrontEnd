@@ -25,10 +25,6 @@ class UserResource extends JsonResource
             'links' => [
                 'self' => route('users.show', ['user' => $this->id]),
             ],
-            'rent_houses' => [
-                'total' => RentHouse::where('owner_id', $this->id)->count(),
-                'list' => $this->rentHouse->pluck('name'),
-            ],
         ];
     }
 
