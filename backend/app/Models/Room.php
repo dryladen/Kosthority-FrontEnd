@@ -17,7 +17,6 @@ class Room extends Model
         'name',
         'description',
         'isAvailable',
-        'tenant_id',
         'rent_house_id',
     ];
 

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\RoomRequest;
 use App\Http\Resources\RoomCollection;
 use App\Http\Resources\RoomResource;
 use App\Models\Room;
@@ -17,31 +18,22 @@ class RoomController extends Controller
      */
     public function index(Request $request)
     {
-        return new RoomCollection(Room::paginate($request->get('paginate') ?: 10));
+        return new RoomCollection(Room::latest()->get());
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(RoomRequest $request)
     {
-        DB::beginTransaction();
         try {
-            $validated = $request->validate([
-                'name' => 'required|string',
-                'description' => 'required|string',
-                'isAvailable' => 'required|boolean',
-                // 'tenant_id' => 'required|integer',
-                'rent_house_id' => 'required|integer',
-            ]);
-            $room = Room::create($validated);
-            DB::commit();
+            $room = Room::create($request->validated());
             return (new RoomResource($room))->response()->setStatusCode(201);
         } catch (\Exception $e) {
-            DB::rollBack();
+            Log::error('Error creating data: ' . $e->getMessage());
             return response()->json([
-                'message' => 'Error',
-                'error' => $e->getMessage(),
+                'status' => 'Error',
+                'message' => $e->getMessage(),
             ], 500);
         }
     }
@@ -49,17 +41,16 @@ class RoomController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Room $room)
+    public function show(string $id)
     {
         try {
-            $roomResource = new RoomResource($room);
-            return $roomResource->response()->setStatusCode(200);
+            $room = Room::findOrFail($id);
+            return (new RoomResource($room))->response()->setStatusCode(200);
         } catch (\Exception $e) {
-            // Log the exception for better debugging and monitoring
-            Log::error('Error fetching room data: ' . $e->getMessage());
+            Log::error('Error fetching data: ' . $e->getMessage());
             return response()->json([
-                'message' => 'Server Internal Error',
-                'error' => env('APP_DEBUG') ? $e->getMessage() : 'An unexpected error occurred',
+                'status' => 'Error',
+                'message' => $e->getMessage(),
             ], 500);
         }
     }
@@ -67,26 +58,16 @@ class RoomController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Room $room)
+    public function update(RoomRequest $request, string $id)
     {
-        DB::beginTransaction();
         try {
-            $validated = $request->validate([
-                'name' => 'required|string',
-                'description' => 'required|string',
-                'isAvailable' => 'required|boolean',
-                // 'tenant_id' => 'required|integer',
-                'rent_house_id' => 'required|integer',
-            ]);
-            $room->update($validated);
-            DB::commit();
+            $room->update($request->validated());
             return (new RoomResource($room))->response()->setStatusCode(200);
         } catch (\Exception $e) {
-            DB::rollBack();
-            Log::error('Error updating room data: ' . $e->getMessage());
+            Log::error('Error updating data: ' . $e->getMessage());
             return response()->json([
-                'message' => 'Error',
-                'error' => $e->getMessage(),
+                'status' => 'Error',
+                'message' => $e->getMessage(),
             ], 500);
         }
     }
@@ -94,21 +75,20 @@ class RoomController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Room $room)
+    public function destroy(string $id)
     {
-        DB::beginTransaction();
         try {
+            $room = Room::findOrFail($id);
             $room->delete();
-            DB::commit();
             return response()->json([
+                'status' => 'Success',
                 'message' => 'Room deleted successfully',
             ], 200);
         } catch (\Exception $e) {
-            DB::rollBack();
-            Log::error('Error deleting room data: ' . $e->getMessage());
+            Log::error('Error deleting data: ' . $e->getMessage());
             return response()->json([
-                'message' => 'Error',
-                'error' => $e->getMessage(),
+                'status' => 'Error',
+                'message' => $e->getMessage(),
             ], 500);
         }
     }

@@ -11,7 +11,7 @@ class RoomRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -22,7 +22,10 @@ class RoomRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'name' => 'required|string',
+            'description' => 'required|string',
+            'isAvailable' => 'required|boolean',
+            'rent_house_id' => 'nullable|integer',
         ];
     }
 }
