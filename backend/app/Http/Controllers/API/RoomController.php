@@ -16,7 +16,7 @@ class RoomController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index(Request $request)
+    public function index()
     {
         return new RoomCollection(Room::latest()->get());
     }

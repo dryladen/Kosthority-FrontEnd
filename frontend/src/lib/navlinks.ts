@@ -1,4 +1,4 @@
-import { Home, LayoutDashboard, LineChart, Package, Users } from "lucide-react";
+import { DoorClosed, Home, LayoutDashboard, LineChart, Package, Users } from "lucide-react";
 
 export const navLinks = [
   {
@@ -7,9 +7,14 @@ export const navLinks = [
     logo: LayoutDashboard,
   },
   {
-    name: 'Houses',
+    name: 'Rental Houses',
     path: '/houses',
     logo: Home,
+  },
+  {
+    name: 'Rooms',
+    path: '/rooms',
+    logo: DoorClosed,
   },
   {
     name: 'Tenants',

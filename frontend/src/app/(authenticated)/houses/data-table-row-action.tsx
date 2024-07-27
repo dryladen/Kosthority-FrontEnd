@@ -1,11 +1,9 @@
 import { Row } from '@tanstack/react-table'
-import { Houses } from './columns'
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuLabel,
-  DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu'
 import { Button } from '@/components/ui/button'
@@ -18,11 +16,14 @@ interface Data<T> {
   id: string
   name: string
   address: string
-  image: string
-  price: number
   description: string
+  image: string
+  price: string
+  user_id: number
   created_at: string
+  updated_at: string
 }
+
 interface DataTableRowActionsProps<TData> {
   row: Row<TData>
 }

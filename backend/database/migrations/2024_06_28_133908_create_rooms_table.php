@@ -15,8 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('name');
             $table->string('description');
-            $table->boolean('isAvailabel')->default(false);
-            $table->string('tenant_id')->nullable();
+            $table->boolean('is_available')->default(false);
             $table->foreignId('rent_house_id')->constrained('rent_houses')->onDelete('cascade');
             $table->timestamps();
         });

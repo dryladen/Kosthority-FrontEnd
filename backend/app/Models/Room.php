@@ -16,7 +16,7 @@ class Room extends Model
     protected $fillable = [
         'name',
         'description',
-        'isAvailable',
+        'is_available',
         'rent_house_id',
     ];
 

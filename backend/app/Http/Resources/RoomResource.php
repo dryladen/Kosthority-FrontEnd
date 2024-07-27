@@ -18,14 +18,14 @@ class RoomResource extends JsonResource
         return [
             'id' => $this->id,
             'name' => $this->name,
-            'is_available' => $this->isAvailable,
+            'is_available' => $this->is_available,
             'description' => $this->description,
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at,
             'links' => [
                 'self' => route('rooms.show', ['room' => $this->id]),
             ],
-            'tenant_id' => $this->tenant_id ? $this->tenant_id : null,
+            'tenant' => $this->tenant ? $this->tenant : null,
             'rent_house_id' => $this->rent_house_id,
         ];
     }
