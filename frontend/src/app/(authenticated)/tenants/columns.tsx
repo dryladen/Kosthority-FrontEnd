@@ -3,12 +3,18 @@
 import { Tenants } from '@/types/types'
 import { ColumnDef } from '@tanstack/react-table'
 import { DataTableColumnHeader } from '../houses/data-table-column-header'
-import { DataTableRowAction } from '../houses/data-table-row-action'
+import { DataTableRowAction } from './data-table-row-action'
+import Image from 'next/image'
 // This type is used to define the shape of our data.
 // You can use a Zod schema here if you want.
 
-
 export const columns: ColumnDef<Tenants>[] = [
+  {
+    accessorKey: 'room_id',
+    header: ({ column }) => (
+      <DataTableColumnHeader column={column} title={'Room ID'} />
+    ),
+  },
   {
     accessorKey: 'name',
     header: ({ column }) => (
@@ -16,9 +22,15 @@ export const columns: ColumnDef<Tenants>[] = [
     ),
   },
   {
-    accessorKey: 'address',
+    accessorKey: 'email',
     header: ({ column }) => (
-      <DataTableColumnHeader column={column} title={'Address'} />
+      <DataTableColumnHeader column={column} title={'Email'} />
+    ),
+  },
+  {
+    accessorKey: 'phone',
+    header: ({ column }) => (
+      <DataTableColumnHeader column={column} title={'Phone'} />
     ),
   },
   {
@@ -44,6 +56,7 @@ export const columns: ColumnDef<Tenants>[] = [
       )
     },
   },
+
   {
     id: 'actions',
     cell: ({ row }) => <DataTableRowAction row={row} />,

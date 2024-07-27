@@ -9,6 +9,13 @@ import { DataTableRowAction } from './data-table-row-action'
 
 export const columns: ColumnDef<Room>[] = [
   {
+    accessorKey: 'rent_house_id',
+    header: ({ column }) => (
+      <DataTableColumnHeader column={column} title={'House Id'} />
+    ),
+    
+  },
+  {
     accessorKey: 'name',
     header: ({ column }) => (
       <DataTableColumnHeader column={column} title={'Name'} />
@@ -43,12 +50,7 @@ export const columns: ColumnDef<Room>[] = [
       )
     },
   },
-  {
-    accessorKey: 'rent_house_id',
-    header: ({ column }) => (
-      <DataTableColumnHeader column={column} title={'Rent House Id'} />
-    ),
-  },
+
   {
     id: 'actions',
     cell: ({ row }) => <DataTableRowAction row={row} />,

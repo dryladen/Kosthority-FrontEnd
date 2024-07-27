@@ -11,6 +11,7 @@ import { Tenants } from '@/types/types'
 import Axios from '@/lib/axios'
 import useSWR from 'swr'
 import { columns } from './columns'
+import { create } from 'domain'
 function getData(): Tenants[] {
   const { data: renthouses } = useSWR('/api/tenants', () =>
     Axios.get('/api/tenants')
@@ -23,10 +24,13 @@ function getData(): Tenants[] {
     renthouses?.map((item: Tenants) => ({
       id: item.id,
       name: item.name,
-      address: item.address,
+      email: item.email,
+      phone: item.phone,
+      start_date: item.start_date,
+      end_date: item.end_date,
       image: item.image,
       price: item.price,
-      description: item.description,
+      room_id: item.room_id,
       created_at: item.created_at,
     })) || []
   return housesData

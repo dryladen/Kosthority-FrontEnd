@@ -21,10 +21,13 @@ export type Room = {
 export type Tenants = {
   id: string
   name: string
-  address: string
-  image: string
+  email: string
+  phone: string
   price: number
-  description: string
+  start_date: string
+  end_date: string
+  image: string
+  room_id: string
   created_at: string
 }
 export type UserType = {
