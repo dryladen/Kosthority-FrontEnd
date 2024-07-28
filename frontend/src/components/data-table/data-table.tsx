@@ -77,7 +77,7 @@ export function DataTable<TData, TValue>({
         />
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
-            <Button variant="outline" className="ml-auto mr-4">
+            <Button variant="outline" className="ml-auto mr-4 gap-2">
               <Eye className="h-4 w-4" />
               <span className='sr-only sm:not-sr-only sm:whitespace-nowrap'>Views</span>
             </Button>

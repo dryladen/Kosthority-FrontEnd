@@ -30,7 +30,7 @@ class DatabaseSeeder extends Seeder
                 'email' => 'johndoe@gmail.com',
                 'password' => bcrypt('password')
             ]);
-            RentHouse::factory(2)->has(Room::factory(3)->has(Tenant::factory(3), 'tenant'), 'rooms')->create(['owner_id' => 2]);
+            RentHouse::factory(2)->has(Room::factory(3)->has(Tenant::factory(3), 'tenant'), 'rooms')->create(['owner_id' => 1]);
             RentHouse::factory(2)->has(Room::factory(3)->has(Tenant::factory(3), 'tenant'), 'rooms')->create(['owner_id' => 2]);
             DB::commit();
         } catch (\Exception $e) {

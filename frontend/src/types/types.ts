@@ -8,11 +8,14 @@ export type RentalHouse = {
   user_id: number
   created_at: string
   updated_at: string
+  rooms: {
+    data: Room[]
+  }
 }
 export type Room = {
   id: string
   name: string
-  is_available : boolean
+  is_available: boolean
   description: string
   created_at: string
   updated_at: string

@@ -11,6 +11,7 @@ import { MoreHorizontal, Pencil, ReceiptText, Trash2 } from 'lucide-react'
 import { EditData } from '@/components/EditData'
 import { DeleteAlert } from '@/components/DeleteAlert'
 import { useState } from 'react'
+import Link from 'next/link'
 
 interface Data<T> {
   id: string
@@ -54,14 +55,11 @@ export function DataTableRowAction<TData extends Data<string>>({
         </DropdownMenuTrigger>
         <DropdownMenuContent align="end">
           <DropdownMenuLabel>Actions</DropdownMenuLabel>
-          {/* <DropdownMenuItem
-              onClick={() => navigator.clipboard.writeText(renthouse.id)}>
-              Copy renthouse ID
-            </DropdownMenuItem>
-            <DropdownMenuSeparator /> */}
           <DropdownMenuItem>
-            <ReceiptText className="h-4 w-4 mr-2" />
-            <span>Details</span>
+            <Link href={`/houses/${renthouse.id}`} className="flex">
+              <ReceiptText className="h-4 w-4 mr-2" />
+              <span>Details</span>
+            </Link>
           </DropdownMenuItem>
           <DropdownMenuItem>
             <button

@@ -41,7 +41,7 @@ export function DataTableRowAction<TData extends Data<string>>({
       <DeleteAlert
         isOpen={isDeleteOpen}
         setIsOpen={setIsDeleteOpen}
-        id={`${renthouse.id}`}
+        id={renthouse.id}
       />
       <DropdownMenu>
         <DropdownMenuTrigger asChild>

@@ -7,7 +7,6 @@ use Illuminate\Http\Resources\Json\JsonResource;
 
 class RentHouseResource extends JsonResource
 {
-    public static $wrap = 'rent_house';
     /**
      * Transform the resource into an array.
      *
@@ -24,7 +23,7 @@ class RentHouseResource extends JsonResource
             'description' => $this->description,
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at,
-            'owner' => $this->owner,
+            'rooms' => new RoomCollection($this->rooms),
             'links' => [
                 'self' => route('renthouses.show', ['renthouse' => $this->id]),
             ],
