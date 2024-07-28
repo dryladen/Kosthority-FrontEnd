@@ -11,7 +11,7 @@ class TenantRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -22,7 +22,14 @@ class TenantRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'name' => 'required|string',
+            'email' => 'nullable|email',
+            'phone' => 'nullable|string',
+            'price' => 'required|integer',
+            'start_date' => 'required|date',
+            'end_date' => 'nullable | date',
+            'image' => 'required|string', // 'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048
+            'room_id' => 'required|integer',
         ];
     }
 }

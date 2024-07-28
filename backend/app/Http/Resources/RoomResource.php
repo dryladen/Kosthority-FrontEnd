@@ -23,7 +23,7 @@ class RoomResource extends JsonResource
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at,
             'links' => [
-                'self' => route('rooms.show', ['room' => $this->id]),
+                'self' => route('rooms.show', ['id' => $this->id]),
             ],
             'tenant' => $this->tenant ? $this->tenant : null,
             'rent_house_id' => $this->rent_house_id,

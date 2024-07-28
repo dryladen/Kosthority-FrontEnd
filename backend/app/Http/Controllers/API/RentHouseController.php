@@ -46,7 +46,7 @@ class RentHouseController extends Controller
     {
         try {
             $renthouse = RentHouse::findOrFail($id);
-            return (new RentHouseResource(renthouse))->response()->setStatusCode(200);
+            return (new RentHouseResource($renthouse))->response()->setStatusCode(200);
         } catch (\Exception $e) {
             Log::error('Error fetching data: ' . $e->getMessage());
             return response()->json([

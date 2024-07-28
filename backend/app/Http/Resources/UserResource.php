@@ -23,7 +23,7 @@ class UserResource extends JsonResource
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at,
             'links' => [
-                'self' => route('users.show', ['user' => $this->id]),
+                'self' => route('users.show', ['id' => $this->id]),
             ],
         ];
     }

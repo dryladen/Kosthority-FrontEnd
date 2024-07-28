@@ -28,7 +28,7 @@ class TenantResource extends JsonResource
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at,
             'links' => [
-                'self' => route('tenants.show', ['tenant' => $this->id]),
+                'self' => route('tenants.show', ['id' => $this->id]),
             ],
             'room_id' => $this->room_id,
         ];

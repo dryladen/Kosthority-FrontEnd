@@ -26,7 +26,7 @@ class RentHouseResource extends JsonResource
             'updated_at' => $this->updated_at,
             'owner' => $this->owner,
             'links' => [
-                'self' => route('users.show', ['user' => $this->id]),
+                'self' => route('renthouse.show', ['id' => $this->id]),
             ],
         ];
     }

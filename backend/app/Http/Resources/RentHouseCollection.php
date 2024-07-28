@@ -22,7 +22,6 @@ class RentHouseCollection extends ResourceCollection
     public function with($request): array
     {
         return [
-            'status' => 'success',
             'meta' => [
                 'key' => 'value',
             ],
