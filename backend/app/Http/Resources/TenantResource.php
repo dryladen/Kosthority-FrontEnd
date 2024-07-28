@@ -7,7 +7,6 @@ use Illuminate\Http\Resources\Json\JsonResource;
 
 class TenantResource extends JsonResource
 {
-    public static $wrap = 'tenant';
     /**
      * Transform the resource into an array.
      *
@@ -16,7 +15,6 @@ class TenantResource extends JsonResource
     public function toArray(Request $request): array
     {
         return [
-            'type' => 'tenant', // 'tenant' is the type of the resource
             'id' => $this->id,
             'name' => $this->name,
             'email' => $this->email,
