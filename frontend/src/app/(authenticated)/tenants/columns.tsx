@@ -2,11 +2,8 @@
 
 import { Tenants } from '@/types/types'
 import { ColumnDef } from '@tanstack/react-table'
-import { DataTableColumnHeader } from '../houses/data-table-column-header'
 import { DataTableRowAction } from './data-table-row-action'
-import Image from 'next/image'
-// This type is used to define the shape of our data.
-// You can use a Zod schema here if you want.
+import { DataTableColumnHeader } from '@/components/data-table/data-table-column-header'
 
 export const columns: ColumnDef<Tenants>[] = [
   {

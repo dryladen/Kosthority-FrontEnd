@@ -2,8 +2,8 @@
 
 import { ColumnDef } from '@tanstack/react-table'
 import { DataTableRowAction } from './data-table-row-action'
-import { DataTableColumnHeader } from './data-table-column-header'
 import { RentalHouse } from '@/types/types'
+import { DataTableColumnHeader } from '@/components/data-table/data-table-column-header'
 // This type is used to define the shape of our data.
 // You can use a Zod schema here if you want.
 

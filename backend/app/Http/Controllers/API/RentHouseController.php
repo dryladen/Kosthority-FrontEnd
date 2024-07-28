@@ -17,7 +17,7 @@ class RentHouseController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index(Request $request)
+    public function index()
     {
         return new RentHouseCollection(Auth::user()->rentHouse()->latest()->get());
     }
@@ -42,10 +42,9 @@ class RentHouseController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show(RentHouse $renthouse)
     {
         try {
-            $renthouse = RentHouse::findOrFail($id);
             return (new RentHouseResource($renthouse))->response()->setStatusCode(200);
         } catch (\Exception $e) {
             Log::error('Error fetching data: ' . $e->getMessage());

@@ -40,10 +40,9 @@ class TenantController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show(Tenant $tenant)
     {
         try {
-            $tenant = Tenant::findOrFail($id);
             return (new TenantResource($tenant))->response()->setStatusCode(200);
         } catch (\Exception $e) {
             return response()->json([
@@ -56,10 +55,9 @@ class TenantController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(TenantRequest $request, string $id)
+    public function update(TenantRequest $request, Tenant $tenant)
     {
         try {
-            $tenant = Tenant::findOrFail($id);
             $tenant->update($request->validated());
             return (new TenantResource($tenant))->response()->setStatusCode(200);
         } catch (\Exception $e) {

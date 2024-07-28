@@ -113,7 +113,7 @@ const NavHead = () => {
           <DropdownMenuTrigger asChild>
             <Button
               variant="outline"
-              className="text-md rounded-full border-0 text-muted-foreground gap-2 focus-visible:ring-0 focus-visible:ring-offset-0">
+              className="text-sm rounded-full border-0 text-muted-foreground gap-2 focus-visible:ring-0 focus-visible:ring-offset-0">
               <span>{user?.name}</span>
               <CircleUser className="h-5 w-5 " />
               <span className="sr-only">Toggle user menu</span>

@@ -6,11 +6,11 @@ import {
   CardHeader,
   CardTitle,
 } from '@/components/ui/card'
-import { DataTable } from '../houses/data-table'
 import { Room } from '@/types/types'
 import Axios from '@/lib/axios'
 import useSWR from 'swr'
 import { columns } from './columns'
+import { DataTable } from '@/components/data-table/data-table'
 function getData(): Room[] {
   const { data: renthouses } = useSWR('/api/rooms', () =>
     Axios.get('/api/rooms')
@@ -35,8 +35,8 @@ const TenantsPage = () => {
   return (
     <Card x-chunk="dashboard-06-chunk-0">
       <CardHeader>
-        <CardTitle>Tenants</CardTitle>
-        <CardDescription>A list of all tenants in the system.</CardDescription>
+        <CardTitle>Rooms</CardTitle>
+        <CardDescription>A list of all rooms in the system.</CardDescription>
       </CardHeader>
       <CardContent>
         <DataTable columns={columns} data={dataTable} />

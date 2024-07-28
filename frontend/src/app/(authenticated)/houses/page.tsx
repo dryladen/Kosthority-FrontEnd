@@ -3,16 +3,16 @@ import {
   Card,
   CardContent,
   CardDescription,
-  CardFooter,
   CardHeader,
   CardTitle,
 } from '@/components/ui/card'
-import { columns, Houses } from './columns'
-import { DataTable } from './data-table'
+import { columns } from './columns'
 import axios from '@/lib/axios'
 import useSWR from 'swr'
+import { RentalHouse } from '@/types/types'
+import { DataTable } from '@/components/data-table/data-table'
 
-function getData(): Houses[] {
+function getData(): RentalHouse[] {
   const { data: renthouses } = useSWR('/api/renthouses', () =>
     axios
       .get('/api/renthouses')
@@ -21,8 +21,8 @@ function getData(): Houses[] {
         if (error.response.status !== 409) throw error
       }),
   )
-  const housesData: Houses[] =
-    renthouses?.map((item: Houses) => ({
+  const housesData: RentalHouse[] =
+    renthouses?.map((item: RentalHouse) => ({
       id: item.id,
       name: item.name,
       address: item.address,

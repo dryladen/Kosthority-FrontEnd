@@ -41,10 +41,9 @@ class UserController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show(User $user, string $id)
     {
         try {
-            $user = User::findOrFail($id);
             return (new UserResource($user))->response()->setStatusCode(200);
         } catch (\Exception $e) {
             Log::error('Error fetching user: ' . $e->getMessage());

@@ -6,12 +6,12 @@ import {
   CardHeader,
   CardTitle,
 } from '@/components/ui/card'
-import { DataTable } from '../houses/data-table'
 import { Tenants } from '@/types/types'
 import Axios from '@/lib/axios'
 import useSWR from 'swr'
 import { columns } from './columns'
 import { create } from 'domain'
+import { DataTable } from '@/components/data-table/data-table'
 function getData(): Tenants[] {
   const { data: renthouses } = useSWR('/api/tenants', () =>
     Axios.get('/api/tenants')
