@@ -23,7 +23,7 @@ function getData(): Room[] {
     renthouses?.map((item: Room) => ({
       id: item.id,
       name: item.name,
-      is_available: item.is_available ? 'Available' : 'Not Available',
+      status: item.status,
       description: item.description,
       created_at: item.created_at,
       rent_house_id: item.rent_house_id

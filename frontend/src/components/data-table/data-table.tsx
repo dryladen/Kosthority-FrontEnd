@@ -31,7 +31,6 @@ import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import * as React from 'react'
 import { Eye } from 'lucide-react'
-import AddData from '@/components/AddData'
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[]
   data: TData[]

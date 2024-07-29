@@ -22,7 +22,7 @@ class RentHouseFactory extends Factory
             'description' => fake()->sentence(),
             'image' => fake()->imageUrl(),
             'price' => fake()->randomFloat(2, 100, 1000),
-            'owner_id' => 1,
+            'owner_id' => fake()->numberBetween(1, 2),
         ];
     }
 }

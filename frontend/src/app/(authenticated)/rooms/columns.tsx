@@ -11,9 +11,15 @@ import { User, User2 } from 'lucide-react'
 
 export const columns: ColumnDef<Room>[] = [
   {
+    accessorKey: 'rent_house_id',
+    header: ({ column }) => (
+      <DataTableColumnHeader column={column} title={'House Id'} />
+    ),
+  },
+  {
     accessorKey: 'name',
     header: ({ column }) => (
-      <DataTableColumnHeader column={column} title={'Data'} />
+      <DataTableColumnHeader column={column} title={'Name'} />
     ),
     cell: ({ row }) => {
       return (
@@ -45,10 +51,25 @@ export const columns: ColumnDef<Room>[] = [
     },
   },
   {
-    accessorKey: 'is_available',
+    accessorKey: 'status',
     header: ({ column }) => (
       <DataTableColumnHeader column={column} title={'Status'} />
     ),
+    cell: ({ row }) => {
+      return (
+        <>
+          {row.original.status === 'Available' ? (
+            <Badge variant="outline" className="text-[10px]">
+              Available
+            </Badge>
+          ) : (
+            <Badge variant="default" className="text-[10px]">
+              Taken
+            </Badge>
+          )}
+        </>
+      )
+    },
   },
   {
     accessorKey: 'description',
@@ -56,6 +77,7 @@ export const columns: ColumnDef<Room>[] = [
       <DataTableColumnHeader column={column} title={'Description'} />
     ),
   },
+
   // {
   //   accessorKey: 'created_at',
   //   header: ({ column }) => (

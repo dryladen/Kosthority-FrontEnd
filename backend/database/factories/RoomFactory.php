@@ -21,8 +21,6 @@ class RoomFactory extends Factory
         return [
             'name' => fake()->name(),
             'description' => fake()->sentence(),
-            'isAvailabel' => fake()->boolean(),
-            'tenant_id' => $attributes['tenant_id'] ?? 1,
             'rent_house_id' => $attributes['rent_house_id'] ?? RentHouse::factory()->create(['owner_id' => 1]),
         ];
     }

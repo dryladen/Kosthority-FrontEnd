@@ -42,7 +42,7 @@ class RentHouseController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(RentHouseRequest $renthouse)
+    public function show(RentHouse $renthouse)
     {
         try {
             return (new RentHouseResource($renthouse))->response()->setStatusCode(200);

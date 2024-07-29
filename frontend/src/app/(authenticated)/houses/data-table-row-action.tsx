@@ -13,7 +13,7 @@ import { useState } from 'react'
 import Link from 'next/link'
 import { RentalHouse, Room } from '@/types/types'
 import { ResponsiveDialog } from '@/components/ResponsiveDialog'
-import { EditData } from '@/components/forms/edit-forms'
+import { EditData } from '@/components/EditData'
 
 interface Data<T> {
   id: string
@@ -46,7 +46,7 @@ export function DataTableRowAction<TData extends Data<string>>({
         setIsOpen={setIsEditOpen}
         title="Edit Person" 
         description='aloha'>
-        <EditData data={renthouse} />
+        <EditData data={renthouse} setIsOpen={setIsEditOpen} />
       </ResponsiveDialog>
       <DeleteAlert
         isOpen={isDeleteOpen}

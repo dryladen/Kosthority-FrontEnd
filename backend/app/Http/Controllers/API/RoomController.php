@@ -61,6 +61,7 @@ class RoomController extends Controller
     public function update(RoomRequest $request, string $id)
     {
         try {
+            $room = Room::findOrFail($id);
             $room->update($request->validated());
             return (new RoomResource($room))->response()->setStatusCode(200);
         } catch (\Exception $e) {

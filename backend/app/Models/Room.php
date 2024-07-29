@@ -6,6 +6,7 @@ use App\Traits\HasTenant;
 use App\Traits\ModelHelpers;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 
 class Room extends Model
 {
@@ -25,8 +26,8 @@ class Room extends Model
         return $this->belongsTo(RentHouse::class, 'rent_house_id');
     }
 
-    public function tenant()
+    public function tenant() : HasOne
     {
-        return $this->hasMany(Tenant::class, 'room_id');
+        return $this->hasOne(Tenant::class, 'room_id');
     }
 }

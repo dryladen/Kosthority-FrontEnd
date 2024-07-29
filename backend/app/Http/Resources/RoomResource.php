@@ -17,14 +17,14 @@ class RoomResource extends JsonResource
         return [
             'id' => $this->id,
             'name' => $this->name,
-            'is_available' => $this->is_available,
             'description' => $this->description,
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at,
+            'status' => $this->tenant ? 'Taken' : 'Available',
             'links' => [
                 'self' => route('rooms.show', ['room' => $this->id]),
             ],
-            'tenants' => new TenantCollection($this->tenant),
+            'tenants' => new TenantResource($this->tenant),
             'rent_house_id' => $this->rent_house_id,
         ];
     }

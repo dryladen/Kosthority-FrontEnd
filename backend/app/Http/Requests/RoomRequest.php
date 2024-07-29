@@ -24,7 +24,6 @@ class RoomRequest extends FormRequest
         return [
             'name' => 'required|string',
             'description' => 'required|string',
-            'is_available' => 'required|boolean',
             'rent_house_id' => 'nullable|integer',
         ];
     }

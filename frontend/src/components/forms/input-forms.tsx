@@ -21,6 +21,7 @@ import Axios from '@/lib/axios'
 import { mutate } from 'swr'
 import { useAuth } from '@/hooks/auth'
 import { useToast } from '../ui/use-toast'
+import { RentalHouse, Room, Tenants } from '@/types/types'
 
 interface Values {
   name: string
@@ -31,7 +32,17 @@ interface Values {
   owner_id: number
 }
 
-const InputForm = () => {
+interface InputFormProps<TData> {
+  dataForm: RentalHouse | Room | Tenants
+  ApiUrl: string
+  title : string
+  description : string
+}
+
+export default function InputForm<TData extends RentalHouse | Room | Tenants>({
+  dataForm,
+  ApiUrl,
+}: InputFormProps<TData>) {
   const searchParams = useSearchParams()
   const [status, setStatus] = useState<string>('')
   const [isLoading, setIsLoading] = useState<boolean>(false)
@@ -51,9 +62,9 @@ const InputForm = () => {
     { setSubmitting, setErrors }: FormikHelpers<Values>,
   ): Promise<any> => {
     try {
-      await Axios.post('/api/renthouses', values)
+      await Axios.post(ApiUrl, values)
         .then(() => {
-          mutate('/api/renthouses')
+          mutate(ApiUrl)
           toast({ title: 'Success', description: 'Data has been added' })
         })
         .catch(error => {
@@ -105,7 +116,9 @@ const InputForm = () => {
             image: '',
             price: 0,
             owner_id: user?.id || 0,
-          }}>
+          }}
+          enableReinitialize
+        >
           <Form className="space-y-4">
             <div className="flex gap-3">
               <div>
@@ -213,5 +226,3 @@ const InputForm = () => {
     </Dialog>
   )
 }
-
-export default InputForm

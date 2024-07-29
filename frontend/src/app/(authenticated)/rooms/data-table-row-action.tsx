@@ -7,19 +7,32 @@ import {
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu'
 import { Button } from '@/components/ui/button'
-import { MoreHorizontal, Pencil, ReceiptText, Trash2 } from 'lucide-react'
-import { EditData } from '@/components/EditData'
+import {
+  BookCheck,
+  BookX,
+  MoreHorizontal,
+  Pencil,
+  ReceiptText,
+  Trash2,
+} from 'lucide-react'
 import { DeleteAlert } from '@/components/DeleteAlert'
 import { useState } from 'react'
+import { EditData } from './EditData'
+import { Tenants } from '@/types/types'
+import { ResponsiveDialog } from '@/components/ResponsiveDialog'
+import Link from 'next/link'
 
 interface Data<T> {
   id: string
   name: string
-  is_available : boolean
   description: string
+  status: string
   created_at: string
   updated_at: string
   rent_house_id: string
+  tenants: {
+    data: Tenants
+  }
 }
 
 interface DataTableRowActionsProps<TData> {
@@ -28,20 +41,23 @@ interface DataTableRowActionsProps<TData> {
 export function DataTableRowAction<TData extends Data<string>>({
   row,
 }: DataTableRowActionsProps<TData>) {
-  const renthouse = row.original
+  const room = row.original
   const [isEditOpen, setIsEditOpen] = useState(false)
   const [isDeleteOpen, setIsDeleteOpen] = useState(false)
   return (
     <>
-      <EditData
+      <ResponsiveDialog
         isOpen={isEditOpen}
         setIsOpen={setIsEditOpen}
-        data={renthouse}
-      />
+        title="Edit Data"
+        description="Editing data...">
+        <EditData data={room} setIsOpen={setIsEditOpen} />
+      </ResponsiveDialog>
       <DeleteAlert
         isOpen={isDeleteOpen}
         setIsOpen={setIsDeleteOpen}
-        id={renthouse.id}
+        linkApi="/api/rooms"
+        id={room.id}
       />
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
@@ -52,14 +68,11 @@ export function DataTableRowAction<TData extends Data<string>>({
         </DropdownMenuTrigger>
         <DropdownMenuContent align="end">
           <DropdownMenuLabel>Actions</DropdownMenuLabel>
-          {/* <DropdownMenuItem
-              onClick={() => navigator.clipboard.writeText(renthouse.id)}>
-              Copy renthouse ID
-            </DropdownMenuItem>
-            <DropdownMenuSeparator /> */}
           <DropdownMenuItem>
-            <ReceiptText className="h-4 w-4 mr-2" />
-            <span>Details</span>
+            <Link href={`/rooms/${room.id}`} className="flex">
+              <ReceiptText className="h-4 w-4 mr-2" />
+              <span>Details</span>
+            </Link>
           </DropdownMenuItem>
           <DropdownMenuItem>
             <button
@@ -78,6 +91,26 @@ export function DataTableRowAction<TData extends Data<string>>({
               className="flex w-full items-center">
               <Trash2 className="mr-2 h-4 w-4" />
               <span>Delete</span>
+            </button>
+          </DropdownMenuItem>
+          <DropdownMenuItem>
+            <button
+              onClick={() => {
+                setIsDeleteOpen(true)
+              }}
+              className="flex w-full items-center">
+              <BookCheck className="mr-2 h-4 w-4" />
+              <span>Check In</span>
+            </button>
+          </DropdownMenuItem>
+          <DropdownMenuItem>
+            <button
+              onClick={() => {
+                setIsDeleteOpen(true)
+              }}
+              className="flex w-full items-center">
+              <BookX className="mr-2 h-4 w-4" />
+              <span>Check Out</span>
             </button>
           </DropdownMenuItem>
         </DropdownMenuContent>

@@ -18,35 +18,35 @@ import { useSearchParams } from 'next/navigation'
 import { useEffect, useRef, useState } from 'react'
 import axios, { AxiosError } from 'axios'
 import Axios from '@/lib/axios'
-import { useToast } from './ui/use-toast'
 import { mutate } from 'swr'
 import { useAuth } from '@/hooks/auth'
-import { RentalHouse } from '@/types/types'
+import { useToast } from '@/components/ui/use-toast'
+import { Room } from '@/types/types'
 
 interface Values {
+  id: string
   name: string
-  address: string
   description: string
-  image: string
-  price: string
-  owner_id: number
+  rent_house_id: string
 }
 
 export function EditData({
   data,
   setIsOpen,
 }: {
-  data: RentalHouse
+  data: Room
   setIsOpen: React.Dispatch<React.SetStateAction<boolean>>
 }) {
   const searchParams = useSearchParams()
   const [status, setStatus] = useState<string>('')
+  const [isLoading, setIsLoading] = useState<boolean>(false)
   const { user } = useAuth({
     middleware: 'auth',
     redirectIfAuthenticated: '/dashboard',
   })
   const triggerRef = useRef<HTMLDivElement>(null)
   const { toast } = useToast()
+
   useEffect(() => {
     const resetToken = searchParams.get('reset')
     setStatus(resetToken ? atob(resetToken) : '')
@@ -57,9 +57,9 @@ export function EditData({
     { setSubmitting, setErrors }: FormikHelpers<Values>,
   ): Promise<any> => {
     try {
-      await Axios.put(`/api/renthouses/${data.id}`, values)
+      await Axios.put(`/api/rooms/${data.id}`, values)
         .then(() => {
-          mutate('/api/renthouses')
+          mutate('/api/rooms')
           toast({ title: 'Success', description: 'Data has been updated' })
         })
         .catch(error => {
@@ -72,28 +72,24 @@ export function EditData({
     } finally {
       setSubmitting(false)
       setStatus('')
+      setIsLoading(false)
       setIsOpen(false)
     }
   }
 
   const validated = Yup.object().shape({
-    name: Yup.string().required('The name field is required.'),
-    address: Yup.string().required('The address field is required.'),
-    description: Yup.string().required('The description field is required.'),
-    image: Yup.string().required('The image field is required.'),
-    price: Yup.string().required('The price field is required.'),
+    name: Yup.string().required('Name is required'),
+    description: Yup.string().required('Description is required'),
   })
   return (
     <Formik
       onSubmit={submitForm}
       validationSchema={validated}
       initialValues={{
+        id: data.id,
         name: data.name,
-        price: data.price,
-        address: data.address,
         description: data.description,
-        image: data.image,
-        owner_id: user?.id || 0,
+        rent_house_id: data.rent_house_id,
       }}>
       <Form className="space-y-4">
         <div className="flex gap-3">
@@ -116,44 +112,6 @@ export function EditData({
               className="text-xs text-red-500"
             />
           </div>
-          <div>
-            <label
-              htmlFor="price"
-              className="undefined block font-semibold text-sm text-gray-700">
-              Price
-            </label>
-            <Field
-              id="price"
-              name="price"
-              type="number"
-              placeholder="Enter your price rental house"
-              className="block p-2 mt-1 w-full text-sm rounded-md shadow-sm border-gray-300 focus:border-slate-200 outline-none focus:ring-2 focus:ring-slate-200 "
-            />
-            <ErrorMessage
-              name="price"
-              component="span"
-              className="text-xs text-red-500"
-            />
-          </div>
-        </div>
-        <div>
-          <label
-            htmlFor="address"
-            className="undefined block font-semibold text-sm text-gray-700">
-            Address
-          </label>
-          <Field
-            id="address"
-            name="address"
-            type="text"
-            placeholder="Enter your address rental house"
-            className="block p-2 mt-1 w-full text-sm rounded-md shadow-sm border-gray-300 focus:border-slate-200 outline-none focus:ring-2 focus:ring-slate-200 "
-          />
-          <ErrorMessage
-            name="address"
-            component="span"
-            className="text-xs text-red-500"
-          />
         </div>
         <div>
           <label
@@ -170,25 +128,6 @@ export function EditData({
           />
           <ErrorMessage
             name="description"
-            component="span"
-            className="text-xs text-red-500"
-          />
-        </div>
-        <div>
-          <label
-            htmlFor="image"
-            className="undefined block font-semibold text-sm text-gray-700">
-            Image
-          </label>
-          <Field
-            id="image"
-            name="image"
-            type="text"
-            placeholder="Enter your image rental house"
-            className="block p-2 mt-1 w-full text-sm rounded-md shadow-sm border-gray-300 focus:border-slate-200 outline-none focus:ring-2 focus:ring-slate-200 "
-          />
-          <ErrorMessage
-            name="image"
             component="span"
             className="text-xs text-red-500"
           />
