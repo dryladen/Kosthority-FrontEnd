@@ -25,7 +25,7 @@ class RentHouseController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(RentHouse $request)
+    public function store(RentHouseRequest $request)
     {
         try {
             $rentHouse = RentHouse::create($request->validated());
@@ -42,7 +42,7 @@ class RentHouseController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(RentHouse $renthouse)
+    public function show(RentHouseRequest $renthouse)
     {
         try {
             return (new RentHouseResource($renthouse))->response()->setStatusCode(200);
