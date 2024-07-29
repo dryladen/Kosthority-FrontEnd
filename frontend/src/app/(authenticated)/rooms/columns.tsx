@@ -18,40 +18,44 @@ export const columns: ColumnDef<Room>[] = [
     cell: ({ row }) => {
       return (
         <>
-          <p className="font-bold text-muted-foreground">
-            {row.original.name}
-            {/* <Badge variant="default" className="text-[10px]">
+          <div className="flex ">
+            <div>
+              <p className="font-bold text-muted-foreground">
+                {row.original.name}
+                {/* <Badge variant="default" className="text-[10px]">
               Available
             </Badge> */}
-          </p>
-          {row.original.tenants?.data
-            ? row.original.tenants.data.map(tenant => {
-                return (
-                  <span className="text-muted-foreground flex gap-2">
-                    {tenant.name}
-                  </span>
-                )
-              })
-            : null}
-          <p className="text-muted-foreground text-[12px]">
-            <span className="font-bold">Checked In</span> : 12/12/12
-          </p>
+              </p>
+              {/* {row.original.tenants?.data
+                ? row.original.tenants.data.map(tenant => {
+                    return (
+                      <span className="text-muted-foreground flex gap-2">
+                        {tenant.name}
+                      </span>
+                    )
+                  })
+                : null} */}
+              <p className="text-muted-foreground text-[12px]">
+                <span className="font-bold">Checked In</span> : 12/12/12
+              </p>
+            </div>
+          </div>
         </>
       )
     },
   },
-  // {
-  //   accessorKey: 'is_available',
-  //   header: ({ column }) => (
-  //     <DataTableColumnHeader column={column} title={'Status'} />
-  //   ),
-  // },
-  // {
-  //   accessorKey: 'description',
-  //   header: ({ column }) => (
-  //     <DataTableColumnHeader column={column} title={'Description'} />
-  //   ),
-  // },
+  {
+    accessorKey: 'is_available',
+    header: ({ column }) => (
+      <DataTableColumnHeader column={column} title={'Status'} />
+    ),
+  },
+  {
+    accessorKey: 'description',
+    header: ({ column }) => (
+      <DataTableColumnHeader column={column} title={'Description'} />
+    ),
+  },
   // {
   //   accessorKey: 'created_at',
   //   header: ({ column }) => (

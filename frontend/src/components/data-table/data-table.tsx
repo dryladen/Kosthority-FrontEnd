@@ -35,11 +35,13 @@ import AddData from '@/components/AddData'
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[]
   data: TData[]
+  children?: React.ReactNode
 }
 
 export function DataTable<TData, TValue>({
   columns,
   data,
+  children,
 }: DataTableProps<TData, TValue>) {
   const [sorting, setSorting] = React.useState<SortingState>([])
   const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>(
@@ -77,7 +79,7 @@ export function DataTable<TData, TValue>({
         />
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
-            <Button variant="outline" className="ml-auto mr-4 gap-2">
+            <Button variant="outline" className="ml-4 sm:ml-auto mr-4 gap-2">
               <Eye className="h-4 w-4" />
               <span className='sr-only sm:not-sr-only sm:whitespace-nowrap'>Views</span>
             </Button>
@@ -99,7 +101,7 @@ export function DataTable<TData, TValue>({
               })}
           </DropdownMenuContent>
         </DropdownMenu>
-        <AddData />
+        {children}
       </div>
       <div className="rounded-md ">
         <Table>

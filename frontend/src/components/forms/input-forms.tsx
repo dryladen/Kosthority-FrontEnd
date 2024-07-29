@@ -1,4 +1,4 @@
-import { Copy, Pencil, PlusCircle } from 'lucide-react'
+import { Copy, PlusCircle } from 'lucide-react'
 
 import { Button } from '@/components/ui/button'
 import {
@@ -15,40 +15,31 @@ import * as Yup from 'yup'
 
 import { ErrorMessage, Field, Form, Formik, FormikHelpers } from 'formik'
 import { useSearchParams } from 'next/navigation'
-import { useEffect, useRef, useState } from 'react'
+import { useEffect, useState } from 'react'
 import axios, { AxiosError } from 'axios'
 import Axios from '@/lib/axios'
-import { useToast } from './ui/use-toast'
 import { mutate } from 'swr'
 import { useAuth } from '@/hooks/auth'
-import { RentalHouse } from '@/types/types'
+import { useToast } from '../ui/use-toast'
 
 interface Values {
   name: string
   address: string
   description: string
   image: string
-  price: string
+  price: number
   owner_id: number
 }
 
-export function EditData({
-  data,
-  isOpen,
-  setIsOpen,
-}: {
-  data: RentalHouse
-  isOpen: boolean
-  setIsOpen: React.Dispatch<React.SetStateAction<boolean>>
-}) {
+const InputForm = () => {
   const searchParams = useSearchParams()
   const [status, setStatus] = useState<string>('')
   const [isLoading, setIsLoading] = useState<boolean>(false)
+  const [open, setOpen] = useState(false)
   const { user } = useAuth({
     middleware: 'auth',
     redirectIfAuthenticated: '/dashboard',
   })
-  const triggerRef = useRef<HTMLDivElement>(null)
   const { toast } = useToast()
   useEffect(() => {
     const resetToken = searchParams.get('reset')
@@ -60,10 +51,10 @@ export function EditData({
     { setSubmitting, setErrors }: FormikHelpers<Values>,
   ): Promise<any> => {
     try {
-      await Axios.put(`/api/renthouses/${data.id}`, values)
+      await Axios.post('/api/renthouses', values)
         .then(() => {
           mutate('/api/renthouses')
-          toast({ title: 'Success', description: 'Data has been updated' })
+          toast({ title: 'Success', description: 'Data has been added' })
         })
         .catch(error => {
           console.error(error)
@@ -75,36 +66,44 @@ export function EditData({
     } finally {
       setSubmitting(false)
       setStatus('')
+      setOpen(false)
       setIsLoading(false)
-      setIsOpen(false)
     }
   }
 
-  const validated = Yup.object().shape({
+  const LoginSchema = Yup.object().shape({
     name: Yup.string().required('The name field is required.'),
     address: Yup.string().required('The address field is required.'),
     description: Yup.string().required('The description field is required.'),
     image: Yup.string().required('The image field is required.'),
-    price: Yup.string().required('The price field is required.'),
+    price: Yup.number().required('The price field is required.'),
   })
   return (
-    <Dialog open={isOpen} onOpenChange={setIsOpen}>
+    <Dialog open={open} onOpenChange={setOpen}>
+      <DialogTrigger asChild>
+        <Button className="gap-2">
+          <PlusCircle className="h-4 w-4" />
+          <span className="sr-only sm:not-sr-only sm:whitespace-nowrap">
+            Add House
+          </span>
+        </Button>
+      </DialogTrigger>
       <DialogContent className="sm:max-w-[425px]">
         <DialogHeader>
-          <DialogTitle>Edit Rental House</DialogTitle>
+          <DialogTitle>Add Rental House</DialogTitle>
           <DialogDescription>
             Add a new rental house to the list
           </DialogDescription>
         </DialogHeader>
         <Formik
           onSubmit={submitForm}
-          validationSchema={validated}
+          validationSchema={LoginSchema}
           initialValues={{
-            name: data.name,
-            price: data.price,
-            address: data.address,
-            description: data.description,
-            image: data.image,
+            name: '',
+            address: '',
+            description: '',
+            image: '',
+            price: 0,
             owner_id: user?.id || 0,
           }}>
           <Form className="space-y-4">
@@ -206,7 +205,7 @@ export function EditData({
               />
             </div>
             <DialogFooter>
-              <Button variant={'outline'} type="submit">Edit Data</Button>
+              <Button type="submit">Add Data</Button>
             </DialogFooter>
           </Form>
         </Formik>
@@ -214,3 +213,5 @@ export function EditData({
     </Dialog>
   )
 }
+
+export default InputForm

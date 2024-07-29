@@ -67,9 +67,6 @@ const HousesPage = ({ params }: { params: { id: string } }) => {
           <CardTitle>Rooms</CardTitle>
           <CardDescription>
             Lorem ipsum dolor sit amet consectetur adipisicing elit. Delectus
-            architecto numquam atque. Porro eum minus quae quisquam facilis unde
-            culpa voluptate? Soluta harum delectus aut minima quae. Minus,
-            laborum ab.
           </CardDescription>
         </CardHeader>
         <CardContent>

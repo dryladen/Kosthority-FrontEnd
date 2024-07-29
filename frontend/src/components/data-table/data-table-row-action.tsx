@@ -7,36 +7,43 @@ import {
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu'
 import { Button } from '@/components/ui/button'
-import { MoreHorizontal, Pencil, ReceiptText, Trash2 } from 'lucide-react'
+import {
+  LucideIcon,
+  MoreHorizontal,
+  Pencil,
+  ReceiptText,
+  Trash2,
+} from 'lucide-react'
+import { EditData } from '@/components/EditData'
 import { DeleteAlert } from '@/components/DeleteAlert'
 import { useState } from 'react'
+import { RentalHouse, Room, Tenants } from '@/types/types'
 import Link from 'next/link'
-import { RentalHouse, Room } from '@/types/types'
-import { ResponsiveDialog } from '@/components/ResponsiveDialog'
-import { EditData } from '@/components/forms/edit-forms'
+import { Url } from 'next/dist/shared/lib/router/router'
+import { ResponsiveDialog } from '../ResponsiveDialog'
+import AddData from '../AddData'
 
-interface Data<T> {
-  id: string
-  name: string
-  address: string
-  description: string
-  image: string
-  price: string
-  user_id: number
-  created_at: string
-  updated_at: string
-  rooms: {
-    data: Room[]
-  }
+interface DataAction {
+  type: 'link' | 'dialog'
+  title: string
+  logo: LucideIcon
+  data: RentalHouse | Room | Tenants
+  link?: Url
+  setIsOpen?: React.Dispatch<React.SetStateAction<boolean>>
 }
 
-interface DataTableRowActionsProps<TData> {
+interface DataTableRowActionsProps<TData>
+  extends React.HTMLAttributes<HTMLDivElement> {
   row: Row<TData>
+  dialogs: React.ReactNode
+  action: DataAction[]
 }
-export function DataTableRowAction<TData extends Data<string>>({
+export function DataTableRowAction<TData extends RentalHouse | Room | Tenants>({
   row,
+  dialogs,
+  action,
 }: DataTableRowActionsProps<TData>) {
-  const renthouse = row.original
+  const dataRow = row.original
   const [isEditOpen, setIsEditOpen] = useState(false)
   const [isDeleteOpen, setIsDeleteOpen] = useState(false)
   return (
@@ -44,16 +51,10 @@ export function DataTableRowAction<TData extends Data<string>>({
       <ResponsiveDialog
         isOpen={isEditOpen}
         setIsOpen={setIsEditOpen}
-        title="Edit Person" 
-        description='aloha'>
-        <EditData data={renthouse} />
+        title="Edit Person">
+        {/* <EditForm cardId={dataRow.id} setIsOpen={setIsEditOpen} /> */}
+        <AddData />
       </ResponsiveDialog>
-      <DeleteAlert
-        isOpen={isDeleteOpen}
-        setIsOpen={setIsDeleteOpen}
-        linkApi='/api/renthouses'
-        id = {renthouse.id}
-      />
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
           <Button variant="ghost" className="h-8 w-8 p-0">
@@ -63,8 +64,32 @@ export function DataTableRowAction<TData extends Data<string>>({
         </DropdownMenuTrigger>
         <DropdownMenuContent align="end">
           <DropdownMenuLabel>Actions</DropdownMenuLabel>
+          {action.map((item, index) => {
+            return (
+              <DropdownMenuItem key={index}>
+                {item.type === 'link' ? (
+                  <Link href={item.link ? item.link : '#'}>
+                    <a className="flex items-center w-full">
+                      {<item.logo className="h-4 w-4 mr-2" />}
+                      <span>{item.title}</span>
+                    </a>
+                  </Link>
+                ) : (
+                  <button
+                    onClick={() => {
+                      item.setIsOpen?.(true);
+                    }}
+                    className="flex items-center w-full">
+                    <Pencil className="h-4 w-4 mr-2" />{' '}
+                    <span>{item.title}</span>
+                  </button>
+                )}
+              </DropdownMenuItem>
+            )
+          })}
+
           <DropdownMenuItem>
-            <Link href={`/houses/${renthouse.id}`} className="flex">
+            <Link href={`/houses/${dataRow.id}`} className="flex">
               <ReceiptText className="h-4 w-4 mr-2" />
               <span>Details</span>
             </Link>
