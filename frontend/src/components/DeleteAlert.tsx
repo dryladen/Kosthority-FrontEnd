@@ -17,10 +17,12 @@ import { mutate } from 'swr'
 import { useToast } from './ui/use-toast'
 
 export function DeleteAlert({
+  linkApi,
   id,
   isOpen,
   setIsOpen,
 }: {
+  linkApi: string
   id: string
   isOpen: boolean
   setIsOpen: React.Dispatch<React.SetStateAction<boolean>>
@@ -29,9 +31,9 @@ export function DeleteAlert({
   const { toast } = useToast()
   if (remove) {
     try {
-      Axios.delete(`/api/renthouses/${id}`)
+      Axios.delete(`${linkApi}/${id}`)
         .then(() => {
-          mutate('/api/renthouses')
+          mutate(linkApi)
           toast({ title: 'Success', description: 'Data has been deleted' })
         })
         .catch(error => {
@@ -46,7 +48,6 @@ export function DeleteAlert({
   }
   return (
     <AlertDialog open={isOpen} onOpenChange={setIsOpen}>
-      
       <AlertDialogContent>
         <AlertDialogHeader>
           <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
