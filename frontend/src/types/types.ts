@@ -20,9 +20,7 @@ export type Room = {
   created_at: string
   updated_at: string
   rent_house_id: string
-  tenants: {
-    data: Tenants
-  }
+  tenants: Tenants
 }
 export type Tenants = {
   id: string

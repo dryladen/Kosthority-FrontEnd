@@ -8,20 +8,20 @@ import {
 } from '@/components/ui/card'
 import axios from '@/lib/axios'
 import useSWR from 'swr'
-import { RentalHouse } from '@/types/types'
+import { Room } from '@/types/types'
 import { DataTable } from '@/components/data-table/data-table'
 import { columns } from '../../rooms/columns'
 
-function getData(id: string): RentalHouse {
-  const { data: renthouses } = useSWR(`/api/renthouses/${id}`, () =>
+function getData(id: string): Room {
+  const { data: rooms } = useSWR(`/api/rooms/${id}`, () =>
     axios
-      .get(`/api/renthouses/${id}`)
+      .get(`/api/rooms/${id}`)
       .then(res => res.data.data)
       .catch(error => {
         if (error.response.status !== 409) throw error
       }),
   )
-  return renthouses
+  return rooms
 }
 
 const HousesPage = ({ params }: { params: { id: string } }) => {
@@ -36,12 +36,13 @@ const HousesPage = ({ params }: { params: { id: string } }) => {
               <p className="text-sm text-muted-foreground">
                 {dataDetail.description}
               </p>
-              <p className="text-sm text-muted-foreground">
+              {/* <p className="text-sm text-muted-foreground">
                 <span className="font-bold">Address : </span>{' '}
                 {dataDetail.address}
-              </p>
+              </p> */}
               <p className="text-sm text-muted-foreground">
-                <span className="font-bold">Price : </span> {dataDetail.price}
+                <span className="font-bold">Renthouse : </span>{' '}
+                {dataDetail.rent_house_id}
               </p>
               <p className="text-sm text-muted-foreground">
                 <span className="font-bold">Created At : </span>{' '}
@@ -52,26 +53,40 @@ const HousesPage = ({ params }: { params: { id: string } }) => {
                   weekday: 'long',
                 })}
               </p>
-              <p className="text-sm text-muted-foreground">
-                <span className="font-bold">Rooms : </span> 8/16
-              </p>
             </>
           )}
           <CardDescription></CardDescription>
         </CardHeader>
       </Card>
       <Card x-chunk="dashboard-06-chunk-0">
-        <CardHeader>
-          <CardTitle>Rooms</CardTitle>
-          <CardDescription>
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Delectus
-          </CardDescription>
-        </CardHeader>
-        <CardContent>
-          {dataDetail && (
-            <DataTable columns={columns} data={dataDetail.rooms.data} />
-          )}
-        </CardContent>
+        {dataDetail?.tenants?.name ? (
+          <>
+            <CardHeader>
+              <CardTitle>{dataDetail.tenants.name}</CardTitle>
+              <CardDescription>
+              <div className="rounded-sm text-muted-foreground">
+                <p className="text-sm">{dataDetail.tenants.email}</p>
+                <p className="text-sm">{dataDetail.tenants.phone}</p>
+                <p className="text-sm">{dataDetail.tenants.start_date}</p>
+                <p className="text-sm">{dataDetail.tenants.end_date}</p>
+                <p className="text-sm">{dataDetail.tenants.price}</p>
+              </div>
+              </CardDescription>
+            </CardHeader>
+            <CardContent>
+              <span>Payments</span>
+            </CardContent>
+          </>
+        ) : (
+          <>
+            <CardHeader>
+              <CardTitle>No Tenant</CardTitle>
+              <CardDescription>
+                Click check in to add a tenant to this room
+              </CardDescription>
+            </CardHeader>
+          </>
+        )}
       </Card>
     </>
   )
