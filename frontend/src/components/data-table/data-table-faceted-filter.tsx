@@ -20,7 +20,7 @@ import {
 } from '@/components/ui/popover'
 import useSWR from 'swr'
 import Axios from '@/lib/axios'
-import { ErrorMessage, Field } from 'formik'
+import { ErrorMessage, Field, useFormikContext } from 'formik'
 
 interface Renthouse {
   id: string
@@ -43,66 +43,65 @@ function getData(): Renthouse[] {
   return roomsData
 }
 
-export function ComboboxDemo() {
+export function ComboboxDemo( props : any ) {
   const [open, setOpen] = React.useState(false)
   const [value, setValue] = React.useState('')
   const renthouses = getData()
+  const {
+    setFieldValue,
+  } = useFormikContext();
   return (
-    <Popover open={open} onOpenChange={setOpen}>
-      <PopoverTrigger asChild>
-        <div className="">
-          <Button
-            variant="outline"
-            role="combobox"
-            aria-expanded={open}
-            className="w-full justify-between">
-            {value
-              ? renthouses.find(framework => framework.id === value)?.name
-              : 'Select renthouse...'}
-            <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
-          </Button>
-          <ErrorMessage
-            name="rent_house_id"
-            component="span"
-            className="text-xs text-red-500"
-          />
-        </div>
-      </PopoverTrigger>
-      <PopoverContent className="w-full p-0">
-        <Command>
-          <CommandInput placeholder="Search rental house..." />
-          <CommandEmpty>No framework found.</CommandEmpty>
-          <CommandList>
-            <CommandGroup>
-              {renthouses.map(framework => (
-                <CommandItem
-                  key={framework.id}
-                  value={framework.id}
-                  onSelect={currentValue => {
-                    setValue(currentValue === value ? '' : currentValue)
-                    setOpen(false)
-                  }}>
-                  <Check
-                    className={cn(
-                      'mr-2 h-4 w-4',
-                      value === framework.id ? 'opacity-100' : 'opacity-0',
-                    )}
-                  />
-                  {framework.name}
-                </CommandItem>
-              ))}
-            </CommandGroup>
-          </CommandList>
-        </Command>
-        <Field
-          id="rent_house_id"
-          name="rent_house_id"
-          type="radio"
-          value={value}
-          placeholder="Ex: Angle House"
-          className="hidden p-2 mt-1 w-full text-sm rounded-md shadow-sm border-gray-300 focus:border-slate-200 outline-none focus:ring-2 focus:ring-slate-200 "
-        />
-      </PopoverContent>
-    </Popover>
+    <>
+      <Popover open={open} onOpenChange={setOpen}>
+        <PopoverTrigger asChild>
+          <div className="">
+            <Button 
+              variant="outline"
+              role="combobox"
+              aria-expanded={open}
+              className="w-full justify-between">
+              {value
+                ? renthouses.find(framework => framework.id === value)?.name
+                : 'Select renthouse...'}
+              <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
+            </Button>
+            <ErrorMessage
+              name="rent_house_id"
+              component="span"
+              className="text-xs text-red-500"
+            />
+          </div>
+        </PopoverTrigger>
+        <PopoverContent className="w-full p-0">
+          <Command>
+            <CommandInput placeholder="Search rental house..." />
+            <CommandEmpty>No framework found.</CommandEmpty>
+            <CommandList>
+              <CommandGroup>
+                {renthouses.map(framework => (
+                  <CommandItem
+                    key={framework.id}
+                    value={framework.id}
+                    onSelect={currentValue => {
+                      setValue(currentValue === value ? '' : currentValue)
+                      setOpen(false)
+                      setFieldValue('rent_house_id', currentValue)
+                    }}>
+                    <option value={framework.id}></option>
+                    <Check
+                      className={cn(
+                        'mr-2 h-4 w-4',
+                        value === framework.id ? 'opacity-100' : 'opacity-0',
+                      )}
+                    />
+                    {framework.name}
+                  </CommandItem>
+                ))}
+              </CommandGroup>
+            </CommandList>
+          </Command>
+        </PopoverContent>
+      </Popover>
+    </>
   )
 }
