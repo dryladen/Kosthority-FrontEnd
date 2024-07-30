@@ -16,7 +16,7 @@ return new class extends Migration
             $table->string('name');
             $table->string('email')->unique()->nullable();
             $table->string('phone')->nullable();
-            $table->string('price'); // if the tenant have diff price from the room, we can use this field
+            $table->integer('price'); // if the tenant have diff price from the room, we can use this field
             $table->date('start_date');
             $table->date('end_date')->nullable();
             $table->string('image')->nullable();

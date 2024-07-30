@@ -8,9 +8,10 @@ import {
 } from '@/components/ui/dropdown-menu'
 import { Button } from '@/components/ui/button'
 import { MoreHorizontal, Pencil, ReceiptText, Trash2 } from 'lucide-react'
-import { EditData } from '@/components/EditData'
 import { DeleteAlert } from '@/components/DeleteAlert'
 import { useState } from 'react'
+import { ResponsiveDialog } from '@/components/ResponsiveDialog'
+import { EditData } from './EditData'
 
 interface Data<T> {
   id: string
@@ -22,6 +23,7 @@ interface Data<T> {
   end_date: string
   image: string
   room_id: string
+  created_at: string
 }
 
 interface DataTableRowActionsProps<TData> {
@@ -30,20 +32,19 @@ interface DataTableRowActionsProps<TData> {
 export function DataTableRowAction<TData extends Data<string>>({
   row,
 }: DataTableRowActionsProps<TData>) {
-  const renthouse = row.original
+  const tenants = row.original
   const [isEditOpen, setIsEditOpen] = useState(false)
   const [isDeleteOpen, setIsDeleteOpen] = useState(false)
   return (
     <>
-      <EditData
-        isOpen={isEditOpen}
-        setIsOpen={setIsEditOpen}
-        data={renthouse}
-      />
+      <ResponsiveDialog isOpen={isEditOpen} setIsOpen={setIsEditOpen} title='Edit Tenants'>
+        <EditData data={tenants} setIsOpen={setIsEditOpen} />
+      </ResponsiveDialog>
       <DeleteAlert
         isOpen={isDeleteOpen}
         setIsOpen={setIsDeleteOpen}
-        id={`${renthouse.id}`}
+        linkApi="/api/tenants"
+        id={tenants.id}
       />
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
