@@ -20,6 +20,7 @@ import {
 } from '@/components/ui/popover'
 import useSWR from 'swr'
 import Axios from '@/lib/axios'
+import { ErrorMessage, Field } from 'formik'
 
 interface Renthouse {
   id: string
@@ -49,16 +50,23 @@ export function ComboboxDemo() {
   return (
     <Popover open={open} onOpenChange={setOpen}>
       <PopoverTrigger asChild>
-        <Button
-          variant="outline"
-          role="combobox"
-          aria-expanded={open}
-          className="w-full justify-between">
-          {value
-            ? renthouses.find(framework => framework.id === value)?.name
-            : 'Select renthouse...'}
-          <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
-        </Button>
+        <div className="">
+          <Button
+            variant="outline"
+            role="combobox"
+            aria-expanded={open}
+            className="w-full justify-between">
+            {value
+              ? renthouses.find(framework => framework.id === value)?.name
+              : 'Select renthouse...'}
+            <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
+          </Button>
+          <ErrorMessage
+            name="rent_house_id"
+            component="span"
+            className="text-xs text-red-500"
+          />
+        </div>
       </PopoverTrigger>
       <PopoverContent className="w-full p-0">
         <Command>
@@ -86,6 +94,14 @@ export function ComboboxDemo() {
             </CommandGroup>
           </CommandList>
         </Command>
+        <Field
+          id="rent_house_id"
+          name="rent_house_id"
+          type="radio"
+          value={value}
+          placeholder="Ex: Angle House"
+          className="hidden p-2 mt-1 w-full text-sm rounded-md shadow-sm border-gray-300 focus:border-slate-200 outline-none focus:ring-2 focus:ring-slate-200 "
+        />
       </PopoverContent>
     </Popover>
   )

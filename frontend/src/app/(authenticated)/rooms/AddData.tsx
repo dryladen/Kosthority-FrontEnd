@@ -72,6 +72,7 @@ const AddData = () => {
   const LoginSchema = Yup.object().shape({
     name: Yup.string().required('The name field is required.'),
     description: Yup.string().required('The description field is required.'),
+    rent_house_id: Yup.string().required('The rent house field is required.'),
   })
   return (
     <Dialog open={open} onOpenChange={setOpen}>
@@ -98,26 +99,24 @@ const AddData = () => {
           }}>
           <Form className="space-y-4">
             <ComboboxDemo />
-            <div className="flex gap-3">
-              <div>
-                <label
-                  htmlFor="name"
-                  className="undefined block font-semibold text-sm text-gray-700">
-                  Name
-                </label>
-                <Field
-                  id="name"
-                  name="name"
-                  type="text"
-                  placeholder="Ex: Angle House"
-                  className="block p-2 mt-1 w-full text-sm rounded-md shadow-sm border-gray-300 focus:border-slate-200 outline-none focus:ring-2 focus:ring-slate-200 "
-                />
-                <ErrorMessage
-                  name="name"
-                  component="span"
-                  className="text-xs text-red-500"
-                />
-              </div>
+            <div>
+              <label
+                htmlFor="name"
+                className="undefined block font-semibold text-sm text-gray-700">
+                Name
+              </label>
+              <Field
+                id="name"
+                name="name"
+                type="text"
+                placeholder="Ex: Angle House"
+                className="block p-2 mt-1 w-full text-sm rounded-md shadow-sm border-gray-300 focus:border-slate-200 outline-none focus:ring-2 focus:ring-slate-200 "
+              />
+              <ErrorMessage
+                name="name"
+                component="span"
+                className="text-xs text-red-500"
+              />
             </div>
             <div>
               <label
