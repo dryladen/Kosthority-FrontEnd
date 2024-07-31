@@ -21,7 +21,7 @@ import Axios from '@/lib/axios'
 import { useToast } from './ui/use-toast'
 import { mutate } from 'swr'
 import { useAuth } from '@/hooks/auth'
-import { RentalHouse } from '@/types/types'
+import { Property } from '@/types/types'
 
 interface Values {
   name: string
@@ -36,7 +36,7 @@ export function EditData({
   data,
   setIsOpen,
 }: {
-  data: RentalHouse
+  data: Property
   setIsOpen: React.Dispatch<React.SetStateAction<boolean>>
 }) {
   const searchParams = useSearchParams()
@@ -57,9 +57,9 @@ export function EditData({
     { setSubmitting, setErrors }: FormikHelpers<Values>,
   ): Promise<any> => {
     try {
-      await Axios.put(`/api/renthouses/${data.id}`, values)
+      await Axios.put(`/api/properties/${data.id}`, values)
         .then(() => {
-          mutate('/api/renthouses')
+          mutate('/api/properties')
           toast({ title: 'Success', description: 'Data has been updated' })
         })
         .catch(error => {

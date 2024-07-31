@@ -25,7 +25,7 @@ interface Data<T> {
   user_id: number
   created_at: string
   updated_at: string
-  rooms: {
+  units: {
     data: Unit[]
   }
 }
@@ -64,7 +64,7 @@ export function DataTableRowAction<TData extends Data<string>>({
         <DropdownMenuContent align="end">
           <DropdownMenuLabel>Actions</DropdownMenuLabel>
           <DropdownMenuItem>
-            <Link href={`/houses/${property.id}`} className="flex">
+            <Link href={`/properties/${property.id}`} className="flex">
               <ReceiptText className="h-4 w-4 mr-2" />
               <span>Details</span>
             </Link>

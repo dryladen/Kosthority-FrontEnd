@@ -3,7 +3,6 @@ import { Copy, PlusCircle } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import {
   Dialog,
-  DialogClose,
   DialogContent,
   DialogDescription,
   DialogFooter,
@@ -51,9 +50,9 @@ const AddData = () => {
     { setSubmitting, setErrors }: FormikHelpers<Values>,
   ): Promise<any> => {
     try {
-      await Axios.post('/api/renthouses', values)
+      await Axios.post('/api/properties', values)
         .then(() => {
-          mutate('/api/renthouses')
+          mutate('/api/properties')
           toast({ title: 'Success', description: 'Data has been added' })
         })
         .catch(error => {

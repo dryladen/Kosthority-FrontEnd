@@ -8,20 +8,20 @@ import {
 } from '@/components/ui/card'
 import axios from '@/lib/axios'
 import useSWR from 'swr'
-import { RentalHouse } from '@/types/types'
+import { Property } from '@/types/types'
 import { DataTable } from '@/components/data-table/data-table'
 import { columns } from '../../units/columns'
 
-function getData(id: string): RentalHouse {
-  const { data: renthouses } = useSWR(`/api/renthouses/${id}`, () =>
+function getData(id: string): Property {
+  const { data: properties } = useSWR(`/api/properties/${id}`, () =>
     axios
-      .get(`/api/renthouses/${id}`)
+      .get(`/api/properties/${id}`)
       .then(res => res.data.data)
       .catch(error => {
         if (error.response.status !== 409) throw error
       }),
   )
-  return renthouses
+  return properties
 }
 
 const HousesPage = ({ params }: { params: { id: string } }) => {
@@ -69,7 +69,7 @@ const HousesPage = ({ params }: { params: { id: string } }) => {
         </CardHeader>
         <CardContent>
           {dataDetail && (
-            <DataTable columns={columns} data={dataDetail.rooms.data} />
+            <DataTable columns={columns} data={dataDetail.units.data} />
           )}
         </CardContent>
       </Card>

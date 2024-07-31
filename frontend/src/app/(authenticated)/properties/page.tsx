@@ -39,7 +39,7 @@ const HousesPage = () => {
   const dataTable = getData()
   return (
     <>
-      <Card x-chunk="dashboard-06-chunk-0">
+      <Card>
         <CardHeader>
           <CardTitle>Rental Houses</CardTitle>
           <CardDescription>
