@@ -3,32 +3,30 @@
 namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\RoomRequest;
-use App\Http\Resources\RoomCollection;
-use App\Http\Resources\RoomResource;
-use App\Models\Room;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
+use App\Http\Requests\UnitRequest;
+use App\Http\Resources\UnitCollection;
+use App\Http\Resources\UnitResource;
+use App\Models\Unit;
 use Illuminate\Support\Facades\Log;
 
-class RoomController extends Controller
+class UnitController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        return new RoomCollection(Room::latest()->get());
+        return new UnitCollection(Unit::latest()->get());
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(RoomRequest $request)
+    public function store(UnitRequest $request)
     {
         try {
-            $room = Room::create($request->validated());
-            return (new RoomResource($room))->response()->setStatusCode(201);
+            $unit = Unit::create($request->validated());
+            return (new UnitResource($unit))->response()->setStatusCode(201);
         } catch (\Exception $e) {
             Log::error('Error creating data: ' . $e->getMessage());
             return response()->json([
@@ -44,8 +42,8 @@ class RoomController extends Controller
     public function show(string $id)
     {
         try {
-            $room = Room::findOrFail($id);
-            return (new RoomResource($room))->response()->setStatusCode(200);
+            $unit = Unit::findOrFail($id);
+            return (new UnitResource($unit))->response()->setStatusCode(200);
         } catch (\Exception $e) {
             Log::error('Error fetching data: ' . $e->getMessage());
             return response()->json([
@@ -58,12 +56,12 @@ class RoomController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(RoomRequest $request, string $id)
+    public function update(UnitRequest $request, string $id)
     {
         try {
-            $room = Room::findOrFail($id);
-            $room->update($request->validated());
-            return (new RoomResource($room))->response()->setStatusCode(200);
+            $unit = Unit::findOrFail($id);
+            $unit->update($request->validated());
+            return (new UnitResource($unit))->response()->setStatusCode(200);
         } catch (\Exception $e) {
             Log::error('Error updating data: ' . $e->getMessage());
             return response()->json([
@@ -79,11 +77,11 @@ class RoomController extends Controller
     public function destroy(string $id)
     {
         try {
-            $room = Room::findOrFail($id);
-            $room->delete();
+            $unit = Unit::findOrFail($id);
+            $unit->delete();
             return response()->json([
                 'status' => 'Success',
-                'message' => 'Room deleted successfully',
+                'message' => 'Unit deleted successfully',
             ], 200);
         } catch (\Exception $e) {
             Log::error('Error deleting data: ' . $e->getMessage());

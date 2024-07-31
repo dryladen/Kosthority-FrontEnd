@@ -25,8 +25,8 @@ class PropertyController extends Controller
     public function store(PropertyRequest $request)
     {
         try {
-            $Property = Property::create($request->validated());    
-            return (new PropertyResource($Property))->response()->setStatusCode(201);
+            $property = Property::create($request->validated());    
+            return (new PropertyResource($property))->response()->setStatusCode(201);
         } catch (\Exception $e) {
             Log::error('Error creating data: ' . $e->getMessage());
             return response()->json([

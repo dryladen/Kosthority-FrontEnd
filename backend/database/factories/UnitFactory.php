@@ -9,7 +9,7 @@ use Illuminate\Database\Eloquent\Factories\Factory;
 /**
  * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Room>
  */
-class RoomFactory extends Factory
+class UnitFactory extends Factory
 {
     /**
      * Define the model's default state.
@@ -21,7 +21,8 @@ class RoomFactory extends Factory
         return [
             'name' => fake()->name(),
             'description' => fake()->sentence(),
-            'rent_house_id' => $attributes['rent_house_id'] ?? RentHouse::factory()->create(['owner_id' => 1]),
+            'price' => fake()->numberBetween(1000, 9000),
+            'property_id' => $attributes['property_id'] ?? RentHouse::factory()->create(['owner_id' => 1]),
         ];
     }
 }
