@@ -11,14 +11,12 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('payments', function (Blueprint $table) {
+        Schema::create('units', function (Blueprint $table) {
             $table->id();
-            $table->double('amount');
-            $table->double('paid');
-            $table->double('balance');
-            $table->string('method'); // cash, transfer, etc
-            $table->string('status');
-            $table->foreignId('lease_id')->constrained('leases')->onDelete('cascade');
+            $table->string('name');
+            $table->double('price');
+            $table->string('description');
+            $table->foreignId('rent_house_id')->constrained('rent_houses')->onDelete('cascade');
             $table->timestamps();
         });
     }
@@ -28,6 +26,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('payments');
+        Schema::dropIfExists('units');
     }
 };

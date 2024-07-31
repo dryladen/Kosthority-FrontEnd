@@ -11,14 +11,13 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('rent_houses', function (Blueprint $table) {
+        Schema::create('leases', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
-            $table->string('address');
-            $table->string('description');
-            $table->string('image');
-            $table->integer('price');
-            $table->foreignId('owner_id')->constrained('users')->onDelete('cascade');
+            $table->foreignId('unit_id')->constrained('units')->onDelete('cascade');
+            $table->foreignId('tenant_id')->constrained('tenants')->onDelete('cascade');
+            $table->date('start_date');
+            $table->date('end_date');
+            $table->double('amount');
             $table->timestamps();
         });
     }
@@ -28,6 +27,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('rent_houses');
+        Schema::dropIfExists('leases');
     }
 };
