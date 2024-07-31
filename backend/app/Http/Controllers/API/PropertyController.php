@@ -16,7 +16,7 @@ class PropertyController extends Controller
      */
     public function index()
     {
-        return new PropertyCollection(Auth::user()->property()->latest()->get());
+        return new PropertyCollection(Auth::user()->properties()->latest()->get());
     }
 
     /**

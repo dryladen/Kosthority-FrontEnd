@@ -22,7 +22,7 @@ class Unit extends Model
 
     public function property()
     {
-        return $this->belongsTo(RentHouse::class, 'property_id');
+        return $this->belongsTo(Property::class, 'property_id');
     }
 
     public function leases() : HasOne

@@ -11,7 +11,7 @@ import { MoreHorizontal, Pencil, ReceiptText, Trash2 } from 'lucide-react'
 import { DeleteAlert } from '@/components/DeleteAlert'
 import { useState } from 'react'
 import Link from 'next/link'
-import { RentalHouse, Room } from '@/types/types'
+import { Unit } from '@/types/types'
 import { ResponsiveDialog } from '@/components/ResponsiveDialog'
 import { EditData } from '@/components/EditData'
 
@@ -26,7 +26,7 @@ interface Data<T> {
   created_at: string
   updated_at: string
   rooms: {
-    data: Room[]
+    data: Unit[]
   }
 }
 
@@ -36,7 +36,7 @@ interface DataTableRowActionsProps<TData> {
 export function DataTableRowAction<TData extends Data<string>>({
   row,
 }: DataTableRowActionsProps<TData>) {
-  const renthouse = row.original
+  const property = row.original
   const [isEditOpen, setIsEditOpen] = useState(false)
   const [isDeleteOpen, setIsDeleteOpen] = useState(false)
   return (
@@ -44,15 +44,15 @@ export function DataTableRowAction<TData extends Data<string>>({
       <ResponsiveDialog
         isOpen={isEditOpen}
         setIsOpen={setIsEditOpen}
-        title="Edit Person" 
-        description='aloha'>
-        <EditData data={renthouse} setIsOpen={setIsEditOpen} />
+        title="Edit Property" 
+        description='Edit any data you want'>
+        <EditData data={property} setIsOpen={setIsEditOpen} />
       </ResponsiveDialog>
       <DeleteAlert
         isOpen={isDeleteOpen}
         setIsOpen={setIsDeleteOpen}
-        linkApi='/api/renthouses'
-        id = {renthouse.id}
+        linkApi='/api/properties'
+        id = {property.id}
       />
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
@@ -64,7 +64,7 @@ export function DataTableRowAction<TData extends Data<string>>({
         <DropdownMenuContent align="end">
           <DropdownMenuLabel>Actions</DropdownMenuLabel>
           <DropdownMenuItem>
-            <Link href={`/houses/${renthouse.id}`} className="flex">
+            <Link href={`/houses/${property.id}`} className="flex">
               <ReceiptText className="h-4 w-4 mr-2" />
               <span>Details</span>
             </Link>

@@ -9,21 +9,21 @@ import {
 import { columns } from './columns'
 import axios from '@/lib/axios'
 import useSWR from 'swr'
-import { RentalHouse } from '@/types/types'
+import { Property } from '@/types/types'
 import { DataTable } from '@/components/data-table/data-table'
 import AddData from '@/components/AddData'
 
-function getData(): RentalHouse[] {
-  const { data: renthouses } = useSWR('/api/renthouses', () =>
+function getData(): Property[] {
+  const { data: properties } = useSWR('/api/properties', () =>
     axios
-      .get('/api/renthouses')
+      .get('/api/properties')
       .then(res => res.data.data)
       .catch(error => {
         if (error.response.status !== 409) throw error
       }),
   )
-  const housesData: RentalHouse[] =
-    renthouses?.map((item: RentalHouse) => ({
+  const housesData: Property[] =
+    properties?.map((item: Property) => ({
       id: item.id,
       name: item.name,
       address: item.address,

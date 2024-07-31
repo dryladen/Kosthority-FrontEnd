@@ -10,7 +10,7 @@ import axios from '@/lib/axios'
 import useSWR from 'swr'
 import { RentalHouse } from '@/types/types'
 import { DataTable } from '@/components/data-table/data-table'
-import { columns } from '../../rooms/columns'
+import { columns } from '../../units/columns'
 
 function getData(id: string): RentalHouse {
   const { data: renthouses } = useSWR(`/api/renthouses/${id}`, () =>

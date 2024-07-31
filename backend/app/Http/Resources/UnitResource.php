@@ -22,7 +22,7 @@ class UnitResource extends JsonResource
             'updated_at' => $this->updated_at,
             'property' => $this->property,
             'links' => [
-                'self' => route('units.show', ['room' => $this->id]),
+                'self' => route('units.show', ['unit' => $this->id]),
             ],
         ];
     }

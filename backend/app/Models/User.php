@@ -49,8 +49,8 @@ class User extends Authenticatable
         ];
     }
     
-    public function rentHouse() : HasMany
+    public function properties() : HasMany
     {
-        return $this->hasMany(RentHouse::class,'owner_id');
+        return $this->hasMany(Property::class,'owner_id');
     }
 }

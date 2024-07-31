@@ -25,7 +25,7 @@ class PropertyResource extends JsonResource
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at,
             'links' => [
-                'self' => route('property.show', ['property' => $this->id]),
+                'self' => route('properties.show', ['property' => $this->id]),
             ],
         ];
     }
