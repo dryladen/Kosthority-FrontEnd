@@ -2,7 +2,7 @@
 
 namespace Database\Factories;
 
-use App\Models\Room;
+use App\Models\Unit;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -22,7 +22,6 @@ class TenantFactory extends Factory
             'email' => fake()->unique()->safeEmail(),
             'phone' => fake()->phoneNumber(),
             'image' => fake()->imageUrl(),
-            'unit_id' => $attributes['unit_id'] ?? Room::factory(),
         ];
     }
 }

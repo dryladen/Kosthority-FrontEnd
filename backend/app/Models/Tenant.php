@@ -23,8 +23,8 @@ class Tenant extends Model
         'room_id',
     ];
 
-    public function room()
+    public function leases()
     {
-        return $this->belongsTo(Room::class, 'room_id');
+        return $this->hasMany(Lease::class, 'tenant_id');
     }
 }

@@ -12,14 +12,16 @@ class Payment extends Model
     const TABLE = 'payments';
     protected $table = self::TABLE;
     protected $fillable = [
-        'paid_amount',
-        'unpaid_amount',
-        'payment_method',
-        'date',
-        'description',
-        'status',
-        'tenant_id',
-        'room_id',
-        'rent_house_id',
+        'lease_id',
+        'amount',
+        'paid',
+        'balance',
+        'method',
+        'status'
     ];
+
+    public function lease()
+    {
+        return $this->belongsTo(Lease::class, 'lease_id');
+    }
 }

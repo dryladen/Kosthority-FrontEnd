@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 
-class Room extends Model
+class Unit extends Model
 {
     use HasFactory, ModelHelpers;
 
@@ -25,8 +25,8 @@ class Room extends Model
         return $this->belongsTo(RentHouse::class, 'property_id');
     }
 
-    public function tenant() : HasOne
+    public function leases() : HasOne
     {
-        return $this->hasOne(Tenant::class, 'unit_id');
+        return $this->hasOne(Lease::class, 'unit_id');
     }
 }
