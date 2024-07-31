@@ -1,4 +1,4 @@
-import { DoorClosed, Home, LayoutDashboard, LineChart, Package, Users } from "lucide-react";
+import { CircleDollarSign, DoorClosed, Handshake, Home, LayoutDashboard, ReceiptText, Users } from "lucide-react";
 
 export const navLinks = [
   {
@@ -7,12 +7,12 @@ export const navLinks = [
     logo: LayoutDashboard,
   },
   {
-    name: 'Rental Houses',
+    name: 'Property',
     path: '/houses',
     logo: Home,
   },
   {
-    name: 'Rooms',
+    name: 'Units',
     path: '/rooms',
     logo: DoorClosed,
   },
@@ -22,13 +22,18 @@ export const navLinks = [
     logo: Users,
   },
   {
-    name: 'Payments',
+    name: 'Leases',
     path: '/payments',
-    logo: Package,
+    logo: Handshake,
   },
   {
-    name: 'Reports',
-    path: '/reports',
-    logo: LineChart,
+    name: 'Payments',
+    path: '/payments',
+    logo: CircleDollarSign,
+  },
+  {
+    name: 'Invoices',
+    path: '/invoices',
+    logo: ReceiptText,
   },
 ]

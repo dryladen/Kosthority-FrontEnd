@@ -12,6 +12,7 @@ import { DeleteAlert } from '@/components/DeleteAlert'
 import { useState } from 'react'
 import { ResponsiveDialog } from '@/components/ResponsiveDialog'
 import { EditData } from './EditData'
+import Link from 'next/link'
 
 interface Data<T> {
   id: string
@@ -37,7 +38,10 @@ export function DataTableRowAction<TData extends Data<string>>({
   const [isDeleteOpen, setIsDeleteOpen] = useState(false)
   return (
     <>
-      <ResponsiveDialog isOpen={isEditOpen} setIsOpen={setIsEditOpen} title='Edit Tenants'>
+      <ResponsiveDialog
+        isOpen={isEditOpen}
+        setIsOpen={setIsEditOpen}
+        title="Edit Tenants">
         <EditData data={tenants} setIsOpen={setIsEditOpen} />
       </ResponsiveDialog>
       <DeleteAlert
@@ -55,14 +59,11 @@ export function DataTableRowAction<TData extends Data<string>>({
         </DropdownMenuTrigger>
         <DropdownMenuContent align="end">
           <DropdownMenuLabel>Actions</DropdownMenuLabel>
-          {/* <DropdownMenuItem
-              onClick={() => navigator.clipboard.writeText(renthouse.id)}>
-              Copy renthouse ID
-            </DropdownMenuItem>
-            <DropdownMenuSeparator /> */}
           <DropdownMenuItem>
-            <ReceiptText className="h-4 w-4 mr-2" />
-            <span>Details</span>
+            <Link href={`/tenants/${tenants.id}`} className="flex">
+              <ReceiptText className="h-4 w-4 mr-2" />
+              <span>Details</span>
+            </Link>
           </DropdownMenuItem>
           <DropdownMenuItem>
             <button

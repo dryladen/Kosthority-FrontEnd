@@ -58,13 +58,13 @@ export const columns: ColumnDef<Room>[] = [
     cell: ({ row }) => {
       return (
         <>
-          {row.original.status === 'Available' ? (
-            <Badge variant="outline" className="text-[10px]">
-              Available
+          {row.original.status === 'Occupide' ? (
+            <Badge variant="default" className="text-[10px]">
+              Occupide
             </Badge>
           ) : (
-            <Badge variant="default" className="text-[10px]">
-              Taken
+            <Badge variant="destructive" className="text-[10px]">
+              Vacate
             </Badge>
           )}
         </>

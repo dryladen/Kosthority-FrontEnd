@@ -30,9 +30,7 @@ interface Data<T> {
   created_at: string
   updated_at: string
   rent_house_id: string
-  tenants: {
-    data: Tenants
-  }
+  tenants: Tenants
 }
 
 interface DataTableRowActionsProps<TData> {
