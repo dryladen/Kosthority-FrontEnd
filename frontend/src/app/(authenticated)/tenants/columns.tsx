@@ -7,12 +7,6 @@ import { DataTableColumnHeader } from '@/components/data-table/data-table-column
 
 export const columns: ColumnDef<Tenants>[] = [
   {
-    accessorKey: 'room_id',
-    header: ({ column }) => (
-      <DataTableColumnHeader column={column} title={'Room ID'} />
-    ),
-  },
-  {
     accessorKey: 'name',
     header: ({ column }) => (
       <DataTableColumnHeader column={column} title={'Name'} />
@@ -28,12 +22,6 @@ export const columns: ColumnDef<Tenants>[] = [
     accessorKey: 'phone',
     header: ({ column }) => (
       <DataTableColumnHeader column={column} title={'Phone'} />
-    ),
-  },
-  {
-    accessorKey: 'price',
-    header: ({ column }) => (
-      <DataTableColumnHeader column={column} title={'Price'} />
     ),
   },
   {

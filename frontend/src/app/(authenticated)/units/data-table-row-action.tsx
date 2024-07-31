@@ -69,7 +69,7 @@ export function DataTableRowAction<TData extends Data<string>>({
         <DropdownMenuContent align="end">
           <DropdownMenuLabel>Actions</DropdownMenuLabel>
           <DropdownMenuItem>
-            <Link href={`/rooms/${unit.id}`} className="flex">
+            <Link href={`/units/${unit.id}`} className="flex">
               <ReceiptText className="h-4 w-4 mr-2" />
               <span>Details</span>
             </Link>

@@ -19,11 +19,7 @@ interface Data<T> {
   name: string
   email: string
   phone: string
-  price: number
-  start_date: string
-  end_date: string
   image: string
-  room_id: string
   created_at: string
 }
 

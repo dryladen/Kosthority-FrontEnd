@@ -8,14 +8,12 @@ import {
 } from '@/components/ui/card'
 import axios from '@/lib/axios'
 import useSWR from 'swr'
-import { Room } from '@/types/types'
-import { DataTable } from '@/components/data-table/data-table'
-import { columns } from '../columns'
+import { Unit } from '@/types/types'
 
-function getData(id: string): Room {
-  const { data: rooms } = useSWR(`/api/rooms/${id}`, () =>
+function getData(id: string): Unit {
+  const { data: rooms } = useSWR(`/api/units/${id}`, () =>
     axios
-      .get(`/api/rooms/${id}`)
+      .get(`/api/units/${id}`)
       .then(res => res.data.data)
       .catch(error => {
         if (error.response.status !== 409) throw error
@@ -28,7 +26,7 @@ const HousesPage = ({ params }: { params: { id: string } }) => {
   const dataDetail = getData(params.id)
   return (
     <>
-      <Card x-chunk="dashboard-06-chunk-0">
+      <Card>
         <CardHeader>
           <CardTitle>{dataDetail?.name}</CardTitle>
           {dataDetail && (
@@ -36,13 +34,12 @@ const HousesPage = ({ params }: { params: { id: string } }) => {
               <p className="text-sm text-muted-foreground">
                 {dataDetail.description}
               </p>
-              {/* <p className="text-sm text-muted-foreground">
-                <span className="font-bold">Address : </span>{' '}
-                {dataDetail.address}
-              </p> */}
               <p className="text-sm text-muted-foreground">
-                <span className="font-bold">Renthouse : </span>{' '}
-                {dataDetail.rent_house_id}
+                <span className="font-bold">Price : </span> {dataDetail.price}
+              </p>
+              <p className="text-sm text-muted-foreground">
+                <span className="font-bold">Property : </span>{' '}
+                {dataDetail.property.name}
               </p>
               <p className="text-sm text-muted-foreground">
                 <span className="font-bold">Created At : </span>{' '}
@@ -59,34 +56,14 @@ const HousesPage = ({ params }: { params: { id: string } }) => {
         </CardHeader>
       </Card>
       <Card x-chunk="dashboard-06-chunk-0">
-        {dataDetail?.tenants?.name ? (
-          <>
-            <CardHeader>
-              <CardTitle>{dataDetail.tenants.name}</CardTitle>
-              <CardDescription>
-              <div className="rounded-sm text-muted-foreground">
-                <p className="text-sm">{dataDetail.tenants.email}</p>
-                <p className="text-sm">{dataDetail.tenants.phone}</p>
-                <p className="text-sm">{dataDetail.tenants.start_date}</p>
-                <p className="text-sm">{dataDetail.tenants.end_date}</p>
-                <p className="text-sm">{dataDetail.tenants.price}</p>
-              </div>
-              </CardDescription>
-            </CardHeader>
-            <CardContent>
-              <span>Payments</span>
-            </CardContent>
-          </>
-        ) : (
-          <>
-            <CardHeader>
-              <CardTitle>No Tenant</CardTitle>
-              <CardDescription>
-                Click check in to add a tenant to this room
-              </CardDescription>
-            </CardHeader>
-          </>
-        )}
+        <>
+          <CardHeader>
+            <CardTitle>No Tenant</CardTitle>
+            <CardDescription>
+              Click check in to add a tenant to this room
+            </CardDescription>
+          </CardHeader>
+        </>
       </Card>
     </>
   )

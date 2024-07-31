@@ -28,11 +28,7 @@ interface Values {
   name: string
   email: string
   phone: string
-  price: number
-  start_date: string
-  end_date: string
   image: string
-  room_id: string
 }
 
 const AddData = () => {
@@ -79,10 +75,7 @@ const AddData = () => {
     name: Yup.string().required('Name is required'),
     email: Yup.string().required('Email is required'),
     phone: Yup.string().required('Phone is required'),
-    price: Yup.number().required('Price is required'),
-    start_date: Yup.string().required('Start Date is required'),
     image: Yup.string().required('Image is required'),
-    room_id: Yup.string().required('Room is required'),
   })
   return (
     <Dialog open={open} onOpenChange={setOpen}>
@@ -107,14 +100,9 @@ const AddData = () => {
             name: '',
             email: '',
             phone: '',
-            price: 0,
-            start_date: '',
-            end_date: '',
             image: '',
-            room_id: '',
           }}>
           <Form className="space-y-4">
-            <ComboboxDemo name="room_id" apiUrl="rooms" title="Room" />
             <div>
               <label
                 htmlFor="name"
@@ -148,66 +136,21 @@ const AddData = () => {
                 className="block p-2 mt-1 w-full text-sm rounded-md shadow-sm border-gray-300 focus:border-slate-200 outline-none focus:ring-2 focus:ring-slate-200 "
               />
             </div>
-            <div className="flex gap-3">
-              <div>
-                <label
-                  htmlFor="phone"
-                  className="undefined block font-semibold text-sm text-gray-700">
-                  Phone
-                </label>
-                <Field
-                  id="phone"
-                  name="phone"
-                  type="text"
-                  placeholder="Ex: 08123456789"
-                  className="block p-2 mt-1 w-full text-sm rounded-md shadow-sm border-gray-300 focus:border-slate-200 outline-none focus:ring-2 focus:ring-slate-200 "
-                />
-              </div>
-              <div>
-                <label
-                  htmlFor="price"
-                  className="undefined block font-semibold text-sm text-gray-700">
-                  Price
-                </label>
-                <Field
-                  id="price"
-                  name="price"
-                  type="number"
-                  placeholder="Ex: 1000000"
-                  className="block p-2 mt-1 w-full text-sm rounded-md shadow-sm border-gray-300 focus:border-slate-200 outline-none focus:ring-2 focus:ring-slate-200 "
-                />
-              </div>
+            <div>
+              <label
+                htmlFor="phone"
+                className="undefined block font-semibold text-sm text-gray-700">
+                Phone
+              </label>
+              <Field
+                id="phone"
+                name="phone"
+                type="text"
+                placeholder="Ex: 08123456789"
+                className="block p-2 mt-1 w-full text-sm rounded-md shadow-sm border-gray-300 focus:border-slate-200 outline-none focus:ring-2 focus:ring-slate-200 "
+              />
             </div>
-            <div className="flex gap-3">
-              <div>
-                <label
-                  htmlFor="start_date"
-                  className="undefined block font-semibold text-sm text-gray-700">
-                  Start Date
-                </label>
-                <Field
-                  id="start_date"
-                  name="start_date"
-                  type="date"
-                  placeholder="Ex: 2021-12-31"
-                  className="block p-2 mt-1 w-full text-sm rounded-md shadow-sm border-gray-300 focus:border-slate-200 outline-none focus:ring-2 focus:ring-slate-200 "
-                />
-              </div>
-              <div>
-                <label
-                  htmlFor="end_date"
-                  className="undefined block font-semibold text-sm text-gray-700">
-                  End Date
-                </label>
-                <Field
-                  id="end_date"
-                  name="end_date"
-                  type="date"
-                  placeholder="Ex: 2021-12-31"
-                  className="block p-2 mt-1 w-full text-sm rounded-md shadow-sm border-gray-300 focus:border-slate-200 outline-none focus:ring-2 focus:ring-slate-200 "
-                />
-              </div>
-            </div>
+
             <div>
               <label
                 htmlFor="image"

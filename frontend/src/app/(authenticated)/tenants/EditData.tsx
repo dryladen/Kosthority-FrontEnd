@@ -21,18 +21,14 @@ import Axios from '@/lib/axios'
 import { mutate } from 'swr'
 import { useAuth } from '@/hooks/auth'
 import { useToast } from '@/components/ui/use-toast'
-import { Room, Tenants } from '@/types/types'
+import { Tenants } from '@/types/types'
 
 interface Values {
   id: string
   name: string
   email: string
   phone: string
-  price: number
-  start_date: string
-  end_date: string
   image: string
-  room_id: string
 }
 
 export function EditData({
@@ -86,8 +82,6 @@ export function EditData({
     name: Yup.string().required('Name is required'),
     email: Yup.string().required('Email is required'),
     phone: Yup.string().required('Phone is required'),
-    price: Yup.number().required('Price is required'),
-    start_date: Yup.string().required('Start Date is required'),
     image: Yup.string().required('Image is required'),
   })
   return (
@@ -99,11 +93,7 @@ export function EditData({
         name: data.name,
         email: data.email,
         phone: data.phone,
-        price: data.price,
-        start_date: data.start_date,
-        end_date: data.end_date,
         image: data.image,
-        room_id: data.room_id,
       }}>
       <Form className="space-y-4">
         <div>
@@ -139,7 +129,6 @@ export function EditData({
             className="block p-2 mt-1 w-full text-sm rounded-md shadow-sm border-gray-300 focus:border-slate-200 outline-none focus:ring-2 focus:ring-slate-200 "
           />
         </div>
-        <div className="flex gap-3">
           <div>
             <label
               htmlFor="phone"
@@ -153,51 +142,6 @@ export function EditData({
               placeholder="Ex: 08123456789"
               className="block p-2 mt-1 w-full text-sm rounded-md shadow-sm border-gray-300 focus:border-slate-200 outline-none focus:ring-2 focus:ring-slate-200 "
             />
-          </div>
-          <div>
-            <label
-              htmlFor="price"
-              className="undefined block font-semibold text-sm text-gray-700">
-              Price
-            </label>
-            <Field
-              id="price"
-              name="price"
-              type="number"
-              placeholder="Ex: 1000000"
-              className="block p-2 mt-1 w-full text-sm rounded-md shadow-sm border-gray-300 focus:border-slate-200 outline-none focus:ring-2 focus:ring-slate-200 "
-            />
-          </div>
-        </div>
-        <div className="flex gap-3">
-          <div>
-            <label
-              htmlFor="start_date"
-              className="undefined block font-semibold text-sm text-gray-700">
-              Start Date
-            </label>
-            <Field
-              id="start_date"
-              name="start_date"
-              type="date"
-              placeholder="Ex: 2021-12-31"
-              className="block p-2 mt-1 w-full text-sm rounded-md shadow-sm border-gray-300 focus:border-slate-200 outline-none focus:ring-2 focus:ring-slate-200 "
-            />
-          </div>
-          <div>
-            <label
-              htmlFor="end_date"
-              className="undefined block font-semibold text-sm text-gray-700">
-              End Date
-            </label>
-            <Field
-              id="end_date"
-              name="end_date"
-              type="date"
-              placeholder="Ex: 2021-12-31"
-              className="block p-2 mt-1 w-full text-sm rounded-md shadow-sm border-gray-300 focus:border-slate-200 outline-none focus:ring-2 focus:ring-slate-200 "
-            />
-          </div>
         </div>
         <div>
           <label

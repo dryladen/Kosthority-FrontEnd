@@ -22,7 +22,8 @@ class UnitResource extends JsonResource
             'updated_at' => $this->updated_at,
             'property' => ['id' => $this->property->id, 'name' => $this->property->name],
             'price' => $this->price,
-            'status' => $this->leases,
+            'status' => $this->leases ? 'occupied' : 'vacant',
+            'lease' => $this->leases ? new LeaseResource($this->leases) : null,
             'links' => [
                 'self' => route('units.show', ['unit' => $this->id]),
             ],

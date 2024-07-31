@@ -10,7 +10,6 @@ import { Tenants } from '@/types/types'
 import Axios from '@/lib/axios'
 import useSWR from 'swr'
 import { columns } from './columns'
-import { create } from 'domain'
 import { DataTable } from '@/components/data-table/data-table'
 import AddData from './AddData'
 function getData(): Tenants[] {
@@ -27,11 +26,7 @@ function getData(): Tenants[] {
       name: item.name,
       email: item.email,
       phone: item.phone,
-      start_date: item.start_date,
-      end_date: item.end_date,
       image: item.image,
-      price: item.price,
-      room_id: item.room_id,
       created_at: item.created_at,
     })) || []
   return housesData

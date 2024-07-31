@@ -18,7 +18,7 @@ class TenantController extends Controller
      */
     public function index()
     {
-        return TenantCollection::make(Tenant::all());
+        return TenantCollection::make(Tenant::latest()->get());
     }
 
     /**
