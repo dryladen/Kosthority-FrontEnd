@@ -23,9 +23,9 @@ class PropertyResource extends JsonResource
             'description' => $this->description,
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at,
-            'rooms' => new RoomCollection($this->rooms),
+            'units' => new UnitCollection($this->units),
             'links' => [
-                'self' => route('renthouses.show', ['renthouse' => $this->id]),
+                'self' => route('property.show', ['property' => $this->id]),
             ],
         ];
     }

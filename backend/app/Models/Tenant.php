@@ -16,11 +16,7 @@ class Tenant extends Model
         'name',
         'email',
         'phone',
-        'price',
-        'start_date',
-        'end_date',
         'image',
-        'room_id',
     ];
 
     public function leases()

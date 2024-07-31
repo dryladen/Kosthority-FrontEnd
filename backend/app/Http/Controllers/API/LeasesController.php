@@ -1,10 +1,11 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\API;
 
 use App\Models\Leases;
 use App\Http\Requests\StoreLeasesRequest;
 use App\Http\Requests\UpdateLeasesRequest;
+use App\Http\Controllers\Controller;
 
 class LeasesController extends Controller
 {

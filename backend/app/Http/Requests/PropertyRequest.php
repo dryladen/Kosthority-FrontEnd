@@ -26,7 +26,7 @@ class PropertyRequest extends FormRequest
             'address' => 'required|string',
             'description' => 'required|string',
             'image' => 'required|string',
-            'price' => 'required|integer',
+            'price' => 'required|numeric',
             'owner_id' => 'required|integer|exists:users,id',
         ];
     }

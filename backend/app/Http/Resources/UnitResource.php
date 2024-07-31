@@ -18,14 +18,12 @@ class UnitResource extends JsonResource
             'id' => $this->id,
             'name' => $this->name,
             'description' => $this->description,
-            'status' => $this->tenant ? 'Occupide' : 'Vacate',
-            'links' => [
-                'self' => route('rooms.show', ['room' => $this->id]),
-            ],
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at,
-            'tenants' => new TenantResource($this->tenant),
             'property' => $this->property,
+            'links' => [
+                'self' => route('units.show', ['room' => $this->id]),
+            ],
         ];
     }
 

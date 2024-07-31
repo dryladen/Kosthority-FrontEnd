@@ -19,16 +19,12 @@ class TenantResource extends JsonResource
             'name' => $this->name,
             'email' => $this->email,
             'phone' => $this->phone,
-            'price' => $this->price,
-            'start_date' => $this->start_date,
-            'end_date' => $this->end_date,
             'image' => $this->image,
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at,
             'links' => [
                 'self' => route('tenants.show', ['tenant' => $this->id]),
             ],
-            'room_id' => $this->room_id,
         ];
     }
 

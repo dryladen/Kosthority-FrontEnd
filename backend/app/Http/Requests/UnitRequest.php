@@ -24,7 +24,8 @@ class UnitRequest extends FormRequest
         return [
             'name' => 'required|string',
             'description' => 'required|string',
-            'rent_house_id' => 'nullable|integer',
+            'price' => 'required|numeric',
+            'property_id' => 'required|integer',
         ];
     }
 }
