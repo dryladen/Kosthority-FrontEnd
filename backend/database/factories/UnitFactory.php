@@ -2,8 +2,7 @@
 
 namespace Database\Factories;
 
-use App\Models\RentHouse;
-use App\Models\User;
+use App\Models\Property;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -22,7 +21,7 @@ class UnitFactory extends Factory
             'name' => fake()->name(),
             'description' => fake()->sentence(),
             'price' => fake()->numberBetween(1000, 9000),
-            'property_id' => $attributes['property_id'] ?? RentHouse::factory()->create(['owner_id' => 1]),
+            'property_id' => $attributes['property_id'] ?? Property::factory()->create(['owner_id' => 1]),
         ];
     }
 }

@@ -4,9 +4,9 @@ namespace Database\Seeders;
 
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 
-use App\Models\RentHouse;
-use App\Models\Room;
+use App\Models\Property;
 use App\Models\Tenant;
+use App\Models\Unit;
 use App\Models\User;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
@@ -26,12 +26,13 @@ class DatabaseSeeder extends Seeder
                 'password' => bcrypt('password')
             ]);
             User::factory()->create([
-                'name' => 'John Doe',
-                'email' => 'johndoe@gmail.com',
+                'name' => 'Admin',
+                'email' => 'admin@gmail.com',
                 'password' => bcrypt('password')
             ]);
-            RentHouse::factory()->has(Room::factory(3)->has(Tenant::factory(), 'tenant'), 'rooms')->create(['owner_id' => 1]);
-            RentHouse::factory()->has(Room::factory(3)->has(Tenant::factory(), 'tenant'), 'rooms')->create(['owner_id' => 2]);
+            Property::factory()->has(Unit::factory(3),'units')->create(['owner_id' => 1]);
+            Property::factory()->has(Unit::factory(3),'units')->create(['owner_id' => 2]);
+            Tenant::factory(5)->create();
             DB::commit();
         } catch (\Exception $e) {
             DB::rollBack();

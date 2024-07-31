@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
-class RentHouse extends Model
+class Property extends Model
 {
     use HasFactory, ModelHelpers;
 
@@ -29,6 +29,6 @@ class RentHouse extends Model
     }
     public function units() : HasMany
     {
-        return $this->hasMany(Room::class,'property_id');
+        return $this->hasMany(Unit::class,'property_id');
     }
 }
