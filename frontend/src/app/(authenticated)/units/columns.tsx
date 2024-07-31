@@ -35,7 +35,7 @@ export const columns: ColumnDef<Unit>[] = [
     cell: ({ row }) => {
       return (
         <>
-          {row.original.status === 'Occupide' ? (
+          {row.original.status === 'Occupied' ? (
             <Badge variant="default" className="text-[10px]">
               Occupide
             </Badge>

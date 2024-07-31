@@ -18,7 +18,7 @@ class Leases extends Model
         'unit_id',
         'start_date',
         'end_date',
-        'price',
+        'amount',
     ];
 
     public function tenant()

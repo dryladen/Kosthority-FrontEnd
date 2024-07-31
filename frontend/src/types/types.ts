@@ -38,7 +38,7 @@ export type Lease = {
   id: string
   start_date: string
   end_date: string
-  rent: number
+  amount: number
   tenant_id: string
   unit_id: string
   created_at: string

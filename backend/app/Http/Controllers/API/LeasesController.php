@@ -3,10 +3,10 @@
 namespace App\Http\Controllers\API;
 
 use App\Models\Leases;
-use App\Http\Requests\StoreLeasesRequest;
-use App\Http\Requests\UpdateLeasesRequest;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\LeasesRequest;
+use App\Http\Resources\LeaseCollection;
+use App\Http\Resources\LeaseResource;
 
 class LeasesController extends Controller
 {
@@ -15,7 +15,7 @@ class LeasesController extends Controller
      */
     public function index()
     {
-        return new LeasesCollection(Leases::all());
+        return new LeaseCollection(Leases::all());
     }
 
     /**
@@ -25,9 +25,8 @@ class LeasesController extends Controller
     {
         try {
             $leases = Leases::create($request->validated());
-            return (new LeasesResource($leases))->response()->setStatusCode(201);
+            return (new LeaseResource($leases))->response()->setStatusCode(201);
         } catch (\Exception $e) {
-            Log::error('Error creating data: ' . $e->getMessage());
             return response()->json([
                 'status' => 'Error',
                 'message' => $e->getMessage(),
@@ -44,7 +43,6 @@ class LeasesController extends Controller
             $leases = Leases::findOrFail($id);
             return (new LeasesResource($leases))->response()->setStatusCode(200);
         } catch (\Exception $e) {
-            Log::error('Error fetching data: ' . $e->getMessage());
             return response()->json([
                 'status' => 'Error',
                 'message' => $e->getMessage(),
@@ -62,7 +60,6 @@ class LeasesController extends Controller
             $leases->update($request->validated());
             return (new LeasesResource($leases))->response()->setStatusCode(200);
         } catch (\Exception $e) {
-            Log::error('Error updating data: ' . $e->getMessage());
             return response()->json([
                 'status' => 'Error',
                 'message' => $e->getMessage(),
@@ -83,7 +80,6 @@ class LeasesController extends Controller
                 'message' => 'Leases deleted successfully',
             ], 200);
         } catch (\Exception $e) {
-            Log::error('Error updating data: ' . $e->getMessage());
             return response()->json([
                 'status' => 'Error',
                 'message' => $e->getMessage(),
