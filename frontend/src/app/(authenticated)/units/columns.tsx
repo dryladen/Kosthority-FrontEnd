@@ -1,6 +1,6 @@
 'use client'
 
-import { Room } from '@/types/types'
+import { Unit } from '@/types/types'
 import { ColumnDef } from '@tanstack/react-table'
 import { DataTableRowAction } from './data-table-row-action'
 import { DataTableColumnHeader } from '@/components/data-table/data-table-column-header'
@@ -9,11 +9,11 @@ import { User, User2 } from 'lucide-react'
 // This type is used to define the shape of our data.
 // You can use a Zod schema here if you want.
 
-export const columns: ColumnDef<Room>[] = [
+export const columns: ColumnDef<Unit>[] = [
   {
-    accessorKey: 'rent_house_id',
+    accessorKey: 'property.name',
     header: ({ column }) => (
-      <DataTableColumnHeader column={column} title={'House Id'} />
+      <DataTableColumnHeader column={column} title={'Property'} />
     ),
   },
   {
@@ -23,30 +23,7 @@ export const columns: ColumnDef<Room>[] = [
     ),
     cell: ({ row }) => {
       return (
-        <>
-          <div className="flex ">
-            <div>
-              <p className="font-bold text-muted-foreground">
-                {row.original.name}
-                {/* <Badge variant="default" className="text-[10px]">
-              Available
-            </Badge> */}
-              </p>
-              {/* {row.original.tenants?.data
-                ? row.original.tenants.data.map(tenant => {
-                    return (
-                      <span className="text-muted-foreground flex gap-2">
-                        {tenant.name}
-                      </span>
-                    )
-                  })
-                : null} */}
-              <p className="text-muted-foreground text-[12px]">
-                <span className="font-bold">Checked In</span> : 12/12/12
-              </p>
-            </div>
-          </div>
-        </>
+        <p className="font-bold text-muted-foreground">{row.original.name}</p>
       )
     },
   },
@@ -75,6 +52,12 @@ export const columns: ColumnDef<Room>[] = [
     accessorKey: 'description',
     header: ({ column }) => (
       <DataTableColumnHeader column={column} title={'Description'} />
+    ),
+  },
+  {
+    accessorKey: 'price',
+    header: ({ column }) => (
+      <DataTableColumnHeader column={column} title={'Price'} />
     ),
   },
 

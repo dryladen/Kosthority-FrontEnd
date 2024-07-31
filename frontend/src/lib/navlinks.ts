@@ -8,12 +8,12 @@ export const navLinks = [
   },
   {
     name: 'Property',
-    path: '/houses',
+    path: '/properties',
     logo: Home,
   },
   {
     name: 'Units',
-    path: '/rooms',
+    path: '/units',
     logo: DoorClosed,
   },
   {

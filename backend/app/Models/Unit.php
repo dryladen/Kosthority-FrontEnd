@@ -27,6 +27,6 @@ class Unit extends Model
 
     public function leases() : HasOne
     {
-        return $this->hasOne(Lease::class, 'unit_id');
+        return $this->hasOne(Leases::class, 'unit_id');
     }
 }

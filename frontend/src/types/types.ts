@@ -19,7 +19,11 @@ export type Unit = {
   price: number
   created_at: string
   updated_at: string
-  property_id: string
+  property: {
+    id: string
+    name: string
+  }
+  status: string
 }
 export type Tenants = {
   id: string

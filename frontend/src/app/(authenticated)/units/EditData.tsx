@@ -21,20 +21,21 @@ import Axios from '@/lib/axios'
 import { mutate } from 'swr'
 import { useAuth } from '@/hooks/auth'
 import { useToast } from '@/components/ui/use-toast'
-import { Room } from '@/types/types'
+import { Unit } from '@/types/types'
 
 interface Values {
   id: string
   name: string
+  price: number
   description: string
-  rent_house_id: string
+  property_id: string
 }
 
 export function EditData({
   data,
   setIsOpen,
 }: {
-  data: Room
+  data: Unit
   setIsOpen: React.Dispatch<React.SetStateAction<boolean>>
 }) {
   const searchParams = useSearchParams()
@@ -57,9 +58,9 @@ export function EditData({
     { setSubmitting, setErrors }: FormikHelpers<Values>,
   ): Promise<any> => {
     try {
-      await Axios.put(`/api/rooms/${data.id}`, values)
+      await Axios.put(`/api/units/${data.id}`, values)
         .then(() => {
-          mutate('/api/rooms')
+          mutate('/api/units')
           toast({ title: 'Success', description: 'Data has been updated' })
         })
         .catch(error => {
@@ -79,6 +80,7 @@ export function EditData({
 
   const validated = Yup.object().shape({
     name: Yup.string().required('Name is required'),
+    price: Yup.number().required('Price is required'),
     description: Yup.string().required('Description is required'),
   })
   return (
@@ -89,29 +91,47 @@ export function EditData({
         id: data.id,
         name: data.name,
         description: data.description,
-        rent_house_id: data.rent_house_id,
+        price: data.price,
+        property_id: data.property.id,
       }}>
       <Form className="space-y-4">
-        <div className="flex gap-3">
-          <div>
-            <label
-              htmlFor="name"
-              className="undefined block font-semibold text-sm text-gray-700">
-              Name
-            </label>
-            <Field
-              id="name"
-              name="name"
-              type="text"
-              placeholder="Ex: Angle House"
-              className="block p-2 mt-1 w-full text-sm rounded-md shadow-sm border-gray-300 focus:border-slate-200 outline-none focus:ring-2 focus:ring-slate-200 "
-            />
-            <ErrorMessage
-              name="name"
-              component="span"
-              className="text-xs text-red-500"
-            />
-          </div>
+        <div>
+          <label
+            htmlFor="name"
+            className="undefined block font-semibold text-sm text-gray-700">
+            Name
+          </label>
+          <Field
+            id="name"
+            name="name"
+            type="text"
+            placeholder="Ex: Angle House"
+            className="block p-2 mt-1 w-full text-sm rounded-md shadow-sm border-gray-300 focus:border-slate-200 outline-none focus:ring-2 focus:ring-slate-200 "
+          />
+          <ErrorMessage
+            name="name"
+            component="span"
+            className="text-xs text-red-500"
+          />
+        </div>
+        <div>
+          <label
+            htmlFor="price"
+            className="undefined block font-semibold text-sm text-gray-700">
+            Price
+          </label>
+          <Field
+            id="price"
+            name="price"
+            type="text"
+            placeholder="Ex: Angle House"
+            className="block p-2 mt-1 w-full text-sm rounded-md shadow-sm border-gray-300 focus:border-slate-200 outline-none focus:ring-2 focus:ring-slate-200 "
+          />
+          <ErrorMessage
+            name="price"
+            component="span"
+            className="text-xs text-red-500"
+          />
         </div>
         <div>
           <label

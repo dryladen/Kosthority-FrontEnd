@@ -25,8 +25,9 @@ import { ComboboxDemo } from '@/components/data-table/data-table-faceted-filter'
 
 interface Values {
   name: string
+  price: number
   description: string
-  rent_house_id: string
+  property_id: string
 }
 
 const AddData = () => {
@@ -49,9 +50,9 @@ const AddData = () => {
     { setSubmitting, setErrors }: FormikHelpers<Values>,
   ): Promise<any> => {
     try {
-      await Axios.post('/api/rooms', values)
+      await Axios.post('/api/units', values)
         .then(() => {
-          mutate('/api/rooms')
+          mutate('/api/units')
           toast({ title: 'Success', description: 'Data has been added' })
         })
         .catch(error => {
@@ -71,8 +72,9 @@ const AddData = () => {
 
   const LoginSchema = Yup.object().shape({
     name: Yup.string().required('The name field is required.'),
+    price: Yup.number().required('The price field is required.'),
     description: Yup.string().required('The description field is required.'),
-    rent_house_id: Yup.string().required('The rent house field is required.'),
+    property_id: Yup.string().required('The rent house field is required.'),
   })
   return (
     <Dialog open={open} onOpenChange={setOpen}>
@@ -94,15 +96,35 @@ const AddData = () => {
           validationSchema={LoginSchema}
           initialValues={{
             name: '',
+            price: 0,
             description: '',
-            rent_house_id: '',
+            property_id: '',
           }}>
           <Form className="space-y-4">
             <ComboboxDemo
-              name={'rent_house_id'}
-              apiUrl="renthouses"
-              title="renthouse"
+              name={'property_id'}
+              apiUrl="properties"
+              title="Property"
             />
+            <div>
+              <label
+                htmlFor="price"
+                className="undefined block font-semibold text-sm text-gray-700">
+                Price
+              </label>
+              <Field
+                id="price"
+                name="price"
+                type="number"
+                placeholder="Ex: Angle House"
+                className="block p-2 mt-1 w-full text-sm rounded-md shadow-sm border-gray-300 focus:border-slate-200 outline-none focus:ring-2 focus:ring-slate-200 "
+              />
+              <ErrorMessage
+                name="price"
+                component="span"
+                className="text-xs text-red-500"
+              />
+            </div>
             <div>
               <label
                 htmlFor="name"

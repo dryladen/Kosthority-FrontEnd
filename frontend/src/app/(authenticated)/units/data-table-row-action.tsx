@@ -18,7 +18,6 @@ import {
 import { DeleteAlert } from '@/components/DeleteAlert'
 import { useState } from 'react'
 import { EditData } from './EditData'
-import { Tenants } from '@/types/types'
 import { ResponsiveDialog } from '@/components/ResponsiveDialog'
 import Link from 'next/link'
 
@@ -29,8 +28,11 @@ interface Data<T> {
   status: string
   created_at: string
   updated_at: string
-  rent_house_id: string
-  tenants: Tenants
+  price: number
+  property: {
+    id: string
+    name: string
+  }
 }
 
 interface DataTableRowActionsProps<TData> {
@@ -39,7 +41,7 @@ interface DataTableRowActionsProps<TData> {
 export function DataTableRowAction<TData extends Data<string>>({
   row,
 }: DataTableRowActionsProps<TData>) {
-  const room = row.original
+  const unit = row.original
   const [isEditOpen, setIsEditOpen] = useState(false)
   const [isDeleteOpen, setIsDeleteOpen] = useState(false)
   return (
@@ -49,13 +51,13 @@ export function DataTableRowAction<TData extends Data<string>>({
         setIsOpen={setIsEditOpen}
         title="Edit Data"
         description="Editing data...">
-        <EditData data={room} setIsOpen={setIsEditOpen} />
+        <EditData data={unit} setIsOpen={setIsEditOpen} />
       </ResponsiveDialog>
       <DeleteAlert
         isOpen={isDeleteOpen}
         setIsOpen={setIsDeleteOpen}
-        linkApi="/api/rooms"
-        id={room.id}
+        linkApi="/api/units"
+        id={unit.id}
       />
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
@@ -67,7 +69,7 @@ export function DataTableRowAction<TData extends Data<string>>({
         <DropdownMenuContent align="end">
           <DropdownMenuLabel>Actions</DropdownMenuLabel>
           <DropdownMenuItem>
-            <Link href={`/rooms/${room.id}`} className="flex">
+            <Link href={`/rooms/${unit.id}`} className="flex">
               <ReceiptText className="h-4 w-4 mr-2" />
               <span>Details</span>
             </Link>
