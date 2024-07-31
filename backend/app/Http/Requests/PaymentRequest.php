@@ -22,7 +22,12 @@ class PaymentRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'lease_id' => ['required', 'integer', 'exists:leases,id'],
+            'amount' => ['required', 'numeric'],
+            'paid' => ['required', 'numeric'],
+            'balance' => ['required', 'numeric'],
+            'method' => ['required', 'string'],
+            'status' => ['required', 'string'],
         ];
     }
 }
