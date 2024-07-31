@@ -3,33 +3,30 @@
 namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\RentHouseRequest;
-use App\Http\Resources\RentHouseCollection;
-use App\Http\Resources\RentHouseResource;
-use App\Models\RentHouse;
-use Illuminate\Auth\Events\Validated;
-use Illuminate\Http\Request;
+use App\Http\Requests\PropertyRequest;
+use App\Http\Resources\PropertyCollection;
+use App\Http\Resources\PropertyResource;
+use App\Models\Property;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\DB;
 
-class RentHouseController extends Controller
+class PropertyController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        return new RentHouseCollection(Auth::user()->rentHouse()->latest()->get());
+        return new PropertyCollection(Auth::user()->property()->latest()->get());
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(RentHouseRequest $request)
+    public function store(PropertyRequest $request)
     {
         try {
-            $rentHouse = RentHouse::create($request->validated());
-            return (new RentHouseResource($rentHouse))->response()->setStatusCode(201);
+            $Property = Property::create($request->validated());    
+            return (new PropertyResource($Property))->response()->setStatusCode(201);
         } catch (\Exception $e) {
             Log::error('Error creating data: ' . $e->getMessage());
             return response()->json([
@@ -42,10 +39,10 @@ class RentHouseController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(RentHouse $renthouse)
+    public function show(Property $property)
     {
         try {
-            return (new RentHouseResource($renthouse))->response()->setStatusCode(200);
+            return (new PropertyResource($property))->response()->setStatusCode(200);
         } catch (\Exception $e) {
             Log::error('Error fetching data: ' . $e->getMessage());
             return response()->json([
@@ -58,12 +55,12 @@ class RentHouseController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(RentHouseRequest $request, string $id)
+    public function update(PropertyRequest $request, string $id)
     {
         try {
-            $renthouse = RentHouse::findOrFail($id);
-            $renthouse->update($request->validated());
-            return (new RentHouseResource($renthouse))->response()->setStatusCode(200);
+            $property = Property::findOrFail($id);
+            $property->update($request->validated());
+            return (new PropertyResource($property))->response()->setStatusCode(200);
         } catch (\Exception $e) {
             Log::error('Error editing data: ' . $e->getMessage());
             return response()->json([
@@ -79,8 +76,8 @@ class RentHouseController extends Controller
     public function destroy(string  $id)
     {
         try {
-            $renthouse = RentHouse::findOrFail($id);
-            $renthouse->delete();
+            $property = Property::findOrFail($id);
+            $property->delete();
             return response()->json([
                 'status' => 'Success',
                 'message' => 'Data deleted successfuly',

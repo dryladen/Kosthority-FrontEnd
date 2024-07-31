@@ -16,7 +16,7 @@ return new class extends Migration
             $table->string('name');
             $table->double('price');
             $table->string('description');
-            $table->foreignId('rent_house_id')->constrained('rent_houses')->onDelete('cascade');
+            $table->foreignId('property_id')->constrained('properties')->onDelete('cascade');
             $table->timestamps();
         });
     }

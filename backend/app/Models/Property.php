@@ -12,7 +12,7 @@ class RentHouse extends Model
 {
     use HasFactory, ModelHelpers;
 
-    const TABLE = 'rent_houses';
+    const TABLE = 'properties';
     protected $table = self::TABLE;
     protected $fillable = [
         'name',
@@ -27,8 +27,8 @@ class RentHouse extends Model
     {
         return $this->belongsTo(User::class,'owner_id');
     }
-    public function rooms() : HasMany
+    public function units() : HasMany
     {
-        return $this->hasMany(Room::class,'rent_house_id');
+        return $this->hasMany(Room::class,'property_id');
     }
 }
