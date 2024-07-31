@@ -23,7 +23,7 @@ export const navLinks = [
   },
   {
     name: 'Leases',
-    path: '/payments',
+    path: '/leases',
     logo: Handshake,
   },
   {

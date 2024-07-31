@@ -24,9 +24,9 @@ const Transactions = () => {
     <Card className="xl:col-span-2">
       <CardHeader className="flex flex-row items-center">
         <div className="grid gap-2">
-          <CardTitle>Transactions</CardTitle>
+          <CardTitle>Invoices</CardTitle>
           <CardDescription>
-            Recent transactions from your store.
+            Recent invoices from your bussiness.
           </CardDescription>
         </div>
         <Button asChild size="sm" className="ml-auto gap-1">
@@ -40,10 +40,10 @@ const Transactions = () => {
         <Table>
           <TableHeader>
             <TableRow>
-              <TableHead>Customer</TableHead>
-              <TableHead className="hidden xl:table-column">Type</TableHead>
-              <TableHead className="hidden xl:table-column">Status</TableHead>
-              <TableHead className="hidden xl:table-column">Date</TableHead>
+              <TableHead>Tenants</TableHead>
+              <TableHead className="">Type</TableHead>
+              <TableHead className="">Status</TableHead>
+              <TableHead className="">Date</TableHead>
               <TableHead className="text-right">Amount</TableHead>
             </TableRow>
           </TableHeader>
@@ -55,13 +55,13 @@ const Transactions = () => {
                   liam@example.com
                 </div>
               </TableCell>
-              <TableCell className="hidden xl:table-column">Sale</TableCell>
-              <TableCell className="hidden xl:table-column">
+              <TableCell className="">Sale</TableCell>
+              <TableCell className="">
                 <Badge className="text-xs" variant="outline">
                   Approved
                 </Badge>
               </TableCell>
-              <TableCell className="hidden md:table-cell lg:hidden xl:table-column">
+              <TableCell className="hidden md:table-cell lg:">
                 2023-06-23
               </TableCell>
               <TableCell className="text-right">$250.00</TableCell>
@@ -73,13 +73,13 @@ const Transactions = () => {
                   olivia@example.com
                 </div>
               </TableCell>
-              <TableCell className="hidden xl:table-column">Refund</TableCell>
-              <TableCell className="hidden xl:table-column">
+              <TableCell className="">Refund</TableCell>
+              <TableCell className="">
                 <Badge className="text-xs" variant="outline">
                   Declined
                 </Badge>
               </TableCell>
-              <TableCell className="hidden md:table-cell lg:hidden xl:table-column">
+              <TableCell className="hidden md:table-cell lg:">
                 2023-06-24
               </TableCell>
               <TableCell className="text-right">$150.00</TableCell>
@@ -91,15 +91,15 @@ const Transactions = () => {
                   noah@example.com
                 </div>
               </TableCell>
-              <TableCell className="hidden xl:table-column">
+              <TableCell className="">
                 Subscription
               </TableCell>
-              <TableCell className="hidden xl:table-column">
+              <TableCell className="">
                 <Badge className="text-xs" variant="outline">
                   Approved
                 </Badge>
               </TableCell>
-              <TableCell className="hidden md:table-cell lg:hidden xl:table-column">
+              <TableCell className="hidden md:table-cell lg:">
                 2023-06-25
               </TableCell>
               <TableCell className="text-right">$350.00</TableCell>
@@ -111,13 +111,13 @@ const Transactions = () => {
                   emma@example.com
                 </div>
               </TableCell>
-              <TableCell className="hidden xl:table-column">Sale</TableCell>
-              <TableCell className="hidden xl:table-column">
+              <TableCell className="">Sale</TableCell>
+              <TableCell className="">
                 <Badge className="text-xs" variant="outline">
                   Approved
                 </Badge>
               </TableCell>
-              <TableCell className="hidden md:table-cell lg:hidden xl:table-column">
+              <TableCell className="hidden md:table-cell lg:">
                 2023-06-26
               </TableCell>
               <TableCell className="text-right">$450.00</TableCell>
@@ -129,13 +129,13 @@ const Transactions = () => {
                   liam@example.com
                 </div>
               </TableCell>
-              <TableCell className="hidden xl:table-column">Sale</TableCell>
-              <TableCell className="hidden xl:table-column">
+              <TableCell className="">Sale</TableCell>
+              <TableCell className="">
                 <Badge className="text-xs" variant="outline">
                   Approved
                 </Badge>
               </TableCell>
-              <TableCell className="hidden md:table-cell lg:hidden xl:table-column">
+              <TableCell className="hidden md:table-cell lg:">
                 2023-06-27
               </TableCell>
               <TableCell className="text-right">$550.00</TableCell>
