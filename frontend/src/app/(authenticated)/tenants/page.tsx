@@ -12,6 +12,7 @@ import useSWR from 'swr'
 import { columns } from './columns'
 import { create } from 'domain'
 import { DataTable } from '@/components/data-table/data-table'
+import AddData from './AddData'
 function getData(): Tenants[] {
   const { data: renthouses } = useSWR('/api/tenants', () =>
     Axios.get('/api/tenants')
@@ -44,7 +45,7 @@ const TenantsPage = () => {
         <CardDescription>A list of all tenants in the system.</CardDescription>
       </CardHeader>
       <CardContent>
-        <DataTable columns={columns} data={dataTable} />
+        <DataTable columns={columns} data={dataTable} children={<AddData/>} />
       </CardContent>
     </Card>
   )

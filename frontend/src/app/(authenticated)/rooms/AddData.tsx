@@ -97,9 +97,12 @@ const AddData = () => {
             description: '',
             rent_house_id: '',
           }}>
-            
           <Form className="space-y-4">
-            <ComboboxDemo />
+            <ComboboxDemo
+              name={'rent_house_id'}
+              apiUrl="renthouses"
+              title="renthouse"
+            />
             <div>
               <label
                 htmlFor="name"

@@ -22,51 +22,57 @@ import useSWR from 'swr'
 import Axios from '@/lib/axios'
 import { ErrorMessage, Field, useFormikContext } from 'formik'
 
-interface Renthouse {
+interface Values {
   id: string
   name: string
 }
 
-function getData(): Renthouse[] {
-  const { data: renthouses } = useSWR('/api/renthouses', () =>
-    Axios.get('/api/renthouses')
+function getData(field: string): Values[] {
+  const { data: dataApi } = useSWR(`/api/${field}`, () =>
+    Axios.get(`/api/${field}`)
       .then(res => res.data.data)
       .catch(error => {
         if (error.response.status !== 409) throw error
       }),
   )
-  const roomsData: Renthouse[] =
-    renthouses?.map((item: Renthouse) => ({
+  const dataArray: Values[] =
+    dataApi?.map((item: Values) => ({
       id: `${item.id}`,
       name: item.name,
     })) || []
-  return roomsData
+  return dataArray
 }
 
-export function ComboboxDemo( props : any ) {
+export function ComboboxDemo({
+  name,
+  apiUrl,
+  title,
+}: {
+  name : string
+  apiUrl: string
+  title: string
+}) {
   const [open, setOpen] = React.useState(false)
   const [value, setValue] = React.useState('')
-  const renthouses = getData()
-  const {
-    setFieldValue,
-  } = useFormikContext();
+  const dataList = getData(apiUrl)
+  const { setFieldValue } = useFormikContext()
   return (
     <>
       <Popover open={open} onOpenChange={setOpen}>
         <PopoverTrigger asChild>
           <div className="">
-            <Button 
+            <Button
               variant="outline"
               role="combobox"
               aria-expanded={open}
               className="w-full justify-between">
               {value
-                ? renthouses.find(framework => framework.id === value)?.name
-                : 'Select renthouse...'}
+                ? dataList.find(framework => framework.id === value)?.name
+                : `Select ${title}...`}
               <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
             </Button>
             <ErrorMessage
-              name="rent_house_id"
+              name={name}  
               component="span"
               className="text-xs text-red-500"
             />
@@ -74,18 +80,18 @@ export function ComboboxDemo( props : any ) {
         </PopoverTrigger>
         <PopoverContent className="w-full p-0">
           <Command>
-            <CommandInput placeholder="Search rental house..." />
+            <CommandInput placeholder={`Search ${title} ...`} />
             <CommandEmpty>No framework found.</CommandEmpty>
             <CommandList>
               <CommandGroup>
-                {renthouses.map(framework => (
+                {dataList.map(framework => (
                   <CommandItem
                     key={framework.id}
                     value={framework.id}
                     onSelect={currentValue => {
-                      setValue(currentValue === value ? '' : currentValue)
+                      setValue(currentValue)
                       setOpen(false)
-                      setFieldValue('rent_house_id', currentValue)
+                      setFieldValue(name, currentValue)
                     }}>
                     <option value={framework.id}></option>
                     <Check
