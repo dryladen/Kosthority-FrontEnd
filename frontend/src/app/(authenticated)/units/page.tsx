@@ -13,15 +13,15 @@ import { columns } from './columns'
 import { DataTable } from '@/components/data-table/data-table'
 import AddData from './AddData'
 function getData(): Unit[] {
-  const { data: renthouses }: { data: Unit[] } = useSWR('/api/units', () =>
+  const { data: properties }: { data: Unit[] } = useSWR('/api/units', () =>
     Axios.get('/api/units')
       .then(res => res.data.data)
       .catch(error => {
         if (error.response.status !== 409) throw error
       }),
   )
-  const roomsData: Unit[] =
-    renthouses?.map((item: Unit) => ({
+  const unitDate: Unit[] =
+    properties?.map((item: Unit) => ({
       id: item.id,
       name: item.name,
       status: item.status,
@@ -31,12 +31,12 @@ function getData(): Unit[] {
       property: item.property,
       price: item.price,
     })) || []
-  return roomsData
+  return unitDate
 }
 const TenantsPage = () => {
   const dataTable = getData()
   return (
-    <Card x-chunk="dashboard-06-chunk-0">
+    <Card>
       <CardHeader>
         <CardTitle>Rooms</CardTitle>
         <CardDescription>A list of all units in the system.</CardDescription>

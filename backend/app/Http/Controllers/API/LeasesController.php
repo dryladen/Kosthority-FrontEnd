@@ -41,7 +41,7 @@ class LeasesController extends Controller
     {
         try {
             $leases = Leases::findOrFail($id);
-            return (new LeasesResource($leases))->response()->setStatusCode(200);
+            return (new LeaseResource($leases))->response()->setStatusCode(200);
         } catch (\Exception $e) {
             return response()->json([
                 'status' => 'Error',
@@ -58,7 +58,7 @@ class LeasesController extends Controller
         try {
             $leases = Leases::findOrFail($id);
             $leases->update($request->validated());
-            return (new LeasesResource($leases))->response()->setStatusCode(200);
+            return (new LeaseResource($leases))->response()->setStatusCode(200);
         } catch (\Exception $e) {
             return response()->json([
                 'status' => 'Error',

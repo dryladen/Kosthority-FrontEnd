@@ -35,12 +35,14 @@ interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[]
   data: TData[]
   children?: React.ReactNode
+  search?: string
 }
 
 export function DataTable<TData, TValue>({
   columns,
   data,
   children,
+  search,
 }: DataTableProps<TData, TValue>) {
   const [sorting, setSorting] = React.useState<SortingState>([])
   const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>(
@@ -69,10 +71,16 @@ export function DataTable<TData, TValue>({
     <>
       <div className="flex items-center pb-4">
         <Input
-          placeholder="Search name..."
-          value={(table.getColumn('name')?.getFilterValue() as string) ?? ''}
+          placeholder={`Search ${search??'name'}...`}
+          value={
+            (table
+              .getColumn(`${search ?? 'name'}`)
+              ?.getFilterValue() as string) ?? ''
+          }
           onChange={event =>
-            table.getColumn('name')?.setFilterValue(event.target.value)
+            table
+              .getColumn(`${search ?? 'name'}`)
+              ?.setFilterValue(event.target.value)
           }
           className="max-w-sm"
         />
@@ -80,7 +88,9 @@ export function DataTable<TData, TValue>({
           <DropdownMenuTrigger asChild>
             <Button variant="outline" className="ml-4 sm:ml-auto mr-4 gap-2">
               <Eye className="h-4 w-4" />
-              <span className='sr-only sm:not-sr-only sm:whitespace-nowrap'>Views</span>
+              <span className="sr-only sm:not-sr-only sm:whitespace-nowrap">
+                Views
+              </span>
             </Button>
           </DropdownMenuTrigger>
           <DropdownMenuContent align="end">
@@ -152,7 +162,8 @@ export function DataTable<TData, TValue>({
       </div>
       <div className="flex items-center justify-end space-x-2 py-4">
         <div className="text-xs text-muted-foreground">
-          Showing <strong>1-{table.getRowModel().rows?.length}</strong> of <strong>{table.getRowCount()}</strong> data
+          Showing <strong>1-{table.getRowModel().rows?.length}</strong> of{' '}
+          <strong>{table.getRowCount()}</strong> data
         </div>
         <Button
           variant="outline"

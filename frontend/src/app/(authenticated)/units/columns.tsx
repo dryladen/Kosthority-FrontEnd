@@ -11,12 +11,6 @@ import { User, User2 } from 'lucide-react'
 
 export const columns: ColumnDef<Unit>[] = [
   {
-    accessorKey: 'property.name',
-    header: ({ column }) => (
-      <DataTableColumnHeader column={column} title={'Property'} />
-    ),
-  },
-  {
     accessorKey: 'name',
     header: ({ column }) => (
       <DataTableColumnHeader column={column} title={'Name'} />
@@ -49,18 +43,31 @@ export const columns: ColumnDef<Unit>[] = [
     },
   },
   {
+    accessorKey: 'price',
+    header: ({ column }) => (
+      <DataTableColumnHeader column={column} title={'Price'} />
+    ),
+    cell: ({ row }) => {
+      const price = row.original.price
+      const formattedPrice = new Intl.NumberFormat('id-ID', {
+        style: 'currency',
+        currency: 'IDR',
+      }).format(price)
+      return <p className="text-muted-foreground">{formattedPrice}</p>
+    },
+  },
+  {
+    accessorKey: 'property.name',
+    header: ({ column }) => (
+      <DataTableColumnHeader column={column} title={'Property'} />
+    ),
+  },
+  {
     accessorKey: 'description',
     header: ({ column }) => (
       <DataTableColumnHeader column={column} title={'Description'} />
     ),
   },
-  {
-    accessorKey: 'price',
-    header: ({ column }) => (
-      <DataTableColumnHeader column={column} title={'Price'} />
-    ),
-  },
-
   // {
   //   accessorKey: 'created_at',
   //   header: ({ column }) => (

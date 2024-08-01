@@ -39,7 +39,7 @@ export function DataTableRowAction<TData extends Data<string>>({
       <ResponsiveDialog
         isOpen={isEditOpen}
         setIsOpen={setIsEditOpen}
-        title="Edit Tenants">
+        title="Edit Lease" description='Edit your data here'>
         <EditData data={leases} setIsOpen={setIsEditOpen} />
       </ResponsiveDialog>
       <DeleteAlert

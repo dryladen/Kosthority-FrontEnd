@@ -59,9 +59,9 @@ export function EditData({
     { setSubmitting, setErrors }: FormikHelpers<Values>,
   ): Promise<any> => {
     try {
-      await Axios.put(`/api/Lease/${data.id}`, values)
+      await Axios.put(`/api/leases/${data.id}`, values)
         .then(() => {
-          mutate('/api/Lease')
+          mutate('/api/leases')
           toast({ title: 'Success', description: 'Data has been updated' })
         })
         .catch(error => {
@@ -82,7 +82,7 @@ export function EditData({
   const validated = Yup.object().shape({
     start_date: Yup.string().required('Start Date is required'),
     end_date: Yup.string().required('End Date is required'),
-    rent: Yup.number().required('Rent is required'),
+    amount: Yup.number().required('Rent is required'),
     tenant_id: Yup.string().required('Tenant ID is required'),
     unit_id: Yup.string().required('Unit ID is required'),
   })
@@ -97,69 +97,66 @@ export function EditData({
         amount: data.amount,
         tenant_id: data.tenant_id,
         unit_id: data.unit_id,
-
       }}>
       <Form className="space-y-4">
         <div>
           <label
-            htmlFor="name"
+            htmlFor="amount"
             className="undefined block font-semibold text-sm text-gray-700">
-            Name
+            Amount
           </label>
           <Field
-            id="name"
-            name="name"
+            id="amount"
+            name="amount"
             type="text"
             placeholder="Ex: Angle House"
             className="block p-2 mt-1 w-full text-sm rounded-md shadow-sm border-gray-300 focus:border-slate-200 outline-none focus:ring-2 focus:ring-slate-200 "
           />
           <ErrorMessage
-            name="name"
+            name="amount"
             component="span"
             className="text-xs text-red-500"
           />
         </div>
-        <div className="">
-          <label
-            htmlFor="email"
-            className="undefined block font-semibold text-sm text-gray-700">
-            Email
-          </label>
-          <Field
-            id="email"
-            name="email"
-            type="text"
-            placeholder="Ex: johndoe@gmail.com"
-            className="block p-2 mt-1 w-full text-sm rounded-md shadow-sm border-gray-300 focus:border-slate-200 outline-none focus:ring-2 focus:ring-slate-200 "
-          />
-        </div>
-          <div>
+        <div className="flex gap-3">
+          <div className="">
             <label
-              htmlFor="phone"
+              htmlFor="start_date"
               className="undefined block font-semibold text-sm text-gray-700">
-              Phone
+              Start Date
             </label>
             <Field
-              id="phone"
-              name="phone"
-              type="text"
-              placeholder="Ex: 08123456789"
+              id="start_date"
+              name="start_date"
+              type="date"
+              placeholder="Ex: johndoe@gmail.com"
               className="block p-2 mt-1 w-full text-sm rounded-md shadow-sm border-gray-300 focus:border-slate-200 outline-none focus:ring-2 focus:ring-slate-200 "
             />
-        </div>
-        <div>
-          <label
-            htmlFor="image"
-            className="undefined block font-semibold text-sm text-gray-700">
-            Image
-          </label>
-          <Field
-            id="image"
-            name="image"
-            type="text"
-            placeholder="Ex: https://example.com/image.jpg"
-            className="block p-2 mt-1 w-full text-sm rounded-md shadow-sm border-gray-300 focus:border-slate-200 outline-none focus:ring-2 focus:ring-slate-200 "
-          />
+            <ErrorMessage
+              name="end_date"
+              component="span"
+              className="text-xs text-red-500"
+            />
+          </div>
+          <div className="">
+            <label
+              htmlFor="end_date"
+              className="undefined block font-semibold text-sm text-gray-700">
+              Start Date
+            </label>
+            <Field
+              id="end_date"
+              name="end_date"
+              type="date"
+              placeholder="Ex: johndoe@gmail.com"
+              className="block p-2 mt-1 w-full text-sm rounded-md shadow-sm border-gray-300 focus:border-slate-200 outline-none focus:ring-2 focus:ring-slate-200 "
+            />
+            <ErrorMessage
+              name="end_date"
+              component="span"
+              className="text-xs text-red-500"
+            />
+          </div>
         </div>
         <DialogFooter>
           <Button variant={'outline'} type="submit">

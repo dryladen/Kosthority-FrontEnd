@@ -6,7 +6,6 @@ import { DataTableRowAction } from './data-table-row-action'
 import { DataTableColumnHeader } from '@/components/data-table/data-table-column-header'
 
 export const columns: ColumnDef<Lease>[] = [
-  
   {
     accessorKey: 'tenant_id',
     header: ({ column }) => (
@@ -18,11 +17,20 @@ export const columns: ColumnDef<Lease>[] = [
     header: ({ column }) => (
       <DataTableColumnHeader column={column} title={'Unit'} />
     ),
-  },{
+  },
+  {
     accessorKey: 'amount',
     header: ({ column }) => (
       <DataTableColumnHeader column={column} title={'Amount'} />
     ),
+    cell: ({ row }) => {
+      const amount = row.original.amount
+      const formattedPrice = new Intl.NumberFormat('id-ID', {
+        style: 'currency',
+        currency: 'IDR',
+      }).format(amount)
+      return <p className="text-muted-foreground">{formattedPrice}</p>
+    },
   },
   {
     accessorKey: 'start_date',
@@ -47,15 +55,12 @@ export const columns: ColumnDef<Lease>[] = [
       <DataTableColumnHeader column={column} title={'End Date'} />
     ),
     cell: ({ row }) => {
-      return new Date(row.getValue('end_date')).toLocaleDateString(
-        undefined,
-        {
-          year: 'numeric',
-          month: 'long',
-          day: '2-digit',
-          weekday: 'long',
-        },
-      )
+      return new Date(row.getValue('end_date')).toLocaleDateString(undefined, {
+        year: 'numeric',
+        month: 'long',
+        day: '2-digit',
+        weekday: 'long',
+      })
     },
   },
 

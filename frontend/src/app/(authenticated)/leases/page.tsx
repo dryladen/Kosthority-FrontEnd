@@ -42,7 +42,7 @@ const LeasesPage = () => {
         <CardDescription>A list of all Leases in the system.</CardDescription>
       </CardHeader>
       <CardContent>
-        <DataTable columns={columns} data={dataTable} children={<AddData />} />
+        <DataTable columns={columns} data={dataTable} children={<AddData />} search='tenant_id' />
       </CardContent>
     </Card>
   )
