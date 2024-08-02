@@ -6,7 +6,7 @@ import { useAuth } from '@/hooks/auth'
 import { Button } from '@/components/ui/button'
 
 export default function Home() {
-  const { user } = useAuth({ middleware: 'guest' })
+  // const { user } = useAuth({ middleware: 'guest' })
 
   return (
     <>
@@ -25,7 +25,7 @@ export default function Home() {
               </div>
               <div className="hidden sm:block">
                 <div className="flex space-x-8">
-                  {user ? (
+                  {/* {user ? (
                     <Button>
                       <Link
                         href="/dashboard"
@@ -46,7 +46,7 @@ export default function Home() {
                         </Link>
                       </Button>
                     </>
-                  )}
+                  )} */}
                 </div>
               </div>
             </div>
